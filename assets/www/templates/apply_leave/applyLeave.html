@@ -1,0 +1,233 @@
+<ion-view view-title="Apply Leave" class="custom_background fabSpeedDialdemoBasicUsage" id="popupContainer" ng-init="init()">
+
+    <div id="loader" ng-show="loader">
+        <div layout="row" layout-sm="column" layout-align="space-around" style="margin-top:75%;">
+            <md-progress-circular md-mode="indeterminate" class="md-accent md-hue-1" md-diameter="40"></md-progress-circular>
+        </div>
+    </div>
+
+    <div id="dim" ng-click="hideDIM()">
+        <center>
+        <div layout="column" style="margin-top:20%;z-index:2;overflow:auto;">
+
+            <div layout="column" style="margin-bottom:20px;">
+                <md-button aria-label="Twitter" class="md-fab md-mini" ng-click="Applycompoff()" style="width:60px;height:60px;">
+                    <img ng-src="img/applyCompOff.png" />
+                </md-button>
+                <h4 style="color:#fff;">Apply Compensatory Off</h4>
+            </div>
+
+            <div layout="column" style="margin-bottom:20px;">
+                <md-button aria-label="Twitter" class="md-fab md-mini" ng-click="LeaveHistory()" style="width:60px;height:60px;">
+                    <img ng-src="img/myLeaveHistory.png" style="margin-top: 5px;"/>
+                </md-button>
+                <h4 style="color:#fff;">Leave History</h4>
+            </div>
+            <div layout="column" style="margin-bottom:20px;">
+                <md-button aria-label="Twitter" class="md-fab md-mini" ng-click="compHistory()" style="width:60px;height:60px;">
+                    <img ng-src="img/compoffhistory.png" style="margin-top: 5px;"/>
+                </md-button>
+                <h4 style="color:#fff;">CompOff History</h4>
+            </div>
+
+            <div layout="column">
+                <md-button aria-label="Twitter" class="md-fab md-mini" ng-click="leavePlan()" style="width:60px;height:60px;">
+                    <img ng-src="img/teamLeavePlan.png" style="margin-top: 5px;"/>
+                </md-button>
+                <h4 style="color:#fff;">My Team Leave Plan</h4>
+            </div>
+
+        </div>
+            </center>
+    </div>
+
+    <ion-header-bar class="bar-positive">
+        <md-button ng-click="close()" style="float:left;background-color:transparent;box-shadow:none;top:-12px;margin-left: -10px;" class="md-fab">
+            <i class="fa fa-arrow-left" style="color:#fff;font-size:25px;"></i>
+        </md-button>
+        <h3 class="md-flex">Apply Leave</h3>
+        <!--md-button ng-click="toggleLeft('leftAP')" style="float:left;background-color:transparent;box-shadow:none;top:-12px;margin-left: -10px;" class="md-fab">
+            <i class="fa fa-bars" style="color:#fff;font-size:25px;"></i>
+        </md-button>
+        <h3 class="md-flex title_text_bar">Apply Leave</h3-->
+
+    </ion-header-bar>
+
+
+    <!--md-sidenav
+            class="md-sidenav-left"
+            md-component-id="leftAP"
+            md-whiteframe="4">
+
+        <md-content>
+            <div>
+                <div class="background">
+
+                    <md-list>
+                        <md-list-item>
+                            <div style="padding-left:10px;">
+                                <img ng-src="{{hrmsLogo}}" />
+
+                            </div>
+                        </md-list-item>
+                    </md-list>
+
+
+                </div>
+                <div style="border-bottom:1px solid #757575;width:100%;margin-top:5px;"></div>
+            </div>
+            <div layout-padding>
+                <md-list>
+                    <md-list-item layout="row" ng-repeat="menu in menuItem" ng-click="goToMenuItem(menu.name)" class="noright menuITEM">
+                        <div class="taskTotal"><i class="fa {{menu.icon_name}} menu_icon" style="color:{{menu.color}}"></i></div>
+                        <div class="custom_emp_left_p"><p class="menu_item">{{ menu.name }}</p></div>
+                        <md-divider ng-if="!$last"></md-divider>
+                    </md-list-item>
+                </md-list>
+            </div>
+        </md-content>
+
+    </md-sidenav-->
+
+
+
+    <ion-content style="margin-bottom:50px;">
+        <ion-refresher on-refresh="doRefresh()"></ion-refresher>
+
+        <md-content flex layout-padding class="custom_white">
+
+            <form name="projectForm">
+
+                <md-input-container class="md-block">
+                    <label>Leave Applied On</label>
+                    <input required md-no-asterisk name="CurrentDate" ng-model="project.CurrentDate" id="CurrentDate" readonly>
+
+                </md-input-container>
+
+
+                <md-input-container class="md-block">
+                    <label>Manager Name</label>
+                    <input required md-no-asterisk name="manager" ng-model="project.manager" id="manager" readonly>
+
+                </md-input-container>
+
+                <div flex-gt-sm="100" layout="row" ng-show="LeaveHalfDayContainer">
+                        <div class="custom_left"><md-checkbox ng-model="data.cb1" class="md-primary" aria-label="Checkbox 1" ng-click="applyHalfDay()">
+                            Half day
+                        </md-checkbox>
+                       </div>
+                    <md-radio-group ng-model="data.group1" ng-show="halfDAYContainer">
+                        <md-radio-button value="1" class="md-primary">1st Half</md-radio-button>
+                        <md-radio-button value="2" class="md-primary">2nd Half</md-radio-button>
+                    </md-radio-group>
+
+                    </div>
+
+                <div flex-gt-sm="100" layout="row" ng-show="ComOffHalfDayContainer">
+                    <div class="custom_left"><md-checkbox ng-checked="true" class="md-primary" aria-label="Checkbox 1">
+                        Half day
+                    </md-checkbox>
+                    </div>
+                    <md-radio-group ng-model="data.group1">
+                        <md-radio-button value="1" class="md-primary">1st Half</md-radio-button>
+                        <md-radio-button value="2" class="md-primary">2nd Half</md-radio-button>
+                    </md-radio-group>
+
+                </div>
+
+
+
+                <md-input-container style="width:100%;">
+                    <label>Leave Type</label>
+                    <md-select ng-model="project.leaveType" id="leaveType" ng-click="emptyLeave()" ng-change="Leave()">
+                        <!--md-option><em>None</em></md-option-->
+                        <md-option ng-repeat="item in leaveAllotmentType" ng-value="item">
+                            {{item.leave_type}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+
+
+                <md-input-container class="md-block">
+                    <label>Remaining Leave</label>
+                    <input required md-no-asterisk name="remainingL" ng-model="project.remainingL" id="remainingL" readonly>
+
+                </md-input-container>
+                <md-input-container class="md-block" ng-show="SelectedCompOff">
+                    <label>Selected Comp off leave day</label>
+                    <input required md-no-asterisk name="selectedCLD" ng-model="project.selectedCLD" id="selectedCLD" readonly>
+
+                </md-input-container>
+
+                <div ng-show="halfDAYContainer">
+
+                    <p>From Date</p>
+                    <md-datepicker md-date-filter="workingDaysForApplyingLeaves" md-open-on-focus md-min-date="minDate" ng-model="project.startDate" id="FromdivID" class="mdDatepicker" ng-change="getHalfDayCount()"></md-datepicker>
+
+                </div>
+
+                <!--div ng-show="CompOffContainer">
+                    <p>From Date</p>
+                    <md-datepicker md-date-filter="workingDaysForApplyingLeaves" md-open-on-focus md-min-date="minDate" ng-model="project.startDate" id="FromdivID" class="mdDatepicker"></md-datepicker>
+
+                </div-->
+
+
+                <div ng-show="toDate">
+                <p>From Date</p>
+                <md-datepicker md-date-filter="workingDaysForApplyingLeaves" md-open-on-focus md-min-date="minDate" ng-model="project.startDate" id="FromdivID" class="mdDatepicker" ng-change="getEndMinDate()" readonly></md-datepicker>
+
+                <p>To Date</p>
+                <md-datepicker ng-disabled="EnableAfterFromDT" md-open-on-focus md-min-date="ToDate_minDate" md-date-filter="workingDaysForApplyingLeaves" ng-model="project.endDate" id="TodivID" class="mdDatepicker" ng-change="getDAYSCount()" readonly></md-datepicker>
+                </div>
+
+                <md-input-container class="md-block">
+                    <label>No. Leaves</label>
+                    <input required md-no-asterisk name="noLeaves" ng-model="project.noLeaves" id="noLeaves" readonly>
+
+                </md-input-container>
+
+                <md-input-container class="md-block">
+                    <label>Reason for Applied Leave</label>
+                    <textarea ng-model="project.reasonFLeave" maxlength="200"></textarea>
+                </md-input-container>
+
+                <!--center><div><md-button ng-click="ApproveLeave(project)" id="card_login_btn" class="custom_btn">Apply Leave</md-button></div></center-->
+                <div class="button" ngf-select="uploadFiles($files)" ngf-multiple="false" style="border-color:grey;color:#145c96;">Upload document</div>
+                <!--button type="file" ngf-select="uploadFiles($files)" accept="*" style="border-color:grey;color:#145c96;">Upload Files</button-->
+                <br><br>
+                Files:
+
+                <md-list>
+
+                    <md-list-item class="md-3-line custom_white" ng-repeat="f in files">
+
+                        <div class="md-list-item-text" layout="row">
+                            <div style="width:80%;" ng-click="openDOC(f.name)"><h4>{{f.name}}</h4></div>
+                            <div><i class="ion-close-round" ng-click="removeFile(f)" style="float:right;"></i></span></div>
+                        </div>
+
+                        <md-divider></md-divider>
+
+
+                    </md-list-item>
+
+
+                </md-list>
+                <div style="height:50px;width:100%;">&nbsp;&nbsp;</div>
+                </form>
+
+        </md-content>
+
+    </ion-content>
+    <div class="bar bar-footer bar-stable">
+        <div ng-click="ApproveLeave(project)" class="custom_footerbar_full"><button ion-button block>Apply Leave</button></div>
+
+    </div>
+    <button class="md-fab md-fab-bottom-right docs-scroll-fab md-button md-ink-ripple scrolling" type="button" docs-scroll-class="scrolling" ng-click="FabSpeedBTN()">
+
+        <i class="fa fa-ellipsis-v md-accent"></i>
+        <div class="md-ripple-container"></div></button>
+
+
+</ion-view>

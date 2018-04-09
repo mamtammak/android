@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title></title>
+
+    <link rel="manifest" href="manifest.json">
+
+    <!-- un-comment this code to enable service worker
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('service-worker.js')
+          .then(() => console.log('service worker installed'))
+          .catch(err => console.log('Error', err));
+      }
+    </script>-->
+
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/font_awsome.css">
+
+    <link rel="stylesheet" type="text/css" href="lib/calender/clndr.css">
+    <link rel="stylesheet" type="text/css" href="lib/rating/ng-rateit.css">
+    <link rel="stylesheet" type="text/css" href="lib/angular-tooltips.css">
+
+
+    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+    <link href="css/ionic.app.css" rel="stylesheet">
+    -->
+    <script src="cordova.js"></script>
+    <script src="jquery.js"></script>
+
+    <script type="text/javascript" src="lib/google_map.js"></script>
+
+    <!--script src="http://www.geoplugin.net/javascript.gp" type="text/javascript"></script-->
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+
+
+    <!-- cordova script (this will be a 404 during development) -->
+    <script src="lib/ng-cordova.min.js"></script>
+
+    <!-- Angular Material style sheet -->
+
+
+    <link rel="stylesheet" href="lib/angular-material/css/angular-material.css">
+    <!-- Angular Material requires Angular.js Libraries ptrLight.min.css-->
+
+    <script src="lib/angular-material/js/angular-min.js"></script>
+    <script src="lib/angular-material/js/angular-animate.js"></script>
+    <script src="lib/angular-material/js/angular-aria.js"></script>
+    <script src="lib/angular-material/js/angular-message.js"></script>
+    <script src="lib/angular-ui/angular-ui-router.js"></script>
+
+    <script src="lib/moment.js"></script>
+    <!--script src="http://cdn.socket.io/socket.io-1.0.3.js"></script-->
+    <!--script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script-->
+    <script src="lib/socket.js"></script>
+    <script src="lib/rating/ng-rateit.min.js"></script>
+    <script src="lib/calender/underscore.js"></script>
+    <script src="lib/calender/clndr.js"></script>
+    <script src="lib/angular-tooltips.min.js"></script>
+
+    <script type="text/javascript" src="lib/chart/Chart.js"></script>
+    <script type="text/javascript" src="lib/chart/utils.js"></script>
+
+
+
+    <script src="js/Toast.js"></script>
+
+
+
+    <!-- Angular Material Library -->
+    <script src="lib/angular-material/js/angular-material.js"></script>
+    <!-- your app's js -->
+
+    <script src="js/app.js"></script>
+    <!--script src="js/PushNotification.js"></script-->
+    <!--script src="js/index.js"></script-->
+    <script src="js/ng-file-upload.min.js"></script>
+    <script src="js/ng-file-upload-shim.js"></script>
+    <!--script src="lib/jquery.gdocsviewer.min.js"></script-->
+    <script src="js/services/ConnectivityService.js"></script>
+    <script src="js/ValueConstants.js"></script>
+
+
+    <!-- Module JS-->
+    <script src="js/modules/employees/employees.js"></script>
+    <script src="js/modules/myProfile/myprofile.js"></script>
+    <script src="js/modules/task/task.js"></script>
+    <script src="js/modules/applyLeave/applyLeave.js"></script>
+    <script src="js/modules/timesheet/timesheet.js"></script>
+    <script src="js/modules/holidays/holidays.js"></script>
+    <script src="js/modules/training/training.js"></script>
+    <script src="js/modules/attendance/attendance.js"></script>
+    <script src="js/modules/payroll/payroll.js"></script>
+    <script src="js/modules/expense/expense.js"></script>
+
+    <!-- Controller JS -->
+    <script src="js/controller/login/login_controllers.js"></script>
+    <script src="js/controller/login/forgetPassword.js"></script>
+    <script src="js/controller/dashboard/dash_controllers.js"></script>
+    <script src="js/controller/dashboard/to_do_list.js"></script>
+    <script src="js/controller/dashboard/events.js"></script>
+    <script src="js/controller/dashboard/notify.js"></script>
+
+    <script src="js/controller/employees/employee_controllers.js"></script>
+    <script src="js/controller/employees/employee_profile.js"></script>
+    <script src="js/controller/employees/employee_details.js"></script>
+    <script src="js/controller/employees/employee_personel_details.js"></script>
+    <script src="js/controller/employees/employee_contact.js"></script>
+    <script src="js/controller/employees/emp_account_info.js"></script>
+    <script src="js/controller/employees/emp_onBoard.js"></script>
+    <script src="js/controller/employees/employee_projects.js"></script>
+
+    <script src="js/controller/myProfile/myprofile_edit.js"></script>
+    <!--script src="js/controller/myProfile/myProfile_controllers.js"></script-->
+    <script src="js/controller/myProfile/my_account_info.js"></script>
+    <script src="js/controller/myProfile/my_contact.js"></script>
+    <script src="js/controller/myProfile/my_details.js"></script>
+    <script src="js/controller/myProfile/my_personel_details.js"></script>
+    <script src="js/controller/myProfile/my_projects.js"></script>
+    <script src="js/controller/myProfile/addNewProject.js"></script>
+
+    <script src="js/controller/task/task.js"></script>
+    <script src="js/controller/task/addTask.js"></script>
+    <script src="js/controller/task/editTask.js"></script>
+    <script src="js/controller/task/comments.js"></script>
+    <script src="js/controller/task/taskExpense.js"></script>
+    <script src="js/controller/applyLeave/applyLeave.js"></script>
+    <script src="js/controller/task/confirmTask.js"></script>
+    <script src="js/controller/task/confirmCompOff.js"></script>
+    <script src="js/controller/task/completed_popUP.js"></script>
+    <script src="js/controller/task/iframeFile.js"></script>
+    <script src="js/controller/applyLeave/applyComOff.js"></script>
+    <script src="js/controller/applyLeave/leaveHistory.js"></script>
+    <script src="js/controller/applyLeave/CompOffHistory.js"></script>
+    <script src="js/controller/applyLeave/CompOffList.js"></script>
+    <script src="js/controller/applyLeave/reApplyLeave.js"></script>
+    <script src="js/controller/applyLeave/leavePlan.js"></script>
+
+    <script src="js/controller/timesheet/timesheet.js"></script>
+    <script src="js/controller/timesheet/addevent.js"></script>
+    <script src="js/controller/timesheet/updateEvent.js"></script>
+    <script src="js/controller/timesheet/shareTimesheet.js"></script>
+    <script src="js/controller/timesheet/EMP_timesheet.js"></script>
+    <script src="js/controller/timesheet/TimesheetEvents.js"></script>
+    <script src="js/controller/timesheet/timesheetEmpFilter.js"></script>
+    <script src="js/controller/timesheet/EmpTimesheetEvents.js"></script>
+
+    <script src="js/controller/holidays/holidays.js"></script>
+    <script src="js/controller/holidays/bottomFilterByYear.js"></script>
+
+    <script src="js/controller/training/training.js"></script>
+    <script src="js/controller/training/curriculum.js"></script>
+    <script src="js/controller/training/aboutCourse.js"></script>
+    <script src="js/controller/training/lessonPage.js"></script>
+
+    <script src="js/controller/attendance/attendance.js"></script>
+    <script src="js/controller/attendance/attandance_details.js"></script>
+    <script src="js/controller/attendance/attendance_filterForEmp.js"></script>
+    <script src="js/controller/attendance/attendance_report.js"></script>
+    <script src="js/controller/attendance/attendanceFilter.js"></script>
+
+    <!--Pay roll-->
+    <script src="js/controller/payroll/payroll.js"></script>
+    <script src="js/controller/payroll/detail_Sal_Struct.js"></script>
+    <script src="js/controller/payroll/AddSalStructure.js"></script>
+    <script src="js/controller/payroll/detail_investment.js"></script>
+    <script src="js/controller/payroll/AddNewInvestment.js"></script>
+    <script src="js/controller/payroll/detail_Payslip.js"></script>
+
+    <script src="js/controller/expense/expense.js"></script>
+    <script src="js/controller/expense/expensePopUp.js"></script>
+    <script src="js/controller/expense/expenseFilter.js"></script>
+    <script src="js/services/List.js"></script>
+
+
+</head>
+<body ng-app="starter" class="platform-ios platform-cordova platform-webview">
+<!--
+  The nav bar that will be updated as we navigate between views.
+-->
+<!--ion-nav-bar class="bar-stable">
+  <ion-nav-back-button>
+  </ion-nav-back-button>
+</ion-nav-bar-->
+<!--
+  The views will be rendered in the <ion-nav-view> directive below
+  Templates are in the /templates folder (but you could also
+  have templates inline in this html file if you'd like).
+-->
+<!--ion-nav-bar type="bar-stable"
+     animation="nav-title-slide-ios7"
+     back-button-type="button-icon button-clear"
+     back-button-icon="arrow-back"></ion-nav-bar-->
+
+<ion-pane>
+    <ion-nav-view>
+    </ion-nav-view>
+</ion-pane>
+
+</body>
+</html>

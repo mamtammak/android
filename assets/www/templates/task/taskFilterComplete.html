@@ -1,0 +1,333 @@
+<ion-view view-title="TaskCompleteFilter" hide-back-button="true" class="custom_background" ng-init="initTaskFilter()" ng-cloak>
+  
+  <div id="loader" ng-show="loader">
+    <div layout="row" layout-sm="column" layout-align="space-around" style="margin-top:75%;">
+      <md-progress-circular md-mode="indeterminate" class="md-accent md-hue-1" md-diameter="40"></md-progress-circular>
+    </div>
+  </div>
+  
+
+  <div class="dimRate">
+    <div style="margin-top:55%;">
+      <md-card>
+        
+        <md-card-content>
+        <center><ng-rate-it ng-model="project.PRating" min="0" max="5" star-width="26" star-height="26" id="ratingStar"></ng-rate-it>
+          <p ng-show="project.PRating == 0"></p>
+          <p ng-show="true" ng-if="project.PRating > 0 && project.PRating <= 1">not happy !</p>
+          <p ng-show="true" ng-if="project.PRating > 1 && project.PRating <= 2">poor performance !</p>
+          <p ng-show="true" ng-if="project.PRating > 2 && project.PRating <= 3">ok performance !</p>
+          <p ng-show="true" ng-if="project.PRating > 3 && project.PRating <= 4">good performance !</p>
+          <p ng-show="true" ng-if="project.PRating > 4 && project.PRating <= 5">excellent performance !</p></center>
+        </md-card-content>
+        <md-card-actions layout="row" layout-align="end center">
+          <md-button class="search_BTN" ng-click="closeRating()">Close</md-button>
+          <md-button class="search_BTN" ng-click="saveRating(project.PRating)">Submit</md-button>
+        </md-card-actions>
+      </md-card>
+    </div>
+    
+  </div>
+  
+  
+  <ion-header-bar class="bar-positive" ng-show="showSearchbar">
+    <md-button ng-click="close()" style="float:left;margin-left: -10px;background-color:transparent;box-shadow:none;top:-12px;" class="md-fab">
+      <i class="fa fa-arrow-left" style="color:#fff;font-size:25px;"></i>
+    </md-button>
+    <h3 class="md-flex title_text_bar">Filter</h3>
+    <md-button ng-click="showSearch()" style="float:right;background-color:transparent;box-shadow:none;top:-12px;" class="md-fab">
+      <i class="fa fa-search" style="color:#fff;font-size:25px;"></i>
+    </md-button>
+    <md-button ng-click="showFilterC()" style="float:right;background-color:transparent;box-shadow:none;top:-12px;" class="md-fab">
+      <i class="fa fa-filter" style="color:#fff;font-size:25px;"></i>
+    </md-button>
+    <!--md-button ng-click="showFilterCompleted()" ng-show="ShowfilterComp" ng-click="showFilterCompleted()" style="float:right;background-color:transparent;box-shadow:none;top:-12px;" class="md-fab">
+      <i class="fa fa-filter" style="color:#fff;font-size:25px;"></i>
+    </md-button-->
+    
+
+    
+  </ion-header-bar>
+  
+  <ion-header-bar class="bar-positive" ng-show="hideSearchbar">
+    <md-button ng-click="hideSearch()" style="float:left;background-color:transparent;box-shadow:none;top:-12px;" class="md-fab">
+      <i class="fa fa-caret-left" style="color:#fff;font-size:25px;"></i>
+    </md-button>
+
+    <input type="search" placeholder="Search" ng-model="query" style="margin-top:15px;" class="item-input-wrapper" />
+    
+    
+  </ion-header-bar>
+
+  <ion-content class="employee_wrapper">
+    <!--ion-refresher on-refresh="doRefresh()"></ion-refresher-->
+    
+    <md-content flex layout-padding class="custom_background">
+      <div ng-show="showFilterCategoryC">
+        <md-list>
+
+          <md-list-item class="md-3-line custom_white">
+            <div layout="row" class="custom_margin_list md-list-item-text">
+              <div class="custom_emp_left_p"><h3>View</h3></div>
+              <div ng-show="showPlusV" class="taskTotal" ng-click="OpenView()"><i style="font-size:24px;" class="fa fa-plus-circle"></i></div>
+              <div ng-show="showMinusV" class="taskTotal" ng-click="CloseView()"><i style="font-size:24px;" class="fa fa-minus-circle"></i></div>
+            </div>
+
+            <md-divider></md-divider>
+
+          </md-list-item>
+          </md-list>
+
+        <md-list ng-show="showView">
+
+          <md-list-item class="md-3-line custom_white" ng-click="searchTaskComp('View',1)">
+            <div class="custom_margin_list md-list-item-text">
+              <h4>Created by me</h4>
+            </div>
+
+            <md-divider></md-divider>
+
+          </md-list-item>
+          <md-list-item class="md-3-line custom_white" ng-click="searchTaskComp('View',2)">
+            <div class="custom_margin_list md-list-item-text">
+              <h4>Assigned to me</h4>
+            </div>
+          <md-divider></md-divider>
+
+          </md-list-item>
+
+
+        </md-list>
+
+        <md-list>
+
+          <md-list-item class="md-3-line custom_white">
+            <div layout="row" class="custom_margin_list md-list-item-text">
+              <div class="custom_emp_left_p"><h3>Sort by</h3></div>
+              <div ng-show="showPlusS" class="taskTotal" ng-click="OpenSort()"><i style="font-size:24px;" class="fa fa-plus-circle"></i></div>
+              <div ng-show="showMinusS" class="taskTotal" ng-click="CloseSort()"><i style="font-size:24px;" class="fa fa-minus-circle"></i></div>
+            </div>
+
+            <md-divider></md-divider>
+
+          </md-list-item>
+        </md-list>
+
+        <md-list ng-show="showSortBy">
+
+          <md-list-item class="md-3-line custom_white" ng-click="searchTaskComp('Sort','duedate')">
+            <div class="custom_margin_list md-list-item-text">
+              <h4>Due date</h4>
+            </div>
+
+            <md-divider></md-divider>
+
+          </md-list-item>
+
+        </md-list>
+
+        <md-list>
+
+          <md-list-item class="md-3-line custom_white">
+            <div layout="row" class="custom_margin_list md-list-item-text">
+              <div class="custom_emp_left_p"><h3>Task</h3></div>
+              <div ng-show="showPlusT" class="taskTotal" ng-click="OpenTask()"><i style="font-size:24px;" class="fa fa-plus-circle"></i></div>
+              <div ng-show="showMinusT" class="taskTotal" ng-click="CloseTask()"><i style="font-size:24px;" class="fa fa-minus-circle"></i></div>
+            </div>
+
+            <md-divider></md-divider>
+
+          </md-list-item>
+        </md-list>
+
+        <md-list ng-show="showTask">
+
+          <md-list-item class="md-3-line custom_white" ng-click="searchTaskComp('task','task')">
+            <div class="custom_margin_list md-list-item-text">
+              <h4>Everyday</h4>
+            </div>
+
+            <md-divider></md-divider>
+
+          </md-list-item>
+          <md-list-item class="md-3-line custom_white" ng-click="searchTaskComp('task','leave')">
+            <div class="custom_margin_list md-list-item-text">
+              <h4>Leave approval</h4>
+            </div>
+
+            <md-divider></md-divider>
+
+          </md-list-item>
+          <md-list-item class="md-3-line custom_white" ng-click="searchTaskComp('task','compoff')">
+            <div class="custom_margin_list md-list-item-text">
+              <h4>Compensatory approval</h4>
+            </div>
+
+            <md-divider></md-divider>
+
+          </md-list-item>
+
+        </md-list>
+        <!--md-list>
+
+        <md-list-item class="md-3-line custom_white">
+          <div layout="row" class="custom_margin_list md-list-item-text">
+            <div class="custom_emp_left_p"><h3>Status</h3></div>
+            <div ng-show="showPlusST" class="taskTotal" ng-click="OpenStatus()"><i class="fa fa-plus-circle"></i></div>
+            <div ng-show="showMinusST" class="taskTotal" ng-click="CloseStatus()"><i class="fa fa-minus-circle"></i></div>
+          </div>
+
+          <md-divider></md-divider>
+
+        </md-list-item>
+        </md-list>
+
+        <md-list ng-show="showStatus">
+
+          <md-list-item class="md-3-line custom_white" ng-click="searchTaskTiles('status','pending')">
+            <div class="custom_margin_list md-list-item-text">
+              <h4>Pending</h4>
+            </div>
+
+            <md-divider></md-divider>
+
+          </md-list-item>
+          <md-list-item class="md-3-line custom_white" ng-click="searchTaskTiles('status','overdue')">
+            <div class="custom_margin_list md-list-item-text">
+              <h4>Overdue</h4>
+            </div>
+
+            <md-divider></md-divider>
+
+          </md-list-item>
+          <md-list-item class="md-3-line custom_white" ng-click="searchTaskTiles('status','ongoing')">
+            <div class="custom_margin_list md-list-item-text">
+              <h4>Ongoing</h4>
+            </div>
+
+            <md-divider></md-divider>
+
+          </md-list-item>
+
+        </md-list-->
+        <md-list>
+        <md-list-item class="md-3-line custom_white">
+          <div layout="row" class="custom_margin_list md-list-item-text">
+            <div class="custom_emp_left_p"><h3>Priority</h3></div>
+            <div ng-show="showPlusP" class="taskTotal" ng-click="OpenPriority()"><i style="font-size:24px;" class="fa fa-plus-circle"></i></div>
+            <div ng-show="showMinusP" class="taskTotal" ng-click="ClosePriority()"><i style="font-size:24px;" class="fa fa-minus-circle"></i></div>
+          </div>
+
+          <md-divider></md-divider>
+
+        </md-list-item>
+        </md-list>
+
+        <md-list ng-show="showPriority">
+
+          <md-list-item class="md-3-line custom_white" ng-click="searchTaskComp('priority','High')">
+            <div class="custom_margin_list md-list-item-text">
+              <h4>High</h4>
+            </div>
+
+            <md-divider></md-divider>
+
+          </md-list-item>
+          <md-list-item class="md-3-line custom_white" ng-click="searchTaskComp('priority','Medium')">
+            <div class="custom_margin_list md-list-item-text">
+              <h4>Medium</h4>
+            </div>
+
+            <md-divider></md-divider>
+
+          </md-list-item>
+          <md-list-item class="md-3-line custom_white" ng-click="searchTaskComp('priority','Low')">
+            <div class="custom_margin_list md-list-item-text">
+              <h4>Low</h4>
+            </div>
+
+            <md-divider></md-divider>
+
+          </md-list-item>
+
+        </md-list>
+      </div>
+
+        <div ng-show="showTaskCompleteTiles">
+          <ion-list>
+
+            <ion-item ng-repeat="list in task_Filter_Comp | filter: query" item="list" class="noPreventDefault" ng-swipe-up="swipeFilterComp($last)">
+              <table class="mdl-data-table mdl-js-data-table" style="width:100%;border-collapse:collapse;margin-top: 2px;background-color:#fff;">
+
+                <thead>
+
+                <tr ng-if="list.leaveid != null" ng-click="RatingSave(list)">
+                  <th align="left" colspan="2"><h3><span id="highLightFont">{{ list.title }}</span> - <span id="highLightFont" style="color:#3f51b5;">{{ list.leaveid }}</span></h3></th>
+
+                </tr>
+
+                <tr ng-if="list.compOffId != null" ng-click="RatingSave(list)">
+                  <th align="left" colspan="2"><h3><span id="highLightFont">{{ list.title }}</span> - <span id="highLightFont" style="color:#3f51b5;">{{ list.compOffId }}</span></h3></th>
+
+                </tr>
+
+                <tr ng-if="list.type == 'task type'" ng-click="RatingSave(list)">
+                  <th align="left" colspan="2" align="left"><h3><span id="highLightFont">{{ list.title }}</span></h3></th>
+
+                </tr>
+
+                </thead>
+                <tbody>
+
+
+                <tr ng-if="list.type == 'task type' && list.rating || list.type == 'task type' && !list.rating">
+                  <td colspan="2">
+                    <span class="md-body-1" style="color:#e51c23;">Performance Rating</span>&nbsp;&nbsp;&nbsp;
+                    <span ng-show="MyEmailId == list.created_by.email" ng-click="RatingPopUp(list)" class="ratePBTN">rate<i class="fa fa-star" style="color:#fff;padding-left:5px;"></i></span>
+                  </td>
+                </tr>
+                <tr ng-if="list.type == 'task type' && list.rating">
+                  <td colspan="2">
+                    <ng-rate-it ng-model="list.rating" read-only="1" min="0" max="5"></ng-rate-it>
+                  </td>
+                </tr>
+
+                <tr ng-if="list.type == 'task type' && !list.rating">
+                  <td colspan="2">
+                    <ng-rate-it ng-model="project.NoRate" read-only="1" min="0" max="5"></ng-rate-it>
+
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="td_width" align="left" ng-click="comments(list._id)"><h3><span style="float:left;color:#616161;font-weight: 900;"><span style="color:#3f51b5;font-size:14px;">{{list.candidate_notes.length}}</span>&nbsp;comments</span></h3></td>
+                  <td class="td_width" align="right"><i class="fa fa-check-square-o" ng-click="MarkIncomplete(list._id)" style="font-size:24px;color:#3f51b5;"></i></td>
+                </tr>
+
+                </tbody>
+              </table>
+            </ion-item>
+
+          </ion-list>
+          <div ng-show="loaderSmall">
+            <div layout="row" layout-sm="column" layout-align="space-around">
+              <md-progress-circular md-mode="indeterminate" class="md-accent md-hue-1" md-diameter="20"></md-progress-circular>
+            </div>
+          </div>
+        </div>
+
+
+        <div style="width:100%;" class="norecords" ng-show="norecords"></div>
+
+    </md-content>
+
+
+  </ion-content>
+  
+  <!--button class="md-fab md-fab-bottom-right docs-scroll-fab md-button md-ink-ripple scrolling" type="button" docs-scroll-class="scrolling" ng-click="AddTask()">
+    
+    <i class="fa fa-plus"></i>
+    <div class="md-ripple-container"></div></button-->
+  
+  
+</ion-view>

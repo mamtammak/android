@@ -1,0 +1,99 @@
+<ion-view view-title="Advance Expense popup" class="custom_white" ng-init="initMyAdvPaymentD();">
+    <div id="loader" ng-show="loader">
+        <div layout="row" layout-sm="column" layout-align="space-around" style="margin-top:75%;">
+            <md-progress-circular md-mode="indeterminate" class="md-accent md-hue-1" md-diameter="40"></md-progress-circular>
+        </div>
+    </div>
+    <ion-header-bar class="bar-positive">
+        <md-button ng-click="close()" style="float:left;background-color:transparent;box-shadow:none;top:-12px;margin-left: -10px;" class="md-fab">
+            <i class="fa fa-arrow-left" style="color:#fff;font-size:25px;"></i>
+        </md-button>
+        <h3 class="md-flex">Advance Payment history</h3>
+
+
+    </ion-header-bar>
+
+    <ion-content>
+
+        <md-content flex layout-padding class="custom_white">
+            <!--md-input-container class="md-block">
+                <label>Username</label>
+                <input required md-no-asterisk name="Username" ng-model="project.Username" readonly>
+
+            </md-input-container-->
+            <div flex-gt-xs>
+                <md-datepicker md-open-on-focus ng-model="project.Date" name="Date"></md-datepicker>
+            </div>
+            <md-input-container class="md-block">
+                <label>Username</label>
+                <md-autocomplete md-selected-item="project.Username" md-search-text="name" md-items="item in supervisors | filter:name" md-item-text="item.name" style="margin:0;">
+                    <span md-highlight-text="item">{{item.name}}</span>
+                    <md-not-found>
+                        <div class="chip-not-found">Not found.</div>
+                    </md-not-found>
+                </md-autocomplete>
+
+
+            </md-input-container>
+
+            <md-input-container class="md-block">
+                <label>Payment Mode</label>
+                <md-select ng-model="project.pay_mode">
+                    <!--md-option><em>None</em></md-option-->
+                    <md-option ng-repeat="item in pay_mode" ng-selected="item._id == PaidMODE" ng-value="item._id">
+                        {{item.name}}
+                    </md-option>
+                </md-select>
+            </md-input-container>
+
+            <!--md-input-container class="md-block">
+                <label>Date</label>
+                <input required md-no-asterisk name="Date" ng-model="project.Date" readonly>
+
+            </md-input-container>
+            <md-input-container class="md-block">
+                <label>Paid through</label>
+                <input required md-no-asterisk name="PaidThrough" ng-model="project.PaidThrough" readonly>
+
+            </md-input-container-->
+
+            <div layout="row">
+                <md-input-container class="md-block" style="width:20%;">
+                    <label>Currency</label>
+                    <input required md-no-asterisk name="Currency" ng-model="project.Currency" readonly>
+
+                </md-input-container>
+
+                <md-input-container class="md-block" style="width:80%;">
+                    <label>Amount</label>
+                    <input required md-no-asterisk name="Amount" type="number" ng-model="project.Amount" aw-limit-length="10">
+
+                </md-input-container>
+
+            </div>
+
+            <md-input-container class="md-block">
+                <label>Reference</label>
+                <input required md-no-asterisk name="Reference" ng-model="project.Reference">
+
+            </md-input-container>
+            <md-input-container class="md-block">
+                <label>Notes</label>
+                <input required md-no-asterisk name="report" ng-model="project.report">
+
+            </md-input-container>
+
+
+        </md-content>
+
+    </ion-content>
+    <div class="bar bar-footer bar-stable">
+        <div ng-click="deleteAdvPay()" class="custom_footerbar" style="border-right: 1px solid grey;"><button ion-button block>DELETE</button></div>
+        <div ng-click="editAdvPay()" class="custom_footerbar" ><button ion-button block>UPDATE</button></div>
+
+    </div>
+
+
+</ion-view>
+
+

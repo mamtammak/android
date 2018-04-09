@@ -1,0 +1,32 @@
+<md-bottom-sheet class="md-grid" layout="column" ng-controller="attendanceFilter">
+
+    <div id="loader" ng-show="loader">
+        <div layout="row" layout-sm="column" layout-align="space-around" style="margin-top:75%;">
+            <md-progress-circular md-mode="indeterminate" class="md-accent md-hue-1" md-diameter="40"></md-progress-circular>
+        </div>
+    </div>
+
+    <!--md-subheader ng-cloak style="border-bottom:1px solid #145c96;width:100%;height:56px;">
+        <div layout="row">
+            <h3 class="md-flex title_text" style="margin-left: 25px;">Search</h3>
+        </div>
+    </md-subheader-->
+    <div ng-cloak style="margin:0 20%;">
+
+        <div layout="row" style="position:relative;left:-15px;">
+            <md-datepicker ng-model="project.myDate" md-placeholder="Date" ng-click="onChangeToDateFilter()"></md-datepicker>
+            <!--div ng-click="getAttendanceByDate()" style="margin: 20px;"><span style="color:#145c96;">SUBMIT</span></div-->
+        </div>
+
+        <md-input-container style="width:100%;">
+            <label>Select Month</label>
+            <md-select ng-model="project.FilterByMonth" ng-change="onChangeToMonthFilter()">
+                <md-option ng-repeat="m in month" ng-value="m.id">
+                    {{m.month}}
+                </md-option>
+            </md-select>
+        </md-input-container>
+        <md-button class="md-raised md-primary" ng-click="getAttendanceReportByFilter()">Search</md-button>
+    </div>
+
+</md-bottom-sheet>

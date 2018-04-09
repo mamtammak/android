@@ -1,0 +1,427 @@
+<ion-view view-title="Add Salary Structure" class="custom_white" ng-init="init()">
+    <div id="loader" ng-show="loader">
+        <div layout="row" layout-sm="column" layout-align="space-around" style="margin-top:75%;">
+            <md-progress-circular md-mode="indeterminate" class="md-accent md-hue-1" md-diameter="40"></md-progress-circular>
+        </div>
+    </div>
+
+    <ion-header-bar class="bar-positive">
+        <md-button ng-click="close()" style="float:left;background-color:transparent;box-shadow:none;top:-12px;margin-left: -10px;" class="md-fab">
+            <i class="fa fa-arrow-left" style="color:#fff;font-size:25px;"></i>
+        </md-button>
+        <h3 class="md-flex">Add Salary Structure</h3>
+
+    </ion-header-bar>
+
+
+    <ion-content style="margin-bottom:50px;">
+
+      <md-content flex layout-padding class="custom_white">
+
+
+         <!--md-autocomplete
+                         md-selected-item="item._id"
+                         md-search-text="name"
+                         md-selected-item-change=""
+                         md-items="item in supervisors | filter:name"
+                         md-item-text="item.name"
+                         md-min-length="0"
+                         id="item._id"
+                         placeholder="Select Employee"
+                         md-menu-class="autocomplete-custom-template">
+                     <md-item-template>
+          <span class="item-title">
+            <span> {{item.name}} </span>
+          </span>
+          <span class="item-metadata">
+            <span>
+              <strong>{{item.email}}</strong>
+            </span>
+            <span>
+              <strong>{{item.employee_code}}</strong>
+            </span>
+          </span>
+          <md-not-found>
+                    <div class="chip-not-found">Not found.</div>
+                </md-not-found>
+                     </md-item-template>
+                 </md-autocomplete-->
+
+
+            <!--md-autocomplete
+                     md-selected-item="list._id"
+                     md-search-text="name"
+                     md-selected-item-change=""
+                     md-items="list in Sal_Template | filter:name"
+                     md-item-text="list.name"
+                     md-min-length="0"
+                     id="list._id"
+                     placeholder="Select Template"
+                     md-menu-class="autocomplete-custom-template">
+                 <md-item-template>
+          <span class="item-title">
+            <span> {{list.name}} </span>
+          </span>
+
+                 </md-item-template>
+             </md-autocomplete-->
+
+          <div layout="row">
+              <md-input-container style="width:50%;">
+                  <label>Select Employee</label>
+                  <md-select ng-model="project.supervisors">
+                      <md-option><em>None</em></md-option>
+                      <md-option ng-repeat="item in supervisors" ng-value="item._id">
+                          {{item.name}}
+                      </md-option>
+                  </md-select>
+              </md-input-container>
+              <md-input-container style="width:50%;">
+                  <label>Select Template</label>
+                  <md-select ng-change="getTemplateOfEmployee()" ng-model="project.Sal_Template">
+                      <md-option><em>None</em></md-option>
+                      <md-option ng-repeat="item in Sal_Template" ng-value="item">
+                          {{item.name}}
+                      </md-option>
+                  </md-select>
+              </md-input-container>
+          </div>
+
+          <div layout="column" ng-show="ShowTemplateV">
+              <div layout="column">
+                  <div layout="row">
+                      <div class="custom_left50"><h3>Total</h3></div>
+                  </div>
+                  <md-list flex ng-repeat="item in Group" class="group">
+                      <md-list-item layout="column "class="md-3-line custom_white">
+                          <div layout="row">
+                              <h4>{{item.component}}</h4>
+
+                          </div>
+                          <div layout="row">
+                              <div class="custom_left50">
+                                  <h4>Value(%)</h4>
+                              </div>
+                              <div class="custom_right50">
+                                  <md-input-container class="md-block" style="margin:0;" ng-if="item.calctype == 'Fixed'">
+                                      <input required md-no-asterisk ng-model="item.value" value="{{item.value}}" type="number" pattern="[0-9]*" inputmode="numeric" readonly>
+                                  </md-input-container>
+                                  <md-input-container class="md-block" style="margin:0;" ng-if="item.calctype == 'Variable'">
+                                      <input required md-no-asterisk ng-model="item.value" name="{{item}}" value="{{item.value}}" type="number" pattern="[0-9]*" inputmode="numeric">
+                                  </md-input-container>
+                              </div>
+                          </div>
+                          <div layout="row">
+                              <div class="custom_left50">
+                                  <h4>Value(Annual)</h4>
+                              </div>
+                              <div class="custom_right50">
+                                  <md-input-container class="md-block" style="margin:0;" ng-if="item.calctype == 'Variable'">
+                                      <input required md-no-asterisk ng-model="project.ctc_model" value="{{project.ctc_model}}" type="number" pattern="[0-9]*" inputmode="numeric" readonly>
+                                  </md-input-container>
+                                  <md-input-container class="md-block" style="margin:0;" ng-if="item.calctype == 'Fixed'">
+                                      <input required md-no-asterisk ng-model="project.ctc_model" name="{{item}}" value="{{project.ctc_model}}" type="number" pattern="[0-9]*" inputmode="numeric">
+                                  </md-input-container>
+                              </div>
+                          </div>
+
+                          <div layout="row" class="custom_divider_color">
+                              <div class="custom_left50">
+                                  <md-input-container class="md-block">
+                                      <p>Annual</p>
+                                      <h4 ng-bind="project.ctc_model"></h4>
+                                      <!--input required md-no-asterisk ng-model="item.valuenum" value="{{item.valuenum}}" readonly-->
+                                  </md-input-container>
+                              </div>
+                              <div class="custom_right50">
+                                  <md-input-container class="md-block">
+                                      <p>Monthly</p>
+                                      <h4>{{(project.ctc_model / 12).toFixed(2)}}</h4>
+                                      <!--input required md-no-asterisk ng-model="item.monthly" value="{{item.valuenum / 12}}" readonly-->
+                                  </md-input-container>
+                              </div>
+                          </div>
+                          <md-divider></md-divider>
+                      </md-list-item>
+                  </md-list>
+                  <div layout="row">
+                      <div class="custom_left50"><h3>Earnings</h3></div>
+                  </div>
+                  <md-list flex class="EARNINGS" ng-repeat="item in DetailBasicHra">
+                      <md-list-item layout="column "class="md-3-line custom_white" ng-if="item.component == 'Basic'">
+                          <div layout="row">
+                              <h4>{{item.component}}</h4>
+
+                          </div>
+                          <div layout="row">
+                              <div class="custom_left50">
+                                  <h4>Value(%)</h4>
+                              </div>
+                              <div class="custom_right50">
+                                  <md-input-container class="md-block" style="margin:0;">
+                                      <input required md-no-asterisk ng-blur="SumEarnings()" name="{{item}}" ng-model="project.basicValue" value="{{project.basicValue}}" type="number" pattern="[0-9]*" inputmode="numeric">
+                                  </md-input-container>
+                              </div>
+                          </div>
+                          <div layout="row">
+                              <div class="custom_left50">
+                                  <h4>Value(Annual)</h4>
+                              </div>
+                              <div class="custom_right50">
+                                  <md-input-container class="md-block" style="margin:0;">
+                                      <input required md-no-asterisk ng-model="project.basicValueA" name="{{item}}" value="{{project.basicValueA}}" type="number" pattern="[0-9]*" inputmode="numeric" readonly>
+                                  </md-input-container>
+                                  <!--md-input-container class="md-block" style="margin:0;" ng-if="item.calctype == 'Fixed'">
+                                      <input required md-no-asterisk ng-blur="SumEarningsBH(item,$event)" ng-model="item.valuenum" value="{{item.valuenum}}" type="number" pattern="[0-9]*" inputmode="numeric">
+                                  </md-input-container-->
+                              </div>
+                          </div>
+
+
+                          <div layout="row" class="custom_divider_color">
+                              <div class="custom_left50">
+                                  <md-input-container class="md-block annual_total">
+                                      <p>Annual</p>
+                                      <h4 id="basicAnnual">{{(project.basicValue/100)*project.ctc_model.toFixed(2)}}</h4>
+                                  </md-input-container>
+
+                              </div>
+                              <div class="custom_right50">
+                                  <md-input-container class="md-block monthly_total">
+                                      <p>Monthly</p>
+                                      <h4 id="basicMonthly">{{((project.basicValue/100)*project.ctc_model / 12).toFixed(2)}}</h4>
+                                  </md-input-container>
+
+                              </div>
+                          </div>
+
+
+                          <md-divider></md-divider>
+                      </md-list-item>
+
+                      <md-list-item layout="column "class="md-3-line custom_white" ng-if="item.component == 'HRA'">
+                          <div layout="row">
+                              <h4>{{item.component}}</h4>
+
+                          </div>
+
+                          <div layout="row">
+                              <div class="custom_left50">
+                                  <h4>Value(%)</h4>
+                              </div>
+                              <div class="custom_right50">
+
+                                  <md-input-container class="md-block" style="margin:0;">
+                                      <input required md-no-asterisk ng-blur="SumEarnings()" name="{{item}}" ng-model="project.hraValue" value="{{project.hraValue}}" type="number" pattern="[0-9]*" inputmode="numeric">
+                                  </md-input-container>
+                              </div>
+                          </div>
+                          <div layout="row">
+                              <div class="custom_left50">
+                                  <h4>Value(Annual)</h4>
+                              </div>
+                              <div class="custom_right50">
+                                  <md-input-container class="md-block" style="margin:0;">
+                                      <input required md-no-asterisk ng-model="project.hraA" name="{{item}}" value="{{project.hraA}}" type="number" pattern="[0-9]*" inputmode="numeric" readonly>
+                                  </md-input-container>
+
+                              </div>
+                          </div>
+
+                          <div layout="row" class="custom_divider_color">
+                              <div class="custom_left50">
+                                  <md-input-container class="md-block annual_total">
+                                      <p>Annual</p>
+
+                                      <h4 id="HraAnnual">{{((project.hraValue/100)* (project.basicValue/100)*project.ctc_model).toFixed(2)}}</h4>
+                                  </md-input-container>
+
+                              </div>
+                              <div class="custom_right50">
+                                  <md-input-container class="md-block monthly_total">
+                                      <p>Monthly</p>
+
+                                      <h4 id="HraMonthly">{{((project.hraValue/100)*(project.basicValue/100)*project.ctc_model / 12).toFixed(2)}}</h4>
+                                  </md-input-container>
+
+                              </div>
+                          </div>
+                          <md-divider></md-divider>
+                      </md-list-item>
+                  </md-list>
+
+                  <md-list flex ng-repeat="item in Earnings" class="EARNINGS" ng-if="item.component != 'Basic' && item.component != 'HRA'">
+                      <md-list-item layout="column "class="md-3-line custom_white" id="item._id">
+                          <div layout="row">
+                              <h4>{{item.component}}</h4>
+
+                          </div>
+
+
+                          <div layout="row">
+                              <div class="custom_left50">
+                                  <h4>Value(%)</h4>
+                              </div>
+                              <div class="custom_right50">
+                                  <md-input-container class="md-block" style="margin:0;" ng-if="item.calctype == 'Fixed'">
+                                      <input required md-no-asterisk ng-model="item.value" value="{{item.value}}" type="number" pattern="[0-9]*" inputmode="numeric" readonly>
+                                  </md-input-container>
+                                  <md-input-container class="md-block" style="margin:0;" ng-if="item.calctype == 'Variable'">
+                                      <input required md-no-asterisk ng-blur="SumEarnings()" name="{{item}}" ng-model="item.value" value="{{item.value}}" type="number" pattern="[0-9]*" inputmode="numeric">
+                                  </md-input-container>
+                              </div>
+                          </div>
+                          <div layout="row">
+                              <div class="custom_left50">
+                                  <h4>Value(Annual)</h4>
+                              </div>
+                              <div class="custom_right50">
+                                  <md-input-container class="md-block" style="margin:0;" ng-if="item.calctype == 'Variable'">
+                                      <input required md-no-asterisk ng-model="item.valuenum" value="{{item.valuenum}}" type="number" pattern="[0-9]*" inputmode="numeric" readonly>
+                                  </md-input-container>
+                                  <md-input-container class="md-block" style="margin:0;" ng-if="item.calctype == 'Fixed'">
+                                      <input required md-no-asterisk ng-blur="SumEarnings()" name="{{item}}" ng-model="item.valuenum" value="{{item.valuenum}}" type="number" pattern="[0-9]*" inputmode="numeric">
+                                  </md-input-container>
+                              </div>
+                          </div>
+
+
+                          <div layout="row" class="custom_divider_color" ng-show="item.calctype == 'Fixed'">
+                              <div class="custom_left50">
+                                  <md-input-container class="md-block annual_total">
+                                      <p>Annual</p>
+                                      <h4>{{item.valuenum}}</h4>
+                                  </md-input-container>
+
+                              </div>
+                              <div class="custom_right50">
+                                  <md-input-container class="md-block monthly_total">
+                                      <p>Monthly</p>
+                                      <h4>{{(item.valuenum / 12).toFixed(2)}}</h4>
+                                  </md-input-container>
+
+                              </div>
+                          </div>
+
+                          <md-divider ng-if="!$last"></md-divider>
+                      </md-list-item>
+                  </md-list>
+
+                  <div class="custom_divider"></div>
+
+                  <div layout="row">
+                      <div class="custom_emp_left"><h3>Deduction</h3></div>
+
+                  </div>
+                  <md-list flex ng-repeat="item in Deduction" id="DEDUCTION">
+
+                      <md-list-item layout="column" class="md-3-line custom_white">
+
+                          <div layout="row">
+                              <h4>{{item.component}}</h4>
+
+                          </div>
+                          <div layout="row">
+                              <div class="custom_left50">
+                                  <h4>Value(%)</h4>
+                              </div>
+                              <div class="custom_right50">
+                                  <md-input-container class="md-block" style="margin:0;" ng-if="item.calctype == 'Fixed'">
+                                      <input required md-no-asterisk ng-model="item.value" value="{{item.value}}" type="number" pattern="[0-9]*" inputmode="numeric" readonly>
+                                  </md-input-container>
+                                  <md-input-container class="md-block" style="margin:0;" ng-if="item.calctype == 'Variable'">
+                                      <input required md-no-asterisk ng-blur="SumEarnings()" name="{{item}}" ng-model="item.value" value="{{item.value}}" type="number" pattern="[0-9]*" inputmode="numeric">
+                                  </md-input-container>
+                              </div>
+                          </div>
+                          <div layout="row">
+                              <div class="custom_left50">
+                                  <h4>Value(Annual)</h4>
+                              </div>
+                              <div class="custom_right50">
+                                  <md-input-container class="md-block" style="margin:0;" ng-if="item.calctype == 'Variable'">
+                                      <input required md-no-asterisk ng-model="item.valuenum" value="{{item.valuenum}}" type="number" pattern="[0-9]*" inputmode="numeric" readonly>
+                                  </md-input-container>
+                                  <md-input-container class="md-block" style="margin:0;" ng-if="item.calctype == 'Fixed'">
+                                      <input required md-no-asterisk ng-blur="SumEarnings()" name="{{item}}" ng-model="item.valuenum" value="{{item.valuenum}}" type="number" pattern="[0-9]*" inputmode="numeric">
+                                  </md-input-container>
+                              </div>
+                          </div>
+                          <div layout="row" class="custom_divider_color" ng-show="item.calctype == 'Fixed'">
+                              <div class="custom_left50">
+                                  <md-input-container class="md-block annual_total">
+                                      <p>Annual</p>
+                                      <h4>{{item.valuenum}}</h4>
+                                  </md-input-container>
+
+                              </div>
+                              <div class="custom_right50">
+                                  <md-input-container class="md-block monthly_total">
+                                      <p>Monthly</p>
+                                      <h4>{{(item.valuenum / 12).toFixed(2)}}</h4>
+                                  </md-input-container>
+
+                              </div>
+                          </div>
+                          <div layout="row" class="custom_divider_color" ng-show="item.calctype == 'Variable'">
+                              <div class="custom_left50">
+                                  <md-input-container class="md-block annual_total">
+                                      <p>Annual</p>
+                                      <h4>{{(item.value/100)*project.ctc_model.toFixed(2)}}</h4>
+                                  </md-input-container>
+
+                              </div>
+                              <div class="custom_right50">
+                                  <md-input-container class="md-block monthly_total">
+                                      <p>Monthly</p>
+                                      <h4>{{((item.value/100)*project.ctc_model / 12).toFixed(2)}}</h4>
+                                  </md-input-container>
+
+                              </div>
+                          </div>
+                          <md-divider ng-if="!$last"></md-divider>
+
+                      </md-list-item>
+
+                  </md-list>
+                  <div class="custom_divider"></div>
+                  <!--div layout="column">
+                      <h4>Total Deductions</h4>
+                      <div layout="row">
+                          <div layout="column" class="custom_emp_right">
+                              <p>Annual</p>
+                              <h4 id="annualTDeduction" ng-model="annualTDeduction"></h4>
+                          </div>
+                          <div class="verticalBorderDark"></div>
+                          <div layout="column" class="custom_emp_right" style="margin-left:10px;">
+                              <p>Monthly</p>
+                              <h4 id="monthlyTDeduction" ng-model="TDeduction"></h4>
+                          </div>
+                      </div>
+                  </div-->
+                  <div class="custom_divider"></div>
+
+                  <div layout="row">
+                      <div><h3>Total Salary</h3></div>
+
+                  </div>
+                  <div layout="row">
+                      <div layout="column" style="width:50%;padding-left:6px;"><p>Annual</p><h4 style="text-decoration: underline;" id="Total_Y"></h4></div>
+                      <div layout="column" style="width:50%;padding-left:6px;"><p>Monthly</p><h4 style="text-decoration: underline;" id="Total_M"></h4></div>
+                  </div>
+
+              </div>
+          </div>
+
+      </md-content>
+
+    </ion-content>
+    <div class="bar bar-footer bar-stable">
+        <div ng-click="saveNewStructure(project)" class="custom_footerbar_full"><button ion-button block>Save</button></div>
+
+    </div>
+
+
+</ion-view>
+
+

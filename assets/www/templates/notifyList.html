@@ -1,0 +1,49 @@
+<ion-view view-title="Notifications" class="custom_white" ng-init="initNotifications()">
+    <div id="loader" ng-show="loader">
+        <div layout="row" layout-sm="column" layout-align="space-around" style="margin-top:75%;">
+            <md-progress-circular md-mode="indeterminate" class="md-accent md-hue-1" md-diameter="40"></md-progress-circular>
+        </div>
+    </div>
+
+    <ion-header-bar class="bar-positive">
+        <md-button ng-click="close()" style="float:left;margin-left: -10px;background-color:transparent;box-shadow:none;top:-12px;" class="md-fab">
+            <i class="fa fa-arrow-left" style="color:#fff;font-size:25px;"></i>
+        </md-button>
+        <h3 class="md-flex">Notifications</h3>
+    </ion-header-bar>
+
+    <ion-content>
+        <ion-refresher on-refresh="doRefresh()"></ion-refresher>
+      <md-content flex layout-padding class="custom_white">
+        <div ng-show="showNotify">
+          <md-list>
+
+                  <md-list-item class="employee md-3-line custom_white" ng-repeat="item in notifyList | orderBy : '-timestamp'" ng-click="RedirectNotification(item)">
+                      <div layout="row">
+                          <img ng-if="item.item.from == null || item.item.from.profile_pic == undefined" ng-src="img/ic_face_black.png" class="md-avatar" />
+                          <img ng-if="item.item.from.profile_pic" ng-src="{{url_pic}}{{item.item.from.profile_pic.thumbnail}}" class="md-avatar" />
+                          <div layout="column">
+                              <h4 ng-bind-html="item.item.sentence.replace('{from}',item.item.from.name)"></h4>
+                              <!--p>{{getTimeago(item.timestamp)}}</p-->
+                              <div layout="row">
+                              <i class="fa fa-feed" style="margin-top:10px;color:#145c96;"></i>
+                              <p style="text-indent:6px;color:#757575;">{{  item.timestamp | date:'dd MMM' }} at {{item.timestamp | date:'shortTime'}}</p>
+                              </div>
+                          </div>
+
+                      </div>
+
+                      <md-divider ng-if="!$last"></md-divider>
+                  </md-list-item>
+
+
+              </md-list>
+            </div>
+          <div class="norecords" style="background-color:#bbbb;" ng-show="norecords"></div>
+
+      </md-content>
+
+    </ion-content>
+
+</ion-view>
+

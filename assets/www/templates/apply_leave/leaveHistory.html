@@ -1,0 +1,82 @@
+<ion-view view-title="Leave History" ng-controller="LeaveHistory_controller" class="custom_background" ng-init="init()">
+
+  <div id="loader" ng-show="loader">
+    <div layout="row" layout-sm="column" layout-align="space-around" style="margin-top:75%;">
+      <md-progress-circular md-mode="indeterminate" class="md-accent md-hue-1" md-diameter="40"></md-progress-circular>
+    </div>
+  </div>
+
+  <ion-header-bar class="bar-positive">
+    <md-button ng-click="close()" style="float:left;background-color:transparent;box-shadow:none;top:-12px;margin-left: -10px;" class="md-fab">
+      <i class="fa fa-arrow-left" style="color:#fff;font-size:25px;"></i>
+    </md-button>
+    <h3 class="md-flex">Leave History</h3>
+    </div>
+  </ion-header-bar>
+
+
+    <ion-content>
+      <!--ion-refresher on-refresh="doRefresh()"></ion-refresher-->
+      <md-content flex layout-padding class="custom_background">
+        <div ng-show="showrecords">
+          <md-virtual-repeat-container id="lazy-container" ng-style="getListHeight()" flex>
+        <md-list>
+
+          <md-list-item class="employee md-3-line custom_white" md-virtual-repeat="item in Lhistory | orderBy : '-leaveApplied_date'">
+
+            <div class="custom_margin_list md-list-item-text">
+              <div layout="row" style="padding-top:10px;">
+              <div><h3><span id="highLightFont">{{ item._id }}</span></h3></div>
+                </div>
+              <div layout="row" style="margin-top:10px;" ng-click="reApplyLeave(item);">
+
+                <div class="custom_left"><h3>{{ item.type_of_leave }}</h3></div>
+                <div class="custom_right"><h3><span style="color:#616161;font-size:13px;">Applied on</span>&nbsp;<span style="color:#075757;">{{ item.leaveApplied_date | date: "mediumDate" }}</span></h3></div>
+                </div>
+                <div layout="row" style="margin-top:16px;" ng-click="reApplyLeave(item);">
+                <div class="custom_left">
+                  <div layout="column">
+                  <h3 style="color:#145c96;">From date</h3>
+                    <h3 style="margin-top:16px;color:#075757;">{{item.from_date | date: "mediumDate"}}</h3>
+                    </div>
+                </div>
+                  <div class="custom_right">
+                    <h3 style="color:#145c96;">To date</h3>
+                    <h3 style="margin-top:16px;color:#075757;">{{item.to_date | date: "mediumDate"}}</h3>
+                  </div>
+                  </div>
+
+              <div layout="row" style="margin-top:16px;" ng-if="item.stat[0].status != 'Reverted by manager'">
+                <div style="width:90%"><h3>{{ item.stat[0].status }}</h3></div>
+                <div>
+                  <div layout="row" ng-if="item.stat[0].status != 'Rejected by Manager'">
+                    <div ng-if="item.stat[0].status != 'Cancelled'" ng-click="cancelLeave(item.stat[0].status,item.from_date,item.leaveApplied_date,item._id)"><i class="trash"></i></div>
+                    <div ng-if="item.stat[0].status != 'Cancelled'" ng-click="notifyManager(item.stat[0].status , item._id)"><i class="bell_icon"></i></div>
+
+                </div>
+              </div>
+              </div>
+
+              <div layout="row" style="margin-top:16px;" ng-if="item.stat[0].status == 'Reverted by manager'">
+                <div class="custom_left"><h3>{{ item.stat[0].status }}</h3></div>
+
+              </div>
+
+
+              </div>
+
+
+
+          <md-divider ng-if="!$last"></md-divider>
+          </md-list-item>
+
+
+        </md-list>
+            </md-virtual-repeat-container>
+          </div>
+        <div ng-show="norecords" class="norecords"></div>
+
+      </md-content>
+    <!--/ion-content-->
+
+</ion-view>

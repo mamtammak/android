@@ -1,0 +1,43 @@
+
+<md-dialog ng-controller="to_do_list" aria-label="Update to-do list" ng-init="initUpdateToDoList()">
+    <form ng-cloak>
+
+        <div id="loader" ng-show="loader">
+            <div layout="row" layout-sm="column" layout-align="space-around" style="margin-top:75%;">
+                <md-progress-circular md-mode="indeterminate" class="md-accent md-hue-1" md-diameter="40"></md-progress-circular>
+            </div>
+        </div>
+
+        <md-dialog-content class="custom_white">
+            <div class="md-dialog-content">
+                <div flex-gt-xs style="width:100%;padding-top:15px;">
+                    <span style="color:#3f51b5;">Due date</span><md-datepicker ng-model="project.duedateUpdate" name="duedateUpdate" md-placeholder="Due date" id="duedateUpdate"></md-datepicker>
+                </div>
+                <p style="color:#3f51b5;">Description</p>
+                <div style="margin:5px;">
+                    <textarea ng-model="project.UpdateTextarea" rows="3" md-select-on-focus id="UpdateTextarea"></textarea>
+                    <!--textarea ng-model="project.UpdateTextarea" style="border:1px solid #fff;height:300px;width:100%;" id="UpdateTextarea"></textarea-->
+                </div>
+                <div layout="row">
+                    <p style="color:#616161;">last modified :&nbsp;&nbsp;{{ last_modifiedDt }}</p>&nbsp;&nbsp;&nbsp;
+                    <span>|</span>&nbsp;&nbsp;&nbsp;<p style="color:#3f51b5;" ng-click="deleteList()">Delete</p>
+                </div>
+            </div>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row" style="background-color: #145c96;">
+            <md-button ng-click="close()" style="background-color: transparent;color:#fff;">
+                Cancel
+            </md-button>
+            <span flex></span>
+            <!--md-button ng-click="answer('not useful')">
+                Not Useful
+            </md-button-->
+            <md-button ng-click="UpdateList()" style="background-color: transparent;color:#fff;">
+                Update
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>
+
+

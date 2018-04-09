@@ -1,0 +1,129 @@
+<ion-view view-title="Payslip" class="custom_white" ng-init="init()">
+    <div id="loader" ng-show="loader">
+        <div layout="row" layout-sm="column" layout-align="space-around" style="margin-top:75%;">
+            <md-progress-circular md-mode="indeterminate" class="md-accent md-hue-1" md-diameter="40"></md-progress-circular>
+        </div>
+    </div>
+
+    <ion-header-bar class="bar-positive">
+        <md-button ng-click="close()" style="float:left;background-color:transparent;box-shadow:none;top:-12px;margin-left: -10px;" class="md-fab">
+            <i class="fa fa-arrow-left" style="color:#fff;font-size:25px;"></i>
+        </md-button>
+        <h3 class="md-flex">Payslip</h3>
+    </ion-header-bar>
+
+
+    <ion-content>
+
+      <md-content flex layout-padding class="custom_white">
+          <md-subheader class="md-no-sticky">Pay Slip for the period of {{MONTH | monthName}} {{YEAR}}</md-subheader>
+          <md-list flex>
+              <md-list-item class="md-3-line">
+                  <div class="md-list-item-text" layout="column">
+
+                      <div layout="row" class="taskLIST">
+                          <div class="custom30">Employee</div>
+                          <div class="custom70">: &nbsp;{{ Emplyoee_name }}</div>
+                      </div>
+                      <div layout="row" class="taskLIST">
+                          <div class="custom30">Employee code</div>
+                          <div class="custom70">: &nbsp;{{ emp_code }}</div>
+                      </div>
+                      <div layout="row" class="taskLIST">
+                          <div class="custom30">Department</div>
+                          <div class="custom70">: &nbsp;{{ Department }}</div>
+                      </div>
+                      <div layout="row" class="taskLIST">
+                          <div class="custom30">Designation</div>
+                          <div class="custom70">: &nbsp;{{ Designation }}</div>
+                      </div>
+                      <div layout="row" class="taskLIST">
+                          <div class="custom30">PAN</div>
+                          <div class="custom70">: &nbsp;{{ PAN }}</div>
+                      </div>
+                      <div layout="row" class="taskLIST">
+                          <div class="custom30">Unpaid Leaves</div>
+                          <div class="custom70">: &nbsp;{{ Unpaid_Leaves }}</div>
+                      </div>
+                      <!--p>Unpaid Leaves : {{Unpaid_Leaves}}</p>
+                      <p>Location : {{Location}}</p-->
+                  </div>
+              </md-list-item>
+              </md-list>
+        <md-grid-list style="background-color:#FAFAFA;margin:5px;">
+          <table style="width:100%;" class="payroll">
+            <thead>
+            <tr>
+                <th align="left">Earning</th><th align="right">Amount</th>
+            </tr>
+            </thead>
+            <tbody ng-repeat="pay in PAYSLIP_STRUC" ng-if="pay.group == 'Addition'">
+               <tr ng-if="checkforEmployer(pay.component)">
+                   <td valign="middle">{{pay.component}}</td>
+                   <td align="right" valign="middle">{{pay.monthly}}</td>
+               </tr>
+
+            </tbody>
+            <tbody>
+            <tr class="total_color">
+                <td valign="middle">TOTAL</td>
+                <td align="right" valign="middle">{{Monthlysalary}}</td>
+            </tr>
+            </tbody>
+          </table>
+           </md-grid-list>
+
+
+          <md-grid-list style="background-color:#FAFAFA;margin:10px 5px;">
+          <table style="width:100%;" class="payroll">
+              <thead>
+              <tr>
+                  <th align="left">Deduction</th><th align="right">Amount</th>
+              </tr>
+              </thead>
+              <tbody ng-repeat="pay in PAYSLIP_STRUC" ng-if="pay.group == 'Statutory Component'">
+              <tr>
+                  <td valign="middle">{{pay.component}}</td>
+                  <td align="right" valign="middle">{{pay.monthly}}</td>
+              </tr>
+              </tbody>
+              <tbody>
+              <tr ng-if="Unpaid_Leaves != 0">
+                  <td valign="middle">Loss of pay</td>
+                  <td align="right" valign="middle">{{ Sal_LOP }}</td>
+              </tr>
+              <tr ng-if="Income_Tax != 0">
+                  <td valign="middle">Income Tax</td>
+                  <td align="right" valign="middle">{{Income_Tax}}</td>
+              </tr>
+              <tr>
+                  <td valign="middle">Professional Tax</td>
+                  <td align="right" valign="middle">{{Professional_Tax}}</td>
+              </tr>
+              </tbody>
+              <tbody>
+              <tr class="total_color">
+                  <td valign="middle">TOTAL</td>
+                  <td align="right" valign="middle">{{ TotalDeduction }}</td>
+              </tr>
+
+              </tbody>
+          </table>
+              </md-grid-list>
+
+          <md-list flex>
+              <md-list-item class="md-3-line mdlist_color">
+                  <div class="md-list-item-text" layout="row">
+                      <div class="custom_left50" style="margin-left:6px;">Net Salary</div>
+                      <div class="custom_left50" style="text-align:right;margin-left: -6px;">{{ Monthlysalary - TotalDeduction }}</div>
+                  </div>
+              </md-list-item>
+          </md-list>
+
+      </md-content>
+
+    </ion-content>
+
+</ion-view>
+
+

@@ -1,0 +1,117 @@
+<ion-view view-title="Apply Leave" ng-controller="reApplyLeave_controller" class="custom_background" id="popupContainerRAL" ng-init="init()">
+
+    <div id="loader" ng-show="loader">
+        <div layout="row" layout-sm="column" layout-align="space-around" style="margin-top:75%;">
+            <md-progress-circular md-mode="indeterminate" class="md-accent md-hue-1" md-diameter="40"></md-progress-circular>
+        </div>
+    </div>
+
+    <ion-header-bar class="bar-positive">
+        <md-button ng-click="close()" style="float:left;background-color:transparent;box-shadow:none;top:-12px;margin-left: -10px;" class="md-fab">
+            <i class="fa fa-arrow-left" style="color:#fff;font-size:25px;"></i>
+        </md-button>
+        <h3 class="md-flex">Reapply Leave</h3>
+
+        </div>
+    </ion-header-bar>
+
+
+    <ion-content>
+
+        <md-content flex layout-padding class="custom_white">
+
+            <form name="projectForm">
+                <!--div layout="column"-->
+
+
+                <md-input-container class="md-block">
+                    <label>Employee Name</label>
+                    <input required md-no-asterisk name="emp_name" ng-model="project.emp_name" id="emp_name" readonly>
+
+                </md-input-container>
+
+                <md-input-container class="md-block">
+                    <label>Email</label>
+                    <input required md-no-asterisk name="Email" ng-model="project.Email" id="Email" readonly>
+
+                    </md-input-container>
+
+                <md-input-container class="md-block">
+                    <label>Leave Applied On</label>
+                    <input required md-no-asterisk name="CurrentDate" ng-model="project.CurrentDate" id="CurrentDate" readonly>
+
+                </md-input-container>
+
+
+                <md-input-container class="md-block">
+                    <label>Manager Name</label>
+                    <input required md-no-asterisk name="manager" ng-model="project.manager" id="manager" readonly>
+
+                </md-input-container>
+
+                <md-input-container class="md-block">
+                    <label>Remaining Leave</label>
+                    <input required md-no-asterisk name="remainingL" ng-model="project.remainingL" id="remainingL" readonly>
+
+                </md-input-container>
+
+                <md-input-container class="md-block">
+                    <label>Compensatory Offs</label>
+                    <input required md-no-asterisk name="compoL" ng-model="project.compoL" id="compoL" readonly>
+
+                </md-input-container>
+
+                <md-input-container class="md-block">
+                    <label>Unpaid Leaves</label>
+                    <input required md-no-asterisk name="unpaid" ng-model="project.unpaid" id="unpaid" readonly>
+
+                </md-input-container>
+
+                <div layout="row">
+                <md-input-container style="width:50%;">
+                    <label>Leave Type</label>
+                    <md-select ng-model="project.leaveType" id="leaveType" ng-change="SHortLeave()">
+                        <md-option><em>None</em></md-option>
+                        <md-option ng-repeat="item in leaveTYPE" ng-value="item.name">
+                            {{item.name}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+
+                    <md-input-container style="width:50%;" ng-show="shortL">
+                        <label>Short Leave Type</label>
+                        <md-select ng-model="project.shortLeaveTyp" id="shortLeaveTyp">
+                            <md-option><em>None</em></md-option>
+                            <md-option ng-repeat="item in ShortLeavetyp" ng-value="item.name">
+                                {{item.name}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                    </div>
+                <p>From Date</p>
+                <md-datepicker ng-model="project.startDate" id="FromdivID"></md-datepicker>
+
+
+
+                <p ng-show="toDate">To Date</p>
+                <md-datepicker ng-model="project.endDate" id="TodivID" ng-show="toDate"></md-datepicker>
+
+                <md-input-container class="md-block">
+                    <label>Reason for Applied Leave</label>
+                    <textarea ng-model="project.reasonFLeave" md-maxlength="100" rows="1" md-select-on-focus></textarea>
+                </md-input-container>
+
+                <md-input-container class="md-block">
+                    <label>Remarks</label>
+                    <textarea ng-model="project.remarks" md-maxlength="100" rows="1" md-select-on-focus></textarea>
+                </md-input-container>
+
+                <center><div><md-button ng-click="ReSubmitLeave(project)" id="card_login_btn" class="custom_btn">Reapply Leave</md-button></div></center>
+
+                </form>
+        </md-content>
+    </ion-content>
+
+
+
+</ion-view>

@@ -1,0 +1,61 @@
+<ion-view class="custom_background" ng-init="initETS()">
+
+    <div id="loader" ng-show="loader">
+        <div layout="row" layout-sm="column" layout-align="space-around" style="margin-top:75%;">
+            <md-progress-circular md-mode="indeterminate" class="md-accent md-hue-1" md-diameter="40"></md-progress-circular>
+        </div>
+    </div>
+
+    <ion-header-bar class="bar-positive">
+        <md-button ng-click="back()" style="float:left;background-color:transparent;box-shadow:none;top:-12px;margin-left: -10px;" class="md-fab">
+            <i class="fa fa-arrow-left" style="color:#fff;font-size:25px;"></i>
+        </md-button>
+
+        <h3 class="md-flex">{{EMP_Name}}</h3>
+
+    </ion-header-bar>
+
+
+    <ion-content>
+        <ion-refresher></ion-refresher>
+        <md-content flex layout-padding class="custom_white">
+
+                    <div id="EMP_full-clndr" class="clearfix">
+                        <script type="text/template" id="EMP_full-clndr-template">
+                            <div class="clndr-controls">
+                                <div class="clndr-previous-button" style="font-size:25px;font-weight:normal;">&lt;</div>
+                                <div class="clndr-next-button" style="font-size:25px;font-weight:normal;">&gt;</div>
+                                <div class="current-month"><%= month %> <%= year %></div>
+
+                            </div>
+                            <div class="clndr-grid">
+                                <div class="days-of-the-week clearfix">
+                                    <% _.each(daysOfTheWeek, function(day) { %>
+                                    <div class="header-day"><%= day %></div>
+                                    <% }); %>
+                                </div>
+                                <div class="days">
+                                    <% _.each(days, function(day) { %>
+                                    <div class="<%= day.classes %>" id="<%= day.id %>"><span class="day-number"><%= day.day %></span></div>
+                                    <% }); %>
+                                </div>
+                            </div>
+                            <div class="event-listing">
+                                <div class="event-listing-title">EVENTS THIS MONTH</div>
+                                <% _.each(eventsThisMonth, function(event) { %>
+                                <div class="event-item">
+                                    <div class="event-item-name"><%= event.title %></div>
+                                    <div class="event-item-location"><%= event.location %></div>
+                                </div>
+                                <% }); %>
+                            </div>
+                        </script>
+                    </div>
+
+
+        </md-content>
+
+
+    </ion-content>
+
+</ion-view>

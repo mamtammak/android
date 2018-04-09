@@ -1,0 +1,91 @@
+<ion-view view-title="Add Project" class="custom_white" ng-controller="addProjects_controller" layout="column" ng-cloak id="popupContainer" ng-init="init();">
+  <div id="loader" ng-show="loader">
+    <div layout="row" layout-sm="column" layout-align="space-around" style="margin-top:75%;">
+      <md-progress-circular md-mode="indeterminate" class="md-accent md-hue-1" md-diameter="40"></md-progress-circular>
+
+    </div>
+    <center><p style="color:#fff;font-size:16px;">Please wait</p>
+      <p style="color:#fff;font-size:16px;">Loading..</p></center>
+  </div>
+  <ion-header-bar class="bar-positive">
+    <md-button ng-click="close()" style="float:left;background-color:transparent;box-shadow:none;top:-12px;margin-left: -10px;" class="md-fab">
+      <i class="fa fa-arrow-left" style="color:#fff;font-size:25px;"></i>
+    </md-button>
+    <h3 class="md-flex">Add Project Deatils</h3>
+  </ion-header-bar>
+
+
+    <ion-content>
+
+      <md-content flex layout-padding class="custom_white">
+
+        <form name="projectForm">
+          <!--div layout="column"-->
+
+          <md-input-container class="md-block">
+            <label>Project Title</label>
+            <input required md-no-asterisk name="PTitle" ng-model="project.PTitle" id="PTitle">
+            <div ng-messages="projectForm.PTitle.$error">
+              <div ng-message="required">This is required.</div>
+
+            </div>
+          </md-input-container>
+
+
+          <md-input-container style="width:100%;padding-top:-5px;">
+            <label>Team Members</label>
+            <md-select ng-model="project.Multi_members" multiple>
+              <md-option ng-repeat="item in Team_members" ng-value="item">
+                {{item.name}}
+              </md-option>
+            </md-select>
+
+          </md-input-container>
+
+          <md-input-container class="md-block">
+            <label>Technology</label>
+            <input required md-no-asterisk name="technology" ng-model="project.technology" id="technology">
+
+          </md-input-container>
+
+          <!--md-input-container class="md-block">
+
+          </md-input-container-->
+
+          <md-input-container class="md-block">
+            <label>Project Description</label>
+            <input required md-no-asterisk name="pdescription" ng-model="project.pdescription" id="pdescription">
+            <div ng-messages="projectForm.reportTo.$error">
+              <div ng-message="required">This is required.</div>
+
+            </div>
+          </md-input-container>
+
+
+          <md-input-container class="md-block">
+            <label>Project Responsibilities</label>
+            <textarea ng-model="project.presponsibility" md-maxlength="100" rows="3" md-select-on-focus></textarea>
+          </md-input-container>
+          <div layout="row">
+          <span>Start</span>
+          <md-datepicker ng-model="ctrl.startDate"></md-datepicker>
+          </div>
+
+          <div layout="row">
+          <span>End</span>
+          <md-datepicker ng-model="ctrl.endDate"></md-datepicker>
+          </div>
+          <center><div><md-button ng-click="UpdateProfile()" id="card_login_btn" class="custom_btn">Save</md-button></div></center>
+
+        </form>
+
+
+
+      </md-content>
+    </ion-content>
+
+
+
+</ion-view>
+
+

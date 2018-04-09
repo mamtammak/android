@@ -1,0 +1,146 @@
+<ion-view view-title="Task Expense" class="custom_white" layout="column" ng-init="init()">
+
+    <div id="loader" ng-show="loader">
+        <div layout="row" layout-sm="column" layout-align="space-around" style="margin-top:75%;">
+            <md-progress-circular md-mode="indeterminate" class="md-accent md-hue-1" md-diameter="40"></md-progress-circular>
+        </div>
+    </div>
+    <ion-header-bar class="bar-positive">
+        <md-button ng-click="close()" style="float:left;margin-left: -10px;background-color:transparent;box-shadow:none;top:-12px;" class="md-fab">
+            <i class="fa fa-arrow-left" style="color:#fff;font-size:25px;"></i>
+        </md-button>
+        <h3 class="md-flex">Expense Approval</h3>
+
+    </ion-header-bar>
+
+    <ion-content style="margin-bottom:50px;">
+
+      <md-content flex layout-padding class="custom_white">
+
+        <form name="projectForm">
+
+                <h3 style="color:#3f51b5;">Expense Approval - {{ name}}</h3>
+                 
+              <md-input-container class="md-block">
+                <label>Employee Name</label>
+                <input required md-no-asterisk name="empName" ng-model="project.empName" readonly>
+
+              </md-input-container>
+              
+              <md-input-container class="md-block">
+                <label>Manager Name</label>
+                <input required md-no-asterisk name="mangerName" ng-model="project.mangerName" readonly>
+
+              </md-input-container>
+
+            <md-input-container class="md-block">
+                <label>Merchant</label>
+                <input required md-no-asterisk name="Merchant" ng-model="project.Merchant" readonly>
+
+            </md-input-container>
+
+            <md-input-container class="md-block">
+                <label>Date</label>
+                <input required md-no-asterisk name="Date" ng-model="project.Date" readonly>
+
+            </md-input-container>
+            <md-input-container class="md-block">
+                <label>Available balance</label>
+                <input required md-no-asterisk name="balance" ng-model="project.balance" readonly>
+
+            </md-input-container>
+            <md-input-container class="md-block">
+                <label>Category</label>
+                <input required md-no-asterisk name="Category" ng-model="project.Category" readonly>
+
+            </md-input-container>
+
+            <div layout="row">
+                <md-input-container class="md-block" style="width:40%;">
+                    <label>Currency</label>
+                    <input required md-no-asterisk name="Currency" ng-model="project.Currency" readonly>
+
+                </md-input-container>
+
+                <md-input-container class="md-block" style="width:40%;">
+                    <label>Amount</label>
+                    <input required md-no-asterisk name="Amount" ng-model="project.Amount" readonly>
+
+                </md-input-container>
+
+            </div>
+
+            <md-input-container class="md-block">
+                <label>Description</label>
+                <input required md-no-asterisk name="Description" ng-model="project.Description" readonly>
+
+            </md-input-container>
+
+            <md-input-container class="md-block">
+                <label>Reference</label>
+                <input required md-no-asterisk name="Reference" ng-model="project.Reference" readonly>
+
+            </md-input-container>
+            <md-input-container class="md-block">
+                <label>Add to report</label>
+                <input required md-no-asterisk name="report" ng-model="project.report" readonly>
+
+            </md-input-container>
+
+            <md-input-container class="md-block">
+                <label>Remarks by manager</label>
+                <input required md-no-asterisk name="remarksByManager" ng-model="project.remarksByManager" ng-readonly="RemarksByMng">
+
+            </md-input-container>
+
+            <md-input-container class="md-block" ng-show="showAcctn">
+                <label>Expense Action</label>
+                <input required md-no-asterisk name="expenseAction" ng-model="project.expenseAction" readonly>
+
+            </md-input-container>
+
+            <md-input-container class="md-block">
+                <label>Remarks by accountant</label>
+                <input required md-no-asterisk name="remarksByAcctn" ng-model="project.remarksByAcctn" ng-readonly="RemarksByAcctn">
+
+            </md-input-container>
+            
+            
+            <div layout="column" ng-show="true" ng-if="document.length != 0">
+                <div layout>
+                    <span class="md-body-1">Expense documents</span>
+                </div>
+
+                <md-list>
+
+                    <md-list-item class="md-3-line custom_white" ng-repeat="item in document">
+
+                        <div class="custom_margin_list md-list-item-text" style="margin:0;" layout="row">
+
+                            <div ng-click="view(item)" style="width:80%;"><h4>{{filename(item)}}</h4></div>
+                            <div ng-click="download(item)"><i class="fa fa-download" style="width:20%;float:right;"></i></div>
+                        </div>
+
+                        <md-divider ng-if="!$last"></md-divider>
+
+
+
+                    </md-list-item>
+
+
+                </md-list>
+            </div>
+            
+            </form>
+      </md-content>
+    </ion-content>
+
+<div class="bar bar-footer bar-stable" ng-show="true" ng-if="checkExpenseStatus != 'Completed'">
+   
+        <div ng-click="ExpenseAction($event)" id="3" class="custom_footerbar" style="border-right: 1px solid grey;"><button ion-button block>Approve</button></div>
+        <div ng-click="ExpenseAction($event)" id="4" class="custom_footerbar"><button ion-button block>Reject</button></div>
+           </div>
+
+</ion-view>
+
+

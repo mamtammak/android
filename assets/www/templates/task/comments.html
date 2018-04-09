@@ -1,0 +1,54 @@
+<ion-view view-title="comments" class="custom_white" ng-init="init()" id="popupContainerTC">
+    <div id="loader" ng-show="loader">
+        <div layout="row" layout-sm="column" layout-align="space-around" style="margin-top:75%;">
+            <md-progress-circular md-mode="indeterminate" class="md-accent md-hue-1" md-diameter="40"></md-progress-circular>
+        </div>
+    </div>
+
+    <ion-header-bar class="bar-positive">
+        <md-button ng-click="cancelComment()" style="float:left;background-color:transparent;box-shadow:none;top:-12px;margin-left: -10px;" class="md-fab">
+            <i class="fa fa-arrow-left" style="color:#fff;font-size:25px;"></i>
+        </md-button>
+        <h3 class="md-flex">Comments</h3>
+
+    </ion-header-bar>
+
+
+    <ion-content>
+        <ion-refresher on-refresh="doRefresh()"></ion-refresher>
+      <md-content flex layout-padding class="custom_white">
+          <div ng-show="showrecords">
+          <md-list class="md-dense" flex>
+              <md-list-item class="md-3-line" ng-repeat="item in comments">
+                  <img ng-src="{{commentUser}}" class="md-avatar"/>
+                  <div class="md-list-item-text" layout="column">
+                      <h3 style="padding-top:10px;"><span id="highLightFont">{{ item.comment_by.name }}</span></h3>
+                      <h3 style="padding-top:10px;">{{ item.comments }}</h3>
+                      <div layout="row" style="padding-top:10px;">
+                      <h3 style="color:#145c96;">{{item.comments_date | date: "medium"}}</h3>&nbsp;&nbsp;&nbsp;
+                       <span style="margin-top:-5px;">|</span>&nbsp;&nbsp;&nbsp;<h3 style="color:#145c96;" ng-click="removeComment(item._id)">Delete</h3>
+                      </div>
+                  </div>
+                  <md-divider ng-if="!$last"></md-divider>
+              </md-list-item>
+
+              </md-list>
+              </div>
+          <div ng-show="norecords" class="norecords"></div>
+
+      </md-content>
+
+    </ion-content>
+    <div class="bar bar-footer bar-stable">
+        <div layout="row">
+        <input type="text" placeholder="Add comments" ng-model="project.addComments" class="item-input-wrapper" />
+         <md-button ng-click="saveComment()" style="float:right;background-color:transparent;box-shadow:none;" class="md-fab">
+             <md-icon md-svg-src="img/icons/if_icons_send_1564528.svg" style="color:#fff;margin-top: -28px;"></md-icon>
+         </md-button>
+        </div>
+    </div>
+
+
+</ion-view>
+
+

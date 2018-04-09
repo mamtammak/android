@@ -1,0 +1,69 @@
+<ion-view view-title="edit task" class="custom_white" ng-init="init()">
+    <div id="loader" ng-show="loader">
+        <div layout="row" layout-sm="column" layout-align="space-around" style="margin-top:75%;">
+            <md-progress-circular md-mode="indeterminate" class="md-accent md-hue-1" md-diameter="40"></md-progress-circular>
+        </div>
+    </div>
+
+    <ion-header-bar class="bar-positive">
+        <md-button ng-click="close()" style="float:left;margin-left: -10px;background-color:transparent;box-shadow:none;top:-12px;" class="md-fab">
+            <i class="fa fa-arrow-left" style="color:#fff;font-size:25px;"></i>
+        </md-button>
+        <h3 class="md-flex">Update Task</h3>
+
+    </ion-header-bar>
+
+
+    <ion-content style="margin-bottom:50px;">
+
+      <md-content flex layout-padding class="custom_white">
+
+        <form name="projectform">
+          <!--div layout="column"-->
+
+
+              <md-input-container class="md-block">
+                <label>Title</label>
+                <input required md-no-asterisk name="title" ng-model="project.title" id="title" readonly>
+
+              </md-input-container>
+
+            <md-input-container class="md-block">
+                <label>Description</label>
+                <input required md-no-asterisk name="description" ng-model="project.description" id="description">
+                <div ng-messages="projectform.description.$error">
+                    <div ng-message="required">This is required.</div>
+
+                </div>
+            </md-input-container>
+
+            <md-input-container style="width:100%;padding-top:-5px;">
+                <label>Assigned To</label>
+                <input required md-no-asterisk name="title" ng-model="project.Assignedto" readonly>
+
+            </md-input-container>
+
+            <div flex style="padding-top:15px;">
+                <span style="font-size:16px;">Due Date</span><md-datepicker ng-model="project.dueDate" name="dueDate"  id="dueDate"></md-datepicker>
+            </div>
+
+
+
+            <!--/div-->
+
+          </form>
+
+          <!--center><div class="taskbtn"><md-button ng-click="saveTask(project)" id="card_login_btn" class="custom_btn">Update</md-button></div></center-->
+
+      </md-content>
+
+    </ion-content>
+
+    <div class="bar bar-footer bar-stable">
+        <div ng-click="saveTask(project)" class="custom_footerbar_full"><button ion-button block>Update</button></div>
+
+    </div>
+
+</ion-view>
+
+

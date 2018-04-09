@@ -1,0 +1,69 @@
+<ion-view view-title="Attendance Report" ng-controller="atten_report_controller" class="custom_background" ng-init="init()">
+
+    <div id="loader" ng-show="loader">
+        <div layout="row" layout-sm="column" layout-align="space-around" style="margin-top:75%;">
+            <md-progress-circular md-mode="indeterminate" class="md-accent md-hue-1" md-diameter="40"></md-progress-circular>
+        </div>
+    </div>
+
+    <ion-header-bar class="bar-positive">
+        <md-button ng-click="close()" style="float:left;background-color:transparent;box-shadow:none;top:-12px;margin-left: -10px;" class="md-fab">
+            <i class="fa fa-arrow-left" style="color:#fff;font-size:25px;"></i>
+        </md-button>
+        <h3 class="md-flex title_text_bar">{{FilterByName}}</h3>
+
+        <md-button ng-click="showSearch()" style="float:right;background-color:transparent;box-shadow:none;top:-12px;" class="md-fab">
+            <i class="fa fa-filter" style="color:#fff;"></i>
+        </md-button>
+        </div>
+    </ion-header-bar>
+
+
+    <ion-content>
+
+        <md-content flex layout-padding class="custom_background">
+
+            <md-list ng-show="records">
+
+                <md-list-item class="TASKDetails md-3-line custom_white" ng-repeat="item in emp_attendance_report | orderBy:'name'" ng-click="getReportDetails(item)">
+
+                    <div class="taskLIST custom_margin_list md-list-item-text">
+                        <h3><span id="highLightFont">{{item.name}}</span></h3>
+
+                        <div layout="row" style="padding-top:16px;">
+                            <div layout="column" class="custom_left">
+                                <label>Working Days</label>
+                                <h3 style="color:#757575;padding-top:12px;text-indent:5px;">{{item.noofday}}</h3>
+
+                            </div>
+                            <div layout="column" class="custom_right">
+                                <label>Working hour</label>
+                                <h3 style="color:#757575;padding-top:12px;">{{item.totalhour}}</h3>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <md-divider ng-if="!$last"></md-divider>
+
+
+
+                </md-list-item>
+
+
+            </md-list>
+
+            <div class="norecords" style="bachground-color:#bbbb;" ng-show="norecords"></div>
+
+
+
+        </md-content>
+
+    </ion-content>
+
+
+
+
+
+</ion-view>

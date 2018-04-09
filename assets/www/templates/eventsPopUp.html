@@ -1,0 +1,98 @@
+
+<md-dialog ng-controller="events" aria-label="Events">
+    <form ng-cloak>
+
+        <div id="loader" ng-show="loader">
+            <div layout="row" layout-sm="column" layout-align="space-around" style="margin-top:75%;">
+                <md-progress-circular md-mode="indeterminate" class="md-accent md-hue-1" md-diameter="40"></md-progress-circular>
+            </div>
+        </div>
+        <md-toolbar style="background-color:#145c96;">
+            <div class="md-toolbar-tools">
+                <img ng-src="{{Event_img}}" class="md-avatar" style="width:32px;height:32px;margin-left: 20px;"/>
+                <h4 class="md-flex" style="margin-left: 25px;">{{titleForEvents}}</h4>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content class="custom_white">
+            <div class="md-dialog-content">
+                <div ng-show="birthdayOverlay">
+                    <md-list class="custom_white">
+
+                                <md-list-item class="md-3-line custom_white" ng-repeat="birthdays in events_birthdays">
+                                    <div class="custom_margin_list md-list-item-text" ng-if=" TodayE == (birthdays.personal_info.dob | date:'MM/dd')" style="background-color:#ffcd03;">
+                                        <div layout="row">
+                                            <!--img ng-src="img/icons/ic_cake_48px.svg" class="md-avatar" /-->
+                                            <div style="width:70%;"><h4 style="font-weight:normal;">{{birthdays.name}}</h4></div>
+                                            <div style="width:30%;"><h4 style="color:#0a5cad;">{{ (birthdays.personal_info.dob | date:'mediumDate').toString().split(',')[0] }}</h4></div>
+                                        </div>
+                                        <!--div class="marquee">
+                                            <div>
+                                                <span>Happy birthday {{birthdays.name}}.</span>
+                                                <span>Happy birthday {{birthdays.name}}.</span>
+                                            </div>
+                                        </div-->
+
+                                    </div>
+
+
+                                    <div class="custom_margin_list md-list-item-text" ng-if=" TodayE != (birthdays.personal_info.dob | date:'MM/dd')">
+                                        <div layout="row">
+                                            <div style="width:70%;"><h4 style="font-weight:normal;">{{birthdays.name}}</h4></div>
+                                            <div style="width:30%;"><h4 style="color:#0a5cad;">{{ (birthdays.personal_info.dob | date:'mediumDate').toString().split(',')[0] }}</h4></div>
+                                        </div>
+                                    </div>
+
+
+                                    <md-divider ng-if="!$last"></md-divider>
+                                </md-list-item>
+
+
+                            </md-list>
+                            <div ng-show="no_birthdays">No events</div>
+
+                </div>
+
+                <div ng-show="SAnniversaryOverlay">
+                    <md-list class="custom_white">
+
+                                <md-list-item class="md-3-line custom_white" ng-repeat="anniersary in events_anniersary" ng-if="anniersary.ageInYears > '0'" ng-show="true">
+                                    <div class="custom_margin_list md-list-item-text" ng-if=" TodayE == (anniersary.joining_date | date:'MM/dd')" style="background-color:#ffcd03;">
+                                        <div layout="row">
+                                            <div style="width:10%;"><h4 style="font-size:17px;color:#0a5cad;">{{anniersary.ageInYears}}<span style="font-size:13px;">{{nth(anniersary.ageInYears)}}</span></h4></div>
+                                            <div style="width:70%;margin-top: 2px;"><h4 style="font-weight:normal;">{{anniersary.name}}</h4></div>
+                                            <div style="width:20%;"><h4 style="color:#0a5cad;">{{ (anniersary.joining_date | date:'mediumDate').toString().split(',')[0] }}</h4></div>
+                                        </div>
+                                        <!--div class="marquee">
+                                            <div>
+                                                <span>Happy {{anniersary.ageInYears}}{{nth(anniersary.ageInYears)}} service anniversary.</span>
+                                                <span>Happy {{anniersary.ageInYears}}{{nth(anniersary.ageInYears)}} service anniversary.</span>
+                                            </div>
+                                        </div-->
+
+                                    </div>
+                                    <div class="custom_margin_list md-list-item-text" ng-if=" TodayE != (anniersary.joining_date | date:'MM/dd')">
+                                        <div layout="row">
+                                            <div style="width:10%;"><h4 style="font-size:17px;color:#0a5cad;">{{anniersary.ageInYears}}<span style="font-size:13px;">{{nth(anniersary.ageInYears)}}</span></h4></div>
+                                            <div style="width:70%;margin-top: 2px;"><h4 style="font-weight:normal;">{{anniersary.name}}</h4></div>
+                                            <div style="width:20%;"><h4 style="color:#0a5cad;">{{ (anniersary.joining_date | date:'mediumDate').toString().split(',')[0] }}</h4></div>
+                                        </div>
+                                    </div>
+
+                                    <md-divider ng-if="!$last"></md-divider>
+
+                                </md-list-item>
+
+
+                            </md-list>
+                            <div ng-show="no_aniversary">No events</div>
+
+                </div>
+            </div>
+        </md-dialog-content>
+
+
+    </form>
+</md-dialog>
+
+

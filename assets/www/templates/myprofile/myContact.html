@@ -1,0 +1,67 @@
+<ion-view view-title="Emergency Contact" ng-controller="myContact_controller" class="custom_white" id="popupContainer" ng-init="init()">
+
+  <ion-header-bar class="bar-positive">
+    <md-button ng-click="goBack()" style="float:left;background-color:transparent;box-shadow:none;top:-12px;margin-left: -10px;" class="md-fab">
+      <i class="fa fa-arrow-left" style="color:#fff;font-size:25px;"></i>
+    </md-button>
+    <h3 class="md-flex">Emergency Contact</h3>
+
+  </ion-header-bar>
+
+    <ion-content>
+
+      <md-content flex layout-padding class="custom_white">
+
+        <form name="projectForm">
+          <!--div layout="column"-->
+
+
+          <md-input-container class="md-block">
+            <label>First Name</label>
+            <input required md-no-asterisk name="Bname" ng-model="project.fname" id="fname">
+            <div ng-messages="projectForm.fname.$error">
+              <div ng-message="required">This is required.</div>
+
+            </div>
+          </md-input-container>
+
+
+          <md-input-container class="md-block">
+            <label>Last Name</label>
+            <input required md-no-asterisk name="lname" ng-model="project.lname" id="lname">
+            <div ng-messages="projectForm.lname.$error">
+              <div ng-message="required">This is required.</div>
+
+            </div>
+          </md-input-container>
+
+          <md-input-container class="md-block">
+            <label>Relationship</label>
+            <input required md-no-asterisk name="relationship" ng-model="project.relationship" id="relationship">
+            <div ng-messages="projectForm.relationship.$error">
+              <div ng-message="required">This is required.</div>
+
+            </div>
+          </md-input-container>
+
+
+          <md-input-container class="md-block">
+            <label>Mobile No.</label>
+            <input required md-no-asterisk name="mobno" ng-model="project.mobile" id="mobno" type="number" pattern="[0-9]*" inputmode="numeric">
+            <div ng-messages="projectForm.reportTo.$error">
+              <div ng-message="required">This is required.</div>
+
+            </div>
+          </md-input-container>
+
+
+
+          <!--/div-->
+
+          <center><div><md-button ng-click="UpdateProfile()" id="card_login_btn" class="custom_btn">Save</md-button></div></center>
+        </form>
+
+      </md-content>
+    </ion-content>
+
+</ion-view>

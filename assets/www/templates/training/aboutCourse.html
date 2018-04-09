@@ -1,0 +1,41 @@
+<md-dialog ng-controller="aboutCourse_controller" class="custom_white" ng-init="init()">
+    <form ng-cloak>
+        <!--md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Mango (Fruit)</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar-->
+
+
+        <md-dialog-content style="color:#000;padding: 6px;">
+
+            <h3>Description</h3>
+            <p style="text-align: justify;text-justify: inter-word;font-size:16px;">{{ course_desb }}</p>
+            <br />
+
+            <ul style="list-style-type:disc;">
+                <li ng-repeat=" opt in Prerequisites" ng-bind-html-unsafe="opt" >
+                    &#9679; {{ opt }}
+                </li>
+            </ul>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+
+            <span flex></span>
+            <md-button ng-click="cancel()" style="background-color:#fff;color:rgb(16,108,200);">
+                Cancel
+            </md-button>
+            <md-button ng-click="Lessons()" style="background-color:#fff;color:rgb(16,108,200);">
+                Skip
+            </md-button>
+        </md-dialog-actions>
+
+
+
+    </form>
+</md-dialog>

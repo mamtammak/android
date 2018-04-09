@@ -1,0 +1,171 @@
+<ion-view view-title="Salary Structure" class="custom_white" ng-init="init()">
+    <div id="loader" ng-show="loader">
+        <div layout="row" layout-sm="column" layout-align="space-around" style="margin-top:75%;">
+            <md-progress-circular md-mode="indeterminate" class="md-accent md-hue-1" md-diameter="40"></md-progress-circular>
+        </div>
+    </div>
+
+    <ion-header-bar class="bar-positive">
+        <md-button ng-click="close()" style="float:left;background-color:transparent;box-shadow:none;top:-12px;margin-left: -10px;" class="md-fab">
+            <i class="fa fa-arrow-left" style="color:#fff;font-size:25px;"></i>
+        </md-button>
+        <h3 class="md-flex">{{ Sal_Struct_Holder }}</h3>
+    </ion-header-bar>
+
+
+    <ion-content>
+
+      <md-content flex layout-padding class="custom_white">
+         <div>
+
+             <md-list flex>
+
+                 <md-list-item ng-repeat="item in GROUP track by $index" layout="column" class="md-3-line custom_white">
+
+
+                     <md-subheader class="md-no-sticky" layout="row">
+                         {{item.group}} &nbsp;-&nbsp; {{item.component}}
+
+                     </md-subheader>
+                     <div ng-show="get_able_disable(item.calctype,'valueA')" style="width:100%;" ng-style="changecolor(item.component)">
+
+                         <div layout="row">
+                             <div class="width33"><h4>Value(A)</h4></div>
+                             <div class="width33"><h4>Annual</h4></div>
+                             <div class="width33"><h4>Monthly</h4></div>
+                         </div>
+
+                         <div layout="row">
+                             <div class="width33">
+                                 <h4>{{item.valuenum}}</h4>
+                             </div>
+                             <div class="width33">
+                                 <h4>{{item.annual.toFixed(2)}}</h4>
+                             </div>
+                             <div class="width33">
+                                 <h4>{{item.monthly.toFixed(2)}}</h4>
+                             </div>
+                         </div>
+
+                     </div>
+
+                     <div ng-show="get_able_disable(item.calctype,'value')" style="width:100%;">
+                             <div layout="row">
+                                 <div class="width33"><h4>Value(%)</h4></div>
+                                 <div class="width33"><h4>Annual</h4></div>
+                                 <div class="width33"><h4>Monthly</h4></div>
+                             </div>
+                             <div layout="row">
+
+                                 <div class="width33">
+                                     <h4>{{item.value}}</h4>
+                                 </div>
+
+
+                                 <div class="width33">
+
+                                     <h4>{{item.annual.toFixed(2)}}</h4>
+                                 </div>
+                                 <div class="width33">
+                                     <h4>{{item.monthly.toFixed(2)}}</h4>
+                                 </div>
+                             </div>
+
+
+                     </div>
+
+                     <md-divider></md-divider>
+
+                 </md-list-item>
+
+             </md-list>
+
+
+        </div>
+
+
+          <!--div ng-show="showEditableDetails" style="margin-bottom:50px;">
+
+
+              <md-list flex>
+
+                  <md-list-item ng-repeat="item in GROUP track by $index" layout="column" class="md-3-line custom_white">
+
+
+                          <md-subheader class="md-no-sticky" layout="row">
+                              {{item.group}} &nbsp;-&nbsp; {{item.component}}
+
+                          </md-subheader>
+                      <div ng-show="get_able_disable(item.calctype,'valueA')" style="width:100%;" ng-style="changecolor(item.component)">
+
+                          <div layout="row">
+                              <div class="width33"><h4>Value(A)</h4></div>
+                              <div class="width33"><h4>Annual</h4></div>
+                              <div class="width33"><h4>Monthly</h4></div>
+                          </div>
+
+                          <div layout="row">
+                          <div class="width33">
+                              <input ng-model="item.valuenum" ng-change="addToSelectedTags($index)" ng-value="{{item.valuenum}}" type="number" pattern="[0-9]*" inputmode="numeric" class="payroll">
+
+                          </div>
+                          <div class="width33">
+                              <h4>{{item.valuenum}}</h4>
+                          </div>
+                          <div class="width33">
+                              <h4>{{(item.valuenum / 12).toFixed(2)}}</h4>
+                          </div>
+                          </div>
+
+                      </div>
+
+                      <div ng-show="get_able_disable(item.calctype,'value')" style="width:100%;">
+                          <div ng-repeat="cal in CalculateS" ng-if="cal.component == item.name">
+                          <div layout="row">
+                              <div class="width33"><h4>Value(%)</h4></div>
+                              <div class="width33"><h4>Annual</h4></div>
+                              <div class="width33"><h4>Monthly</h4></div>
+                          </div>
+                          <div layout="row">
+
+                          <div class="width33">
+                            <input ng-model="item.value" ng-change="addToSelectedTags($index)" ng-value="{{item.value}}" type="number" pattern="[0-9]*" inputmode="numeric" class="payroll">
+
+                          </div>
+
+
+                              <div class="width33" ng-if="cal.component == item.name">
+
+                                  <h4>{{ (item.value * cal.annual / 100).toFixed(2) }}</h4>
+                              </div>
+                              <div class="width33" ng-if="cal.component == item.name">
+                                  <h4>{{ ((item.value * cal.annual / 100)/12).toFixed(2) }}</h4>
+                              </div>
+                              </div>
+
+                      </div>
+
+                    </div>
+
+                      <md-divider></md-divider>
+
+                  </md-list-item>
+
+              </md-list>
+
+
+
+              </div-->
+
+      </md-content>
+
+    </ion-content>
+    <!--div class="bar bar-footer bar-stable" ng-show="showEditable">
+        <div class="custom_footerbar" style="border-right: 1px solid grey;" ng-click="delete_Sal_Structure()"><button ion-button block>DELETE</button></div>
+        <div class="custom_footerbar" ng-click="Update_Sal_Structure()"><button ion-button block>UPDATE</button></div>
+    </div-->
+
+
+</ion-view>
+
+

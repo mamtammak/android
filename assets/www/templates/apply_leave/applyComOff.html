@@ -1,0 +1,68 @@
+<ion-view view-title="Compensatory leave" class="custom_white" id="popupContainerT" ng-init="init()">
+    <div id="loader" ng-show="loader">
+        <div layout="row" layout-sm="column" layout-align="space-around" style="margin-top:75%;">
+            <md-progress-circular md-mode="indeterminate" class="md-accent md-hue-1" md-diameter="40"></md-progress-circular>
+        </div>
+    </div>
+
+    <ion-header-bar class="bar-positive">
+        <md-button ng-click="close()" style="float:left;background-color:transparent;box-shadow:none;top:-12px;margin-left: -10px;" class="md-fab">
+            <i class="fa fa-arrow-left" style="color:#fff;font-size:25px;"></i>
+        </md-button>
+        <h3 class="md-flex">Apply Compensatory Off</h3>
+
+        </div>
+    </ion-header-bar>
+
+
+    <ion-content>
+
+        <md-content flex layout-padding class="custom_white">
+
+
+                <md-input-container class="md-block">
+                    <label>Applying On</label>
+                    <input required md-no-asterisk name="appliedOn" ng-model="project.appliedOn" id="appliedOn" readonly>
+
+                </md-input-container>
+
+
+                    <label>Worked On</label>
+                    <div style="margin-left: -15px;">
+                        <!--md-datepicker ng-model="project.workedon" name="workedon"  id="workedon" md-min-date="minDate"></md-datepicker-->
+                        <md-datepicker md-date-filter="workingDaysForApplyingLeaves" md-open-on-focus ng-model="project.workedon" name="workedon"  id="workedon"
+                                       md-max-date="maxDate"></md-datepicker>
+                    </div>
+
+
+
+                <md-input-container style="width:100%;">
+                    <label>Worked For</label>
+                    <md-select ng-model="project.forday">
+                        <!--md-option><em>None</em></md-option-->
+                        <md-option value="Half Day">Half Day</md-option>
+                        <md-option value="Full Day">Full Day</md-option>
+                    </md-select>
+                </md-input-container>
+
+                <md-input-container class="md-block">
+                    <label>Comment</label>
+                    <input required md-no-asterisk name="comment" ng-model="project.comment" id="comment">
+
+                </md-input-container>
+
+
+            <!--center><div><md-button ng-click="applycomoffleave()" id="card_login_btn" class="custom_btn">Apply Compensatory leave</md-button></div></center-->
+
+        </md-content>
+
+    </ion-content>
+
+    <div class="bar bar-footer bar-stable">
+        <div ng-click="applycomoffleave()" class="custom_footerbar_full"><button ion-button block>Apply Compensatory leave</button></div>
+
+    </div>
+
+</ion-view>
+
+

@@ -1,0 +1,41 @@
+
+
+
+<md-dialog ng-controller="to_do_list" aria-label="Add to-do list">
+    <form ng-cloak>
+
+        <div id="loader" ng-show="loader">
+            <div layout="row" layout-sm="column" layout-align="space-around" style="margin-top:75%;">
+                <md-progress-circular md-mode="indeterminate" class="md-accent md-hue-1" md-diameter="40"></md-progress-circular>
+            </div>
+        </div>
+
+        <md-dialog-content class="custom_white">
+            <div class="md-dialog-content">
+                <div flex-gt-xs style="width:100%;padding-top:5px;">
+                    <span style="color:#3f51b5;">Due date</span> <md-datepicker ng-model="project.duedate" md-min-date="minDate" name="duedate" md-open-on-focus id="List_duedate"></md-datepicker>
+                </div>
+                <p style="color:#3f51b5;">Description</p>
+                <div style="margin:5px;">
+                    <textarea ng-model="project.textArea" rows="3" md-select-on-focus id="textarea"></textarea>
+                    <!--textarea ng-model="project.textArea" style="border:1px solid #fff;height:300px;width:100%;" id="textarea"></textarea-->
+                </div>
+            </div>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row" style="background-color: #145c96;">
+            <md-button ng-click="close()" style="background-color: transparent;color:#fff;">
+                Cancel
+            </md-button>
+            <span flex></span>
+            <!--md-button ng-click="answer('not useful')">
+                Not Useful
+            </md-button-->
+            <md-button ng-click="saveList()" style="background-color: transparent;color:#fff;">
+                Save
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>
+
+

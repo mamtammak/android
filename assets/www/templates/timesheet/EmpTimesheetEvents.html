@@ -1,0 +1,55 @@
+<!--md-dialog aria-label="Add Event" ng-controller="Addevent_controller" style="width:100%;height:100%;min-width:100%;min-height:100%;background-color:#fff;" ng-init="init()"-->
+<ion-view view-title="Employee Timesheet Events" class="custom_white" ng-init="init()">
+        <div id="loader" ng-show="loader">
+            <div layout="row" layout-sm="column" layout-align="space-around" style="margin-top:75%;">
+                <md-progress-circular md-mode="indeterminate" class="md-accent md-hue-1" md-diameter="40"></md-progress-circular>
+            </div>
+        </div>
+
+    <ion-header-bar class="bar-positive">
+        <h3 class="md-flex title_text" style="margin-left: 25px;">{{HeaderTitle}}</h3>
+        <div ng-click="close()" class="outer_burger"><div class="inner_burger"><i class="fa fa-times md-accent" style="font-size:25px;font-weight:normal;"></i></div></div>
+
+    </ion-header-bar>
+
+
+
+    <ion-content>
+
+        <md-content flex layout-padding class="custom_white">
+
+            <form name="projectform">
+
+
+                    <!--div class="active-dates" id="active-dates">
+                        </div-->
+
+                <md-list>
+
+                    <md-list-item class="md-3-line custom_white" ng-repeat="task in EventArray" ng-if="task.title != 'IN'">
+
+                        <div class="custom_margin_list md-list-item-text" style="margin:0;">
+
+                            <h4>{{task.title.label}}</h4>
+                            <p>{{task.title.hours }} hours</p>
+                        </div>
+
+                        <md-divider ng-if="!$last"></md-divider>
+
+
+
+                    </md-list-item>
+
+
+                </md-list>
+
+
+
+                <div class="noEvents"></div>
+
+        </form>
+        </md-content>
+
+            </ion-content>
+
+</ion-view>

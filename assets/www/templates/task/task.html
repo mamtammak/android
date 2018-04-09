@@ -1,0 +1,463 @@
+<ion-view  view-title="Task" class="custom_background" ng-init="init()" ng-cloak>
+
+  <div id="loader" ng-show="loader">
+    <div layout="row" layout-sm="column" layout-align="space-around" style="margin-top:75%;">
+      <md-progress-circular md-mode="indeterminate" class="md-accent md-hue-1" md-diameter="40"></md-progress-circular>
+    </div>
+  </div>
+
+
+  <div class="dimRate">
+    <div style="margin-top:55%;">
+      <md-card>
+
+        <md-card-content>
+          <center><ng-rate-it ng-model="project.PRating" min="0" max="5" star-width="26" star-height="26" id="ratingStar"></ng-rate-it>
+            <p ng-show="project.PRating == 0"></p>
+            <p ng-show="true" ng-if="project.PRating > 0 && project.PRating <= 1">not happy !</p>
+            <p ng-show="true" ng-if="project.PRating > 1 && project.PRating <= 2">poor performance !</p>
+            <p ng-show="true" ng-if="project.PRating > 2 && project.PRating <= 3">ok performance !</p>
+            <p ng-show="true" ng-if="project.PRating > 3 && project.PRating <= 4">good performance !</p>
+            <p ng-show="true" ng-if="project.PRating > 4 && project.PRating <= 5">excellent performance !</p></center>
+        </md-card-content>
+        <md-card-actions layout="row" layout-align="end center">
+          <md-button class="search_BTN" ng-click="closeRating()">Close</md-button>
+          <md-button class="search_BTN" ng-click="saveRating(project.PRating)">Submit</md-button>
+        </md-card-actions>
+      </md-card>
+    </div>
+
+  </div>
+
+
+  <ion-header-bar class="bar-positive" ng-show="showSearchbar">
+    <md-button ng-click="toggleLeft('leftTK')" style="float:left;background-color:transparent;box-shadow:none;top:-12px;margin-left: -10px;" class="md-fab">
+      <i class="fa fa-bars" style="color:#fff;"></i>
+    </md-button>
+    <h3 class="md-flex title_text_bar">Task</h3>
+    <md-button ng-click="showSearch()" style="float:right;background-color:transparent;box-shadow:none;top:-12px;" class="md-fab">
+      <i class="fa fa-search" style="color:#fff;"></i>
+    </md-button>
+    <md-button ng-click="showFilterBySearch()" ng-show="ShowfilterTask" style="float:right;background-color:transparent;box-shadow:none;top:-12px;" class="md-fab">
+
+      <i class="fa fa-filter" style="color:#fff;"></i><span class="badge badge-assertive">{{categoryCountINC}}</span>
+    </md-button>
+    <md-button ng-click="showFilterCompleted()" ng-show="ShowfilterComp" style="float:right;background-color:transparent;box-shadow:none;top:-12px;" class="md-fab">
+
+      <i class="fa fa-filter" style="color:#fff;font-size:25px;"></i><span class="badge badge-assertive">{{categoryCountC}}</span>
+    </md-button>
+
+
+
+  </ion-header-bar>
+
+  <ion-header-bar class="bar-positive" ng-show="hideSearchbar">
+    <md-button ng-click="hideSearch()" style="float:left;background-color:transparent;box-shadow:none;top:-12px;" class="md-fab">
+      <i class="fa fa-caret-left" style="color:#fff;font-size:25px;"></i>
+    </md-button>
+    <!--div class="outer_burger" ng-click="hideSearch()" aria-label="Back"><div class="inner_burger"><i class="fa fa-caret-left md-accent" style="font-size:25px;font-weight:normal;"></i></div></div-->
+
+    <input type="search" placeholder="Search" ng-model="query" style="margin-top:15px;" class="item-input-wrapper" />
+
+
+  </ion-header-bar>
+
+
+
+
+  <!--side menu -->
+  <md-sidenav
+          class="md-sidenav-left"
+          md-component-id="leftTK"
+          md-whiteframe="4">
+
+    <md-content>
+      <div>
+        <md-list class="background">
+          <md-list-item class="background">
+            <div style="padding-left:10px;" layout="row">
+              <img ng-src="{{OrganisationLogo}}" width="70" height="70"/>
+              <h4 class="orgName">{{OrganizationName}}</h4>
+            </div>
+          </md-list-item>
+        </md-list>
+
+
+        <div style="width:100%;margin-top:5px;"></div>
+      </div>
+      <div layout-padding>
+        <md-list>
+          <md-list-item layout="row" ng-repeat="menu in menuItem" ng-click="goToMenuItem(menu.name)" class="noright menuITEM">
+            <div class="taskTotal"><i class="fa {{menu.icon_name}} menu_icon" style="color:{{menu.color}}"></i></div>
+            <div class="custom_emp_left_p"><p class="menu_item">{{ menu.name }}</p></div>
+            <md-divider ng-if="!$last"></md-divider>
+          </md-list-item>
+        </md-list>
+      </div>
+    </md-content>
+
+  </md-sidenav>
+
+
+
+  <!--div class ="tabs employee_section">
+   <a class="tab-item" ng-click="OngoingTask()">
+   <p style="font-size:17px;color:#0050ef;" class="Tcolor">Task</p>
+   </a>
+
+   <a class="tab-item" ng-click="CompletedTask()">
+   <p style="font-size:17px;color:#d43335;" class="Ccolor">Completed</p>
+   </a>
+
+   </div-->
+
+  <div layout="column" layout-fill style="min-height:120px;height:120px;" class="employee_section_tab">
+    <md-tabs class="has-header" md-selected="selectedTab1" flex>
+      <md-tab style="color:#fff;" label="Pending" ng-click="OngoingTask()" id="ongoingTASK">
+
+      </md-tab>
+      <md-tab style="color:#fff;" label="Completed" md-selected="selectedTab1" ng-click="CompletedTask()">
+
+      </md-tab>
+    </md-tabs>
+  </div>
+
+
+
+
+  <!--ion-content style="margin-top:125px;">
+    <ion-refresher on-refresh="doRefresh()"></ion-refresher--> <!--ng-style="getListHeight()"-->
+
+  <md-content flex ng-style="getListHeight()" layout-padding class="custom_background">
+    <div>
+      <div ng-show="showTaskPending">
+
+        <md-virtual-repeat-container id="lazy-container" ng-style="getListHeight()" flex>
+          <md-list flex>
+
+            <md-list-item md-virtual-repeat="list in task_detail_Running | filter:query">
+
+              <table class="mdl-data-table mdl-js-data-table" style="width:100%;border-collapse:collapse;margin-top: 2px;background-color:#fff;">
+
+                <thead>
+                <tr ng-if="list.leaveid != null" ng-click="CheckLeaveResponse(list)">
+                  <th align="left" colspan="2"><h3><span id="highLightFont">{{ list.title }}</span> - <span id="highLightFont" style="color:#757575;">{{ list.leaveid }}</span></h3></th>
+
+                </tr>
+
+                <tr ng-if="list.compOffId != null" ng-click="CheckLeaveResponse(list)">
+                  <th align="left" colspan="2"><h3><span id="highLightFont">{{ list.title }}</span> - <span id="highLightFont" style="color:#757575;">{{ list.compOffId }}</span></h3></th>
+
+                </tr>
+                <tr ng-if="list.type == 'Expense'" ng-click="CheckLeaveResponse(list)">
+                  <th align="left" colspan="2"><h3><span id="highLightFont">{{ list.title }}</span> - <span id="highLightFont" style="color:#757575;">{{ list.expenseid }}</span></h3></th>
+
+                </tr>
+
+                <tr ng-if="list.type == 'task type'" >
+                  <th align="left" colspan="2"><h3><span id="highLightFont" style="vertical-align: middle;width:80%;" ng-click="CheckLeaveResponse(list)">{{ list.title }}</span>
+                    <span ng-if="list.priority == 3" style="width:20%;float:right;">
+                      <a tooltips tooltip-template="High priority" tooltip-close-button="true" tooltip-side="left"><img ng-src="img/icons/high.png" style="margin-left:10px;" /></a>
+                      </span>
+
+                    <span ng-if="list.priority == 2" style="width:20%;float:right;">
+                      <a tooltips tooltip-template="Medium priority" tooltip-close-button="true" tooltip-side="left"><img ng-src="img/icons/medium.png" style="margin-left:10px;" /></a>
+                      </span>
+
+                    <span ng-if="list.priority == 1" style="width:20%;float:right;">
+                      <a tooltips tooltip-template="Low priority" tooltip-close-button="true" tooltip-side="left"><img ng-src="img/icons/low.png" style="margin-left:10px;" /></a>
+                      </span>
+
+                  </h3></th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <tr ng-if="list.type == 'task type'">
+                  <td class="td_width" align="left" ng-if="list.assigned_to.length > 1">
+                    <!--a tooltip="{{ list.assigned_to[0].name }}" tooltip-append-to-body="true">GROUP</a-->
+                    <a tooltips tooltip-template="{{getMembersAssign(list.assigned_to)}}" tooltip-close-button="true" tooltip-side="right">GROUP</a>
+                  </td>
+                  <td class="td_width" align="left" ng-if="list.assigned_to.length == 1" ng-click="CheckLeaveResponse(list)"><h3 style="color:#145c96;">{{list.assigned_to[0].name}}</h3></td>
+                  <td class="td_width" align="right"><h3 style="color:#616161;text-transform: capitalize;">{{ list.status }}</h3></td>
+                </tr>
+
+                <tr ng-if="list.type != 'task type'" ng-click="CheckLeaveResponse(list)">
+                  <td class="td_width" align="left"><h3 style="color:#145c96;">{{list.created_by.name}}</h3></td>
+                  <td class="td_width" align="right"><h3 style="color:#616161;text-transform: capitalize;">{{ list.status }}</h3></td>
+                </tr>
+
+
+
+                <tr>
+                  <td class="td_width" align="left" ng-click="comments(list._id)"><h3><span style="float:left;color:#616161;"><span style="color:#757575;font-size:14px;">{{list.candidate_notes.length}}</span>&nbsp;comments</span></h3></td>
+                  <td class="td_width" align="right"><h3><span style="color:#616161;font-size:13px;">Due date </span><span style="color:#075757;">{{list.due_date | date: "mediumDate"}}</span></h3></td>
+
+
+                </tr>
+
+
+                </tbody>
+              </table>
+              <md-divider ng-if="!$last"></md-divider>
+            </md-list-item>
+
+          </md-list>
+        </md-virtual-repeat-container>
+
+
+      </div>
+
+      <div ng-show="showTaskComplete">
+
+        <md-virtual-repeat-container id="lazy-container" ng-style="getListHeight()" flex>
+          <md-list flex>
+
+            <md-list-item md-virtual-repeat="list in task_detail_Completed | filter: query" item-size="5">
+
+              <table class="mdl-data-table mdl-js-data-table" style="width:100%;border-collapse:collapse;margin-top: 2px;background-color:#fff;">
+
+                <thead>
+
+                <tr ng-if="list.leaveid != null" ng-click="RatingSave(list)">
+                  <th align="left" colspan="2"><h3><span id="highLightFont">{{ list.title }}</span> - <span id="highLightFont" style="color:#757575;">{{ list.leaveid }}</span></h3></th>
+
+                </tr>
+
+                <tr ng-if="list.compOffId != null" ng-click="RatingSave(list)">
+                  <th align="left" colspan="2"><h3><span id="highLightFont">{{ list.title }}</span> - <span id="highLightFont" style="color:#757575;">{{ list.compOffId }}</span></h3></th>
+
+                </tr>
+                <tr ng-if="list.type == 'Expense'" ng-click="RatingSave(list)">
+                  <th align="left" colspan="2"><h3><span id="highLightFont">{{ list.title }}</span> - <span id="highLightFont" style="color:#757575;">{{ list.expenseid }}</span></h3></th>
+
+                </tr>
+
+                <tr ng-if="list.type == 'task type'" ng-click="RatingSave(list)">
+                  <th align="left" colspan="2" align="left"><h3><span id="highLightFont">{{ list.title }}</span></h3></th>
+
+                </tr>
+
+                </thead>
+                <tbody>
+
+                <tr ng-if="list.type == 'task type'">
+                  <td class="td_width" align="left" ng-if="list.assigned_to.length > 1">
+                    <!--a tooltip="{{ list.assigned_to[0].name }}" tooltip-append-to-body="true">GROUP</a-->
+                    <a tooltips tooltip-template="{{getMembersAssign(list.assigned_to)}}" tooltip-close-button="true" tooltip-side="right">GROUP</a>
+                  </td>
+                  <td class="td_width" align="left" ng-if="list.assigned_to.length == 1" ng-click="CheckLeaveResponse(list)"><h3 style="color:#145c96;">{{list.assigned_to[0].name}}</h3></td>
+                  <td class="td_width" align="right"><h3 style="color:#616161;text-transform: capitalize;">{{ list.status }}</h3></td>
+                </tr>
+
+                <tr ng-if="list.type != 'task type'" ng-click="CheckLeaveResponse(list)">
+                  <td class="td_width" align="left"><h3 style="color:#145c96;">{{list.created_by.name}}</h3></td>
+                  <td class="td_width" align="right"><h3 style="color:#616161;text-transform: capitalize;">{{ list.status }}</h3></td>
+                </tr>
+                <tr ng-if="list.type == 'task type' && list.rating || list.type == 'task type' && !list.rating">
+                  <td colspan="2">
+                    <span class="md-body-1" style="color:#145c96;">Performance Rating</span>&nbsp;&nbsp;&nbsp;
+                    <span ng-show="MyEmailId == list.created_by.email" ng-click="RatingPopUp(list)" class="ratePBTN">rate<i class="fa fa-star" style="color:#fff;padding-left:5px;"></i></span>
+                  </td>
+                </tr>
+                <tr ng-if="list.type == 'task type' && list.rating">
+                  <td colspan="2">
+                    <ng-rate-it ng-model="list.rating" read-only="1" min="0" max="5"></ng-rate-it>
+                  </td>
+                </tr>
+
+                <tr ng-if="list.type == 'task type' && !list.rating">
+                  <td colspan="2">
+                    <ng-rate-it ng-model="project.NoRate" read-only="1" min="0" max="5"></ng-rate-it>
+
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="td_width" align="left" ng-click="comments(list._id)"><h3><span style="float:left;color:#616161;"><span style="color:#757575;font-size:14px;">{{list.candidate_notes.length}}</span>&nbsp;comments</span></h3></td>
+                  <td class="td_width" align="right"><i class="fa fa-check-square-o" ng-click="MarkIncomplete(list._id)" style="font-size:24px;color:#757575;"></i></td>
+                </tr>
+
+                </tbody>
+              </table>
+
+              <md-divider ng-if="!$last"></md-divider>
+            </md-list-item>
+
+          </md-list>
+        </md-virtual-repeat-container>
+        <!--div ng-show="loaderSmall">
+          <div layout="row" layout-sm="column" layout-align="space-around">
+            <md-progress-circular md-mode="indeterminate" class="md-accent md-hue-1" md-diameter="20"></md-progress-circular>
+          </div>
+        </div-->
+      </div>
+
+
+      <div ng-show="showTaskTiles">
+
+        <md-virtual-repeat-container id="lazy-container" ng-style="getListHeight()" flex>
+          <md-list flex>
+
+            <md-list-item md-virtual-repeat="list in task_Filter_Running | filter:query" item-size="5">
+              <table class="mdl-data-table mdl-js-data-table" style="width:100%;border-collapse:collapse;margin-top: 2px;background-color:#fff;">
+
+                <thead>
+                <tr ng-if="list.leaveid != null" ng-click="CheckLeaveResponse(list)">
+                  <th align="left" colspan="2"><h3><span id="highLightFont">{{ list.title }}</span> - <span id="highLightFont" style="color:#757575;">{{ list.leaveid }}</span></h3></th>
+
+                </tr>
+
+                <tr ng-if="list.compOffId != null" ng-click="CheckLeaveResponse(list)">
+                  <th align="left" colspan="2"><h3><span id="highLightFont">{{ list.title }}</span> - <span id="highLightFont" style="color:#757575;">{{ list.compOffId }}</span></h3></th>
+
+                </tr>
+                <tr ng-if="list.type == 'Expense'" ng-click="CheckLeaveResponse(list)">
+                  <th align="left" colspan="2"><h3><span id="highLightFont">{{ list.title }}</span> - <span id="highLightFont" style="color:#757575;">{{ list.expenseid }}</span></h3></th>
+
+                </tr>
+
+                <tr ng-if="list.type == 'task type'" >
+                  <th align="left" colspan="2"><h3><span id="highLightFont" style="vertical-align: middle;width:80%;" ng-click="CheckLeaveResponse(list)">{{ list.title }}</span>
+                    <span ng-if="list.priority == 3" style="width:20%;float:right;">
+                      <a tooltips tooltip-template="High priority" tooltip-close-button="true" tooltip-side="left"><img ng-src="img/icons/high.png" style="margin-left:10px;" /></a>
+                      </span>
+
+                    <span ng-if="list.priority == 2" style="width:20%;float:right;">
+                      <a tooltips tooltip-template="Medium priority" tooltip-close-button="true" tooltip-side="left"><img ng-src="img/icons/medium.png" style="margin-left:10px;" /></a>
+                      </span>
+
+                    <span ng-if="list.priority == 1" style="width:20%;float:right;">
+                      <a tooltips tooltip-template="Low priority" tooltip-close-button="true" tooltip-side="left"><img ng-src="img/icons/low.png" style="margin-left:10px;" /></a>
+                      </span>
+
+                  </h3></th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <tr ng-if="list.type == 'task type'">
+                  <td class="td_width" align="left" ng-if="list.assigned_to.length > 1">
+                    <!--a tooltip="{{ list.assigned_to[0].name }}" tooltip-append-to-body="true">GROUP</a-->
+                    <a tooltips tooltip-template="{{getMembersAssign(list.assigned_to)}}" tooltip-close-button="true" tooltip-side="right">GROUP</a>
+                  </td>
+                  <td class="td_width" align="left" ng-if="list.assigned_to.length == 1" ng-click="CheckLeaveResponse(list)"><h3 style="color:#145c96;">{{list.assigned_to[0].name}}</h3></td>
+                  <td class="td_width" align="right"><h3 style="color:#616161;text-transform: capitalize;">{{ list.status }}</h3></td>
+                </tr>
+
+                <tr ng-if="list.type != 'task type'" ng-click="CheckLeaveResponse(list)">
+                  <td class="td_width" align="left"><h3 style="color:#145c96;">{{list.created_by.name}}</h3></td>
+                  <td class="td_width" align="right"><h3 style="color:#616161;text-transform: capitalize;">{{ list.status }}</h3></td>
+                </tr>
+
+
+
+                <tr>
+                  <td class="td_width" align="left" ng-click="comments(list._id)"><h3><span style="float:left;color:#616161;"><span style="color:#757575;font-size:14px;">{{list.candidate_notes.length}}</span>&nbsp;comments</span></h3></td>
+                  <td class="td_width" align="right"><h3><span style="color:#616161;font-size:13px;">Due date </span><span style="color:#075757;">{{list.due_date | date: "mediumDate"}}</span></h3></td>
+
+
+                </tr>
+
+
+                </tbody>
+              </table>
+              <md-divider ng-if="!$last"></md-divider>
+            </md-list-item>
+
+          </md-list>
+        </md-virtual-repeat-container>
+      </div>
+
+      <div ng-show="showTaskCompleteTiles">
+        <md-virtual-repeat-container id="lazy-container" ng-style="getListHeight()" flex>
+          <md-list flex>
+
+            <md-list-item md-virtual-repeat="list in task_Filter_Comp | filter: query" item-size="5">
+              <table class="mdl-data-table mdl-js-data-table" style="width:100%;border-collapse:collapse;margin-top: 2px;background-color:#fff;">
+
+                <thead>
+
+                <tr ng-if="list.leaveid != null" ng-click="RatingSave(list)">
+                  <th align="left" colspan="2"><h3><span id="highLightFont">{{ list.title }}</span> - <span id="highLightFont" style="color:#757575;">{{ list.leaveid }}</span></h3></th>
+
+                </tr>
+
+                <tr ng-if="list.compOffId != null" ng-click="RatingSave(list)">
+                  <th align="left" colspan="2"><h3><span id="highLightFont">{{ list.title }}</span> - <span id="highLightFont" style="color:#757575;">{{ list.compOffId }}</span></h3></th>
+
+                </tr>
+                <tr ng-if="list.type == 'Expense'" ng-click="RatingSave(list)">
+                  <th align="left" colspan="2"><h3><span id="highLightFont">{{ list.title }}</span> - <span id="highLightFont" style="color:#757575;">{{ list.expenseid }}</span></h3></th>
+
+                </tr>
+
+                <tr ng-if="list.type == 'task type'" ng-click="RatingSave(list)">
+                  <th align="left" colspan="2" align="left"><h3><span id="highLightFont">{{ list.title }}</span></h3></th>
+
+                </tr>
+
+                </thead>
+                <tbody>
+
+                <tr ng-if="list.type == 'task type'">
+                  <td class="td_width" align="left" ng-if="list.assigned_to.length > 1">
+                    <!--a tooltip="{{ list.assigned_to[0].name }}" tooltip-append-to-body="true">GROUP</a-->
+                    <a tooltips tooltip-template="{{getMembersAssign(list.assigned_to)}}" tooltip-close-button="true" tooltip-side="right">GROUP</a>
+                  </td>
+                  <td class="td_width" align="left" ng-if="list.assigned_to.length == 1" ng-click="CheckLeaveResponse(list)"><h3 style="color:#145c96;">{{list.assigned_to[0].name}}</h3></td>
+                  <td class="td_width" align="right"><h3 style="color:#616161;text-transform: capitalize;">{{ list.status }}</h3></td>
+                </tr>
+
+                <tr ng-if="list.type != 'task type'" ng-click="CheckLeaveResponse(list)">
+                  <td class="td_width" align="left"><h3 style="color:#145c96;">{{list.created_by.name}}</h3></td>
+                  <td class="td_width" align="right"><h3 style="color:#616161;text-transform: capitalize;">{{ list.status }}</h3></td>
+                </tr>
+                <tr ng-if="list.type == 'task type' && list.rating || list.type == 'task type' && !list.rating">
+                  <td colspan="2">
+                    <span class="md-body-1" style="color:#145c96;">Performance Rating</span>&nbsp;&nbsp;&nbsp;
+                    <span ng-show="MyEmailId == list.created_by.email" ng-click="RatingPopUp(list)" class="ratePBTN">rate<i class="fa fa-star" style="color:#fff;padding-left:5px;"></i></span>
+                  </td>
+                </tr>
+                <tr ng-if="list.type == 'task type' && list.rating">
+                  <td colspan="2">
+                    <ng-rate-it ng-model="list.rating" read-only="1" min="0" max="5"></ng-rate-it>
+                  </td>
+                </tr>
+
+                <tr ng-if="list.type == 'task type' && !list.rating">
+                  <td colspan="2">
+                    <ng-rate-it ng-model="project.NoRate" read-only="1" min="0" max="5"></ng-rate-it>
+
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="td_width" align="left" ng-click="comments(list._id)"><h3><span style="float:left;color:#616161;"><span style="color:#757575;font-size:14px;">{{list.candidate_notes.length}}</span>&nbsp;comments</span></h3></td>
+                  <td class="td_width" align="right"><i class="fa fa-check-square-o" ng-click="MarkIncomplete(list._id)" style="font-size:24px;color:#757575;"></i></td>
+                </tr>
+
+                </tbody>
+              </table>
+              <md-divider ng-if="!$last"></md-divider>
+            </md-list-item>
+
+          </md-list>
+        </md-virtual-repeat-container>
+      </div>
+
+
+      <div style="width:100%;" class="norecords" ng-show="norecords" ng-click="doRefresh()"></div>
+    </div>
+  </md-content>
+
+
+  <!--/ion-content-->
+
+  <button class="md-fab md-fab-bottom-right docs-scroll-fab md-button md-ink-ripple scrolling" type="button" docs-scroll-class="scrolling" ng-click="AddTask()">
+
+    <i class="fa fa-plus"></i>
+    <div class="md-ripple-container"></div></button>
+
+
+</ion-view>

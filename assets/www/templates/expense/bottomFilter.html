@@ -1,0 +1,39 @@
+<md-bottom-sheet class="md-grid" layout="column" ng-controller="teamExpenseFilter" ng-init="init()">
+
+    <div id="loader" ng-show="loader">
+        <div layout="row" layout-sm="column" layout-align="space-around" style="margin-top:75%;">
+            <md-progress-circular md-mode="indeterminate" class="md-accent md-hue-1" md-diameter="40"></md-progress-circular>
+        </div>
+    </div>
+
+    <!--md-subheader ng-cloak style="border-bottom:1px solid #145c96;width:100%;height:56px;">
+        <div layout="row">
+            <h3 class="md-flex title_text" style="margin-left: 25px;">Search</h3>
+        </div>
+    </md-subheader-->
+    <div ng-cloak style="margin:0 20%;">
+        <div layout="column">
+            <div flex-gt-xs style="margin-left: -12px;">
+                <md-datepicker ng-model="project.fromdt" md-placeholder="From" ng-change="getEndMinDate()"></md-datepicker>
+            </div>
+            <div flex-gt-xs style="margin-left: -12px;">
+                <md-datepicker ng-disabled="EnableAfterFromDT" ng-model="project.todt" md-min-date="ToDate_minDate" md-placeholder="To"></md-datepicker>
+            </div>
+        </div>
+
+        <md-input-container style="width:80%;" layout="row">
+            <i class="ion-person-add" style="margin-left:8px;"></i>
+            <md-select ng-model="project.employee" placeholder="Employee" style="margin-left:12px;margin-top:-10px">
+                <md-option><em>None</em></md-option>
+                <md-option value="all" ng-show="showToAdmin">Select all</md-option>
+                <md-option ng-repeat="item in supervisors" ng-value="item._id">
+                    {{item.name}}
+                </md-option>
+            </md-select>
+        </md-input-container>
+
+    </div>
+    <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+        <md-button class="md-raised" style="width:80%;background-color:#145c96;color:#fff;" ng-click="teamExpense()">Search</md-button>
+    </section>
+</md-bottom-sheet>

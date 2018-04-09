@@ -1,0 +1,148 @@
+<ion-view view-title="My Profile Edit" class="custom_white" ng-init="init()" cache-view="false">
+
+  <div id="loader" ng-show="loader">
+    <div layout="row" layout-sm="column" layout-align="space-around" style="margin-top:75%;">
+      <md-progress-circular md-mode="indeterminate" class="md-accent md-hue-1" md-diameter="40"></md-progress-circular>
+    </div>
+  </div>
+
+  <div id="dimCam" ng-click="closecam()">
+    <div style="margin-top:50%;">
+      <md-card>
+
+        <md-card-content>
+
+          <md-list flex>
+            <md-list-item class="md-3-line" ng-click="uploadPicLibrary()">
+              <!--img ng-src="{{}}" class="md-avatar" /-->
+              <div class="md-list-item-text">
+                <h3>Photo Library</h3>
+              </div>
+              <md-divider></md-divider>
+            </md-list-item>
+
+            <md-list-item class="md-3-line" ng-click="uploadPicCamera()">
+                <!--img ng-src="{{}}" class="md-avatar" /-->
+                <div class="md-list-item-text">
+                  <h3>Camera</h3>
+                </div>
+              </md-list-item>
+              </md-list>
+
+              </md-card-content>
+
+      </md-card>
+    </div>
+
+  </div>
+
+
+  <ion-header-bar class="bar-positive">
+    <md-button ng-click="close()" style="float:left;background-color:transparent;box-shadow:none;top:-12px;margin-left: -10px;" class="md-fab">
+      <i class="fa fa-arrow-left" style="color:#fff;font-size:25px;"></i>
+    </md-button>
+    <h3 class="md-flex">My Profile</h3>
+
+  </ion-header-bar>
+
+
+
+
+<ion-content>
+      <ion-refresher on-refresh="doRefresh()"></ion-refresher>
+      <md-content flex layout-padding class="custom_white">
+        <div id="grad1">
+          <section style="width:100%;">
+
+            <div id="profile-container">
+              <img src="{{emp_pic}}" id="addPhoto" class="profileImage"/>
+
+            </div>
+            <img src="img/ic_photo_camera_black_48dp.png" class="cameraImage" ng-click="updateProfilePic()" />
+
+            <div>
+              <center><p><span id="highLightFontEMP">{{emp_name}}</span></p></center>
+              <center><p>{{emp_mail}}</p></center>
+
+            </div>
+
+
+
+          </section>
+        </div>
+        <section layout="column">
+          <md-list flex>
+
+            <md-list-item class="md-3-line profile custom_white" ng-click="EmployeeDetails()">
+
+              <div class="custom_margin_list md-list-item-text" layout="row">
+
+                <div class="custom_emp_left_p"><h3><span id="highLightFont">Employee Details</span></h3></div><div class="custom_emp_right"><i class="fa fa-chevron-right custom_arrow"></i></div>
+
+              </div>
+              <md-divider></md-divider>
+
+            </md-list-item>
+
+            <md-list-item class="md-3-line profile custom_white" ng-click="EmpPersonalDetails()">
+
+              <div class="custom_margin_list md-list-item-text" layout="row">
+
+                <div class="custom_emp_left_p"><h3><span id="highLightFont">Personal Details</span></h3></div><div class="custom_emp_right"><i class="fa fa-chevron-right custom_arrow"></i></div>
+
+              </div>
+              <md-divider></md-divider>
+
+            </md-list-item>
+
+            <md-list-item class="profile md-3-line custom_white" ng-click="EmpContact()">
+
+              <div class="custom_margin_list md-list-item-text" layout="row">
+
+                <div class="custom_emp_left_p"><h3><span id="highLightFont">Emergency Contact</span></h3></div><div class="custom_emp_right"><i class="fa fa-chevron-right custom_arrow"></i></div>
+
+              </div>
+              <md-divider></md-divider>
+
+            </md-list-item>
+
+            <md-list-item class="md-3-line profile custom_white" ng-click="AccountInfo()">
+
+              <div class="custom_margin_list md-list-item-text" layout="row">
+
+                <div class="custom_emp_left_p"><h3><span id="highLightFont">Account Information</span></h3></div><div class="custom_emp_right"><i class="fa fa-chevron-right custom_arrow"></i></div>
+
+              </div>
+              <md-divider></md-divider>
+
+            </md-list-item>
+
+            <md-list-item class="md-3-line profile custom_white" ng-click="ProjectInfo()">
+
+              <div class="custom_margin_list md-list-item-text" layout="row">
+
+                <div class="custom_emp_left_p"><h3><span id="highLightFont">Projects</span></h3></div><div class="custom_emp_right"><i class="fa fa-chevron-right custom_arrow"></i></div>
+
+              </div>
+              <md-divider></md-divider>
+
+            </md-list-item>
+          </md-list>
+
+          <center>
+          <!--div><md-button ng-click="logout()" id="card_login_btn" class="custom_btn">Logout</md-button></div-->
+          <h4 style="color:#145c96;" ng-click="logout()">Sign out</h4>
+          <p>V {{ AppVersion}}</p>
+          </center>
+
+
+
+        </section>
+
+      </md-content>
+    </ion-content>
+  <!--div class="bar bar-footer bar-stable">
+    <div ng-click="logout()" class="custom_footerbar_full"><button ion-button block>Logout</button></div>
+
+  </div-->
+</ion-view>

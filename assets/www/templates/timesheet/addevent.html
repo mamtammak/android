@@ -1,0 +1,72 @@
+
+<md-dialog ng-controller="Addevent_controller" ng-init="init()" aria-label="Add Event">
+    <form>
+
+        <div id="loader" ng-show="loader">
+            <div layout="row" layout-sm="column" layout-align="space-around" style="margin-top:75%;">
+                <md-progress-circular md-mode="indeterminate" class="md-accent md-hue-1" md-diameter="40"></md-progress-circular>
+            </div>
+        </div>
+
+
+        <md-dialog-content class="custom_white">
+            <div class="md-dialog-content">
+            <form name="projectform">
+                <div ng-show="checkForTask">
+
+                    <md-input-container style="width:100%;">
+                        <label>Task Assigned</label>
+                        <md-select ng-model="project.taskAssigned" style="color:#000;" ng-change="useDefaultTask()">
+                            <!--md-option><em>None</em></md-option-->
+                            <md-option ng-repeat="item in task_assigned" ng-value="item">
+                                {{item.title}}
+                            </md-option>
+                            <md-option ng-value="other">Other</md-option>
+                        </md-select>
+                    </md-input-container>
+
+                </div>
+
+
+
+                    <md-input-container style="width:100%;" ng-show="showTitle">
+                        <label>Title</label>
+                        <input required name="title" ng-model="project.title" id="title" name="title" required>
+                        <div ng-messages="projectform.title.$error">
+                            <div ng-message="required">This is required.</div>
+
+                        </div>
+                    </md-input-container>
+
+                   <div layout="row">
+                    <md-input-container style="width:80%;">
+                        <label>Working Hours</label>
+                        <input type="number" required name="working_hr" ng-model="project.working_hr" id="working_hr">
+
+                    </md-input-container>
+                       <md-input-container style="width:20%;"><p style="color:#000;font-size:15px;margin-top:11px;">hours</p></md-input-container>
+                       </div>
+
+            </form>
+            </div>
+
+            <!--center><div class="taskbtn"><md-button ng-click="submit(project)" id="card_login_btn" class="custom_btn">ADD</md-button></div></center-->
+
+
+
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row" style="background-color: #145c96;">
+            <md-button ng-click="close()" style="background-color: transparent;color:#fff;">
+                Cancel
+            </md-button>
+            <span flex></span>
+            <!--md-button ng-click="answer('not useful')">
+                Not Useful
+            </md-button-->
+            <md-button ng-click="submit(project)" style="background-color: transparent;color:#fff;">
+                ADD
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

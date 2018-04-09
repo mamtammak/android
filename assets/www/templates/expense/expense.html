@@ -1,0 +1,398 @@
+<ion-view  view-title="Expenses" class="custom_background" ng-init="init()" ng-cloak>
+
+  <div id="loader" ng-show="loader">
+    <div layout="row" layout-sm="column" layout-align="space-around" style="margin-top:75%;">
+      <md-progress-circular md-mode="indeterminate" class="md-accent md-hue-1" md-diameter="40"></md-progress-circular>
+    </div>
+  </div>
+
+
+  <ion-header-bar class="bar-positive" ng-show="showSearchbar">
+    <md-button ng-click="toggleLeft('leftExp')" style="float:left;background-color:transparent;box-shadow:none;top:-12px;margin-left: -10px;" class="md-fab">
+      <i class="fa fa-bars" style="color:#fff;"></i>
+    </md-button>
+    <h3 class="md-flex title_text_bar">Expenses</h3>
+    <md-button ng-show="FilterICON" ng-click="showBottomFilter()" style="float:right;background-color:transparent;box-shadow:none;top:-12px;" class="md-fab">
+      <i class="fa fa-filter" style="color:#fff;"></i>
+    </md-button>
+    <md-button ng-show="searchICON" ng-click="showSearch()" style="float:right;background-color:transparent;box-shadow:none;top:-12px;" class="md-fab">
+      <i class="fa fa-search" style="color:#fff;"></i>
+    </md-button>
+
+  </ion-header-bar>
+
+  <ion-header-bar class="bar-positive" ng-show="hideSearchbar">
+    <md-button ng-click="hideSearch()" style="float:left;background-color:transparent;box-shadow:none;top:-12px;" class="md-fab">
+      <i class="fa fa-caret-left" style="color:#fff;font-size:25px;"></i>
+    </md-button>
+    <!--div class="outer_burger" ng-click="hideSearch()" aria-label="Back"><div class="inner_burger"><i class="fa fa-caret-left md-accent" style="font-size:25px;font-weight:normal;"></i></div></div-->
+
+    <input type="search" placeholder="Search" ng-model="query" style="margin-top:15px;" class="item-input-wrapper" />
+
+
+  </ion-header-bar>
+
+
+
+
+  <!--side menu -->
+  <md-sidenav
+          class="md-sidenav-left"
+          md-component-id="leftExp"
+          md-whiteframe="4">
+
+    <md-content>
+      <div>
+        <md-list class="background">
+          <md-list-item class="background">
+            <div style="padding-left:10px;" layout="row">
+              <img ng-src="{{OrganisationLogo}}" width="70" height="70"/>
+              <h4 class="orgName">{{OrganizationName}}</h4>
+            </div>
+          </md-list-item>
+        </md-list>
+
+
+        <div style="width:100%;margin-top:5px;"></div>
+      </div>
+      <div layout-padding>
+        <md-list>
+          <md-list-item layout="row" ng-repeat="menu in menuItem" ng-click="goToMenuItem(menu.name)" class="noright menuITEM">
+            <div class="taskTotal"><i class="fa {{menu.icon_name}} menu_icon" style="color:{{menu.color}}"></i></div>
+            <div class="custom_emp_left_p"><p class="menu_item">{{ menu.name }}</p></div>
+            <md-divider ng-if="!$last"></md-divider>
+          </md-list-item>
+        </md-list>
+      </div>
+    </md-content>
+
+  </md-sidenav>
+
+
+
+  <div layout="column" layout-fill style="min-height:120px;height:120px;" class="employee_section_tab">
+    <md-tabs class="has-header" md-selected="selectedTabExpense" flex>
+      <md-tab style="color:#fff;" label="Add Expense" ng-click="AddExpenseTab()"></md-tab>
+      <md-tab label="Expense History" ng-click="ExpenseHistory()" md-selected="selectedTabExpense" ></md-tab>
+      <md-tab label="My Team Expenses" ng-click="MyTExpenseHistory()" md-selected="selectedTabExpense" ></md-tab>
+      <md-tab label="Advance Payment History" ng-click="AdvancePH()" md-selected="selectedTabExpense" ></md-tab>
+      <md-tab ng-if="Role == 'ADM'" label="Advance Payment" ng-click="AdvancePayment()" md-selected="selectedTabExpense" ></md-tab>
+
+    </md-tabs>
+  </div>
+
+
+
+
+  <ion-content style="margin-top:125px;">
+    <!--ion-refresher on-refresh="doRefresh()"></ion-refresher-->
+
+    <md-content flex layout-padding class="custom_background">
+
+      <div ng-show="showAddExpense">
+        <section class="custom_white" style="width:100%;padding-top:15px;margin-bottom:50px;">
+          <div flex-gt-xs>
+            <md-datepicker md-open-on-focus md-max-date="maxDate" ng-model="project.expenseDT" name="expenseDT" id="expenseDT"></md-datepicker>
+          </div>
+
+          <md-input-container style="width:100%;">
+            <label>Merchant</label>
+            <input required  name="Merchant" ng-model="project.Merchant" id="Merchant">
+            <div ng-messages="projectForm.Merchant.$error">
+              <div ng-message="required">This is required.</div>
+
+            </div>
+          </md-input-container>
+
+
+          <md-input-container style="width:100%;">
+            <label>Category</label>
+            <md-select ng-model="project.Category" ng-change="changeCategory()">
+              <md-option ng-repeat="cat in Category" ng-value="cat._id">
+                {{cat.name}}
+              </md-option>
+            </md-select>
+          </md-input-container>
+
+          <md-input-container style="width:100%;">
+            <label>Advance payment amount</label>
+            <input required  name="advpay" ng-model="project.advpay" id="advpay" readonly>
+          </md-input-container>
+
+          <div layout="row">
+
+            <md-input-container style="width:20%;">
+              <label>Currency</label>
+              <input required  name="Currency" ng-model="CurrencyCode" value="{{CurrencyCode}}" id="Currency" readonly>
+            </md-input-container>
+
+
+            <md-input-container style="width:80%;">
+              <label>Amount</label>
+              <input required  name="Amount" ng-model="project.Amount" id="Amount" type="number" aw-limit-length="10">
+              <div ng-messages="projectForm.Amount.$error">
+                <div ng-message="required">This is required.</div>
+
+              </div>
+            </md-input-container>
+          </div>
+          <md-input-container style="width:100%;">
+            <label>Description</label>
+            <input  name="Description" ng-model="project.Description" id="Description">
+
+          </md-input-container>
+
+          <md-input-container style="width:100%;">
+            <label>Reference</label>
+            <input name="Reference" ng-model="project.Reference" id="Reference">
+
+          </md-input-container>
+
+          <md-input-container style="width:100%;">
+            <label>Add to report</label>
+            <input name="addReport" ng-model="project.addReport" id="addReport">
+
+          </md-input-container>
+
+          <!--button ngf-select="uploadFiles($files)" accept="image/*" ngf-multiple="true">
+            Select Files</button-->
+          <div class="button" ngf-select="uploadFiles($files)" ngf-multiple="true"
+               ngf-pattern="'image/*,application/pdf'" style="border-color:grey;color:#145c96;">Upload Files</div>
+          <span>accept only images or pdf files</span>
+          <br><br>
+          Files:
+
+          <md-list>
+
+            <md-list-item class="md-3-line custom_white" ng-repeat="f in files">
+
+              <div class="md-list-item-text" layout=row"">
+                <h4>{{f.name}}</h4>
+                <span class="taskTotal"><i class="ion-close-round" ng-click="removeFile(f)" style="float:right;"></i></span>
+              </div>
+
+              <md-divider ng-if="!$last"></md-divider>
+
+            </md-list-item>
+
+
+          </md-list>
+
+
+          <!--center><md-button class="md-raised">Attachment</md-button></center-->
+
+        </section>
+      </div>
+
+
+
+      <div ng-show="showAdvancePayment">
+        <section class="custom_white" style="width:100%;padding-top:15px;margin-bottom:50px;">
+          <div flex-gt-xs>
+            <md-datepicker md-open-on-focus ng-model="project.paymentDT" name="paymentDT"  id="paymentDT"></md-datepicker>
+          </div>
+          <md-input-container class="md-block">
+            <label>Username</label>
+            <md-autocomplete md-selected-item="project.Username"  md-search-text="name" md-items="item in supervisors | filter:name" md-item-text="item.name" style="margin:0;">
+              <span md-highlight-text="item">{{item.name}}</span>
+              <md-not-found>
+                <div class="chip-not-found">Not found.</div>
+              </md-not-found>
+            </md-autocomplete>
+
+
+          </md-input-container>
+
+          <md-input-container class="md-block">
+            <label>Payment Mode</label>
+            <md-select ng-model="project.PaymentThrough" ng-change="changeCategory()">
+              <md-option><em>None</em></md-option>
+              <md-option ng-repeat="item in pay_mode" ng-value="item._id">
+                {{item.name}}
+              </md-option>
+            </md-select>
+          </md-input-container>
+          <div layout="row">
+
+            <md-input-container style="width:20%;">
+              <label>Currency</label>
+              <input required name="Currency" ng-model="CurrencyCode" value="{{CurrencyCode}}" id="ADVCurrency" readonly>
+            </md-input-container>
+
+
+            <md-input-container style="width:80%;">
+              <label>Amount</label>
+              <input required name="ADVAmount" ng-model="project.ADVAmount" id="ADVAmount" type="number" aw-limit-length="10">
+              <div ng-messages="projectForm.ADVAmount.$error">
+                <div ng-message="required">This is required.</div>
+
+              </div>
+            </md-input-container>
+          </div>
+
+
+          <md-input-container class="md-block">
+            <label>Reference</label>
+            <input name="ADVReference" ng-model="project.ADVReference" id="ADVReference">
+
+          </md-input-container>
+
+          <md-input-container class="md-block">
+            <label>Notes</label>
+            <input name="Notes" ng-model="project.Notes" id="Notes">
+
+          </md-input-container>
+
+
+        </section>
+      </div>
+    </md-content>
+  </ion-content>
+  <md-content flex layout-padding class="custom_background">
+    <div ng-show="showExpenseHistory">
+
+      <md-virtual-repeat-container id="lazy-container" ng-style="getListHeight()" flex>
+        <md-list flex>
+
+          <md-list-item md-virtual-repeat="list in myExpenses | filter:query | orderBy : 'expense_date' : true">
+            <table class="mdl-data-table mdl-js-data-table" ng-click="showMyExpDetail(list)" style="width:100%;border-collapse:collapse;margin-top: 2px;background-color:#fff;">
+
+              <thead>
+              <tr ng-if="Role != 'ADM'">
+                <th align="left" colspan="2"><h3><span id="highLightFont">{{ list._id }}</span></h3></th>
+
+              </tr>
+
+              <tr ng-if="Role == 'ADM'">
+                <th align="left" colspan="2"><h3><span id="highLightFont">{{ list._id }}</span> - <span id="highLightFont" style="color:#3f51b5;">{{ list.user.name }}</span></h3></th>
+
+              </tr>
+
+              </thead>
+              <tbody>
+
+              <tr>
+                <td class="td_width" align="left"><h3 style="color:#616161;text-transform: capitalize;">{{ list.category.name }}</h3></td>
+                <td class="td_width" align="right" vertical-align="middle"><h3><span style="color:#3f51b5;font-size:20px;">{{CurrencySYM(list.currency)}} {{ format(list.amount)}}</span></h3></td>
+
+              </tr>
+
+
+
+              <tr>
+                <td class="td_width" align="left"><h3>{{ list.expense_date | date: "mediumDate" }}</h3></td>
+                <td class="td_width" align="right" vertical-align="middle"><h3>{{ExpenseStatus(list.status)}}</h3></td>
+              </tr>
+
+
+              </tbody>
+            </table>
+            <md-divider ng-if="!$last"></md-divider>
+          </md-list-item>
+
+        </md-list>
+      </md-virtual-repeat-container>
+
+    </div>
+
+    <div ng-show="showTeamExpenseHistory">
+
+      <md-virtual-repeat-container id="lazy-container" ng-style="getListHeight()" flex>
+        <md-list flex>
+
+          <md-list-item md-virtual-repeat="list in myTeamExpenses | filter:query | orderBy : 'expense_date' : true">
+            <table class="mdl-data-table mdl-js-data-table" ng-click="showMyExpDetail(list)" style="width:100%;border-collapse:collapse;margin-top: 2px;background-color:#fff;">
+
+              <thead>
+
+              <tr>
+                <th align="left" colspan="2"><h3><span id="highLightFont">{{ list.user.name }}</span> - <span id="highLightFont" style="color:#3f51b5;font-size:12px;font-weight:normal;">{{ list._id }}</span></h3></th>
+
+              </tr>
+
+              </thead>
+              <tbody>
+
+              <tr>
+                <td class="td_width" align="left"><h3 style="color:#616161;text-transform: capitalize;">{{ list.category.name }}</h3></td>
+                <td class="td_width" align="right" vertical-align="middle"><h3><span style="color:#3f51b5;font-size:20px;">{{CurrencySYM(list.currency)}} {{ format(list.amount)}}</span></h3></td>
+
+              </tr>
+
+
+
+              <tr>
+                <td class="td_width" align="left"><h3>{{ list.expense_date | date: "mediumDate" }}</h3></td>
+                <td class="td_width" align="right" vertical-align="middle"><h3>{{ExpenseStatus(list.status)}}</h3></td>
+              </tr>
+
+
+              </tbody>
+            </table>
+            <md-divider ng-if="!$last"></md-divider>
+          </md-list-item>
+
+        </md-list>
+      </md-virtual-repeat-container>
+
+    </div>
+
+    <div ng-show="showAdvancePH">
+      <md-virtual-repeat-container id="lazy-container" ng-style="getListHeight()" flex>
+        <md-list flex>
+
+          <md-list-item md-virtual-repeat="list in myAdvancePayHistory | filter:query | orderBy : 'expense_date' : true" item-size="5">
+            <table class="mdl-data-table mdl-js-data-table" ng-click="showMyAdvExpDetail(list)" style="width:100%;border-collapse:collapse;margin-top: 2px;background-color:#fff;">
+
+              <thead ng-if="Role == 'ADM'">
+              <tr>
+                <th align="left" colspan="2"><h3><span id="highLightFont">{{ list.user.name }}</span></h3></th>
+
+              </tr>
+
+              </thead>
+              <tbody>
+
+              <tr>
+                <td class="td_width" align="left"><h3 style="text-transform: capitalize;"><span style="color:#616161;">Payment mode</span> {{ list.payment_mode.name }}</h3></td>
+                <td class="td_width" align="right" vertical-align="middle"><h3><span style="color:#3f51b5;font-size:20px;">{{CurrencySYM(list.currency)}} {{ format(list.amount)}}</span></h3></td>
+              </tr>
+
+
+
+              <tr>
+                <td class="td_width" align="left"><h3>{{ list.payment_date | date: "mediumDate" }}</h3></td>
+                <td class="td_width" align="right" vertical-align="middle">&nbsp;&nbsp;</td>
+              </tr>
+
+
+              </tbody>
+            </table>
+            <md-divider ng-if="!$last"></md-divider>
+          </md-list-item>
+
+        </md-list>
+      </md-virtual-repeat-container>
+    </div>
+
+
+
+
+    <div style="width:100%;" class="norecords" ng-show="norecords"></div>
+  </md-content>
+
+
+
+  <div class="bar bar-footer bar-stable" ng-show="AddExpenseBTN">
+    <div ng-click="cancelExpense()" class="custom_footerbar" style="border-right: 1px solid grey;"><button ion-button block>Cancel</button></div>
+    <div ng-click="addNewExpense()" class="custom_footerbar" ><button ion-button block>Add Expense</button></div>
+
+  </div>
+
+  <div class="bar bar-footer bar-stable" ng-show="ShowToADM_AdvPay">
+    <div ng-click="cancelExpense()" class="custom_footerbar" style="border-right: 1px solid grey;"><button ion-button block>Cancel</button></div>
+    <div ng-click="MakePayment()" class="custom_footerbar" ><button ion-button block>Pay</button></div>
+
+  </div>
+
+</ion-view>

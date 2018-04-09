@@ -1,0 +1,112 @@
+<ion-view view-title="Personal Details" ng-controller="myPersonalDetails_controller" class="custom_white" id="popupContainer" ng-init="init()">
+
+  <ion-header-bar class="bar-positive">
+    <md-button ng-click="goBack()" style="float:left;background-color:transparent;box-shadow:none;top:-12px;margin-left: -10px;" class="md-fab">
+      <i class="fa fa-arrow-left" style="color:#fff;font-size:25px;"></i>
+    </md-button>
+    <h3 class="md-flex">Personal Details</h3>
+
+  </ion-header-bar>
+
+    <ion-content>
+
+      <md-content flex layout-padding class="custom_white">
+        <form name="projectForm">
+
+
+          <md-input-container class="md-block">
+            <label>Mobile No.</label>
+            <input required md-no-asterisk name="mobno" ng-model="project.mobno" id="mobno" type="number" pattern="[0-9]*" inputmode="numeric">
+            <div ng-messages="projectForm.mobno.$error">
+              <div ng-message="required">This is required.</div>
+
+            </div>
+          </md-input-container>
+
+          <md-input-container class="md-block">
+            <label>Landline No. (#STD Code-Number)</label>
+            <input required md-no-asterisk name="landlineno" ng-model="project.landlineno" id="landlineno" type="number" pattern="[0-9]*" inputmode="numeric" placeholder="Optional">
+
+          </md-input-container>
+
+          <div layout="row">
+
+            <md-input-container style="width:50%;">
+              <label>Marital Status</label>
+              <md-select ng-model="project.mStatus">
+                <md-option><em>None</em></md-option>
+                <md-option ng-repeat="status in marital" ng-value="status.name">
+                  {{status.name}}
+                </md-option>
+              </md-select>
+            </md-input-container>
+
+            <!--md-input-container class="md-block">
+
+            </md-input-container-->
+
+            <md-input-container style="width:50%;">
+              <label>Gender</label>
+              <md-select ng-model="project.gender">
+                <md-option><em>None</em></md-option>
+                <md-option ng-repeat="sex in gender" ng-value="sex.name">
+                  {{sex.name}}
+                </md-option>
+              </md-select>
+            </md-input-container>
+          </div>
+
+          <div flex>
+            <span style="font-size:16px;">DOB</span><md-datepicker ng-model="project.myDate" name="myDate" id="myDate" style="margin-left:-15px;"></md-datepicker>
+          </div>
+
+          <md-input-container class="md-block">
+            <label>Address</label>
+            <input required md-no-asterisk name="address" ng-model="project.address" id="address">
+            <div ng-messages="projectForm.address.$error">
+              <div ng-message="required">This is required.</div>
+
+            </div>
+          </md-input-container>
+          <md-input-container class="md-block">
+            <label>City</label>
+            <input required md-no-asterisk name="city" ng-model="project.city" id="city">
+            <div ng-messages="projectForm.city.$error">
+              <div ng-message="required">This is required.</div>
+
+            </div></md-input-container>
+
+            <md-input-container class="md-block">
+              <label>State</label>
+              <input required md-no-asterisk name="state" ng-model="project.state" id="state">
+              <div ng-messages="projectForm.state.$error">
+                <div ng-message="required">This is required.</div>
+
+              </div>
+          </md-input-container>
+
+            <md-input-container class="md-block">
+              <label>Country</label>
+              <input required md-no-asterisk name="country" ng-model="project.country" id="country">
+              <div ng-messages="projectForm.country.$error">
+                <div ng-message="required">This is required.</div>
+
+              </div>
+            </md-input-container>
+
+          <md-input-container class="md-block">
+            <label>Postal Code (#6 Digit)</label>
+            <input required md-no-asterisk name="postcode" ng-model="project.postcode" id="postcode" type="number" pattern="[0-9]*" inputmode="numeric">
+            <div ng-messages="projectForm.postcode.$error">
+              <div ng-message="required">This is required.</div>
+
+            </div>
+          </md-input-container>
+
+          <center><div><md-button ng-click="UpdateProfile(project)" id="card_login_btn" class="custom_btn">Save</md-button></div></center>
+
+        </form>
+      </md-content>
+    </ion-content>
+
+</ion-view>

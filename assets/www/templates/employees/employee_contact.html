@@ -1,0 +1,57 @@
+<ion-view view-title="Emergency Contact" ng-controller="employeeContact_controller" class="custom_white">
+
+  <ion-header-bar class="bar-positive">
+    <md-button ng-click="goBack()" style="float:left;background-color:transparent;box-shadow:none;top:-12px;margin-left: -10px;" class="md-fab">
+      <i class="fa fa-arrow-left" style="color:#fff;font-size:25px;"></i>
+    </md-button>
+    <h3 class="md-flex">Emergency Contact</h3>
+
+  </ion-header-bar>
+
+
+    <ion-content>
+
+      <md-content flex layout-padding class="custom_white">
+
+            <md-list flex>
+
+              <md-list-item class="md-3-line detail custom_white">
+
+                <div class="custom_margin_list md-list-item-text" layout="row">
+
+                  <div class="custom_left"><h3>Name</h3></div><div class="separater"><h3> : </h3></div><div class="custom_left_text custom_padding"><h3>{{first_name}} {{ last_name}}</h3></div>
+
+                </div>
+                <md-divider></md-divider>
+
+              </md-list-item>
+
+              <md-list-item class="md-3-line detail custom_white">
+
+                <div class="custom_margin_list md-list-item-text" layout="row">
+
+                  <div class="custom_left"><h3>Relationship</h3></div><div class="separater"><h3> : </h3></div><div class="custom_left_text custom_padding"><h3>{{relationship}}</h3></div>
+
+                </div>
+                <md-divider></md-divider>
+
+              </md-list-item>
+
+              <md-list-item class="md-3-line detail custom_white">
+
+                <div class="custom_margin_list md-list-item-text" layout="row">
+
+                  <div class="custom_left"><h3>Mobile Number</h3></div><div class="separater"><h3> : </h3></div><div class="custom_left_text custom_padding"><h3>{{contact}}</h3></div>
+
+                </div>
+                <md-divider></md-divider>
+
+              </md-list-item>
+
+
+            </md-list>
+
+      </md-content>
+    </ion-content>
+
+</ion-view>

@@ -1,0 +1,111 @@
+<ion-view view-title="Employee Details" ng-controller="myDetails_controller" class="custom_white" id="popupContainer" ng-init="init()">
+
+  <ion-header-bar class="bar-positive">
+    <md-button ng-click="goBack()" style="float:left;background-color:transparent;box-shadow:none;top:-12px;margin-left: -10px;" class="md-fab">
+      <i class="fa fa-arrow-left" style="color:#fff;font-size:25px;"></i>
+    </md-button>
+    <h3 class="md-flex">Employee Details</h3>
+
+  </ion-header-bar>
+
+
+    <ion-content>
+
+      <md-content flex layout-padding class="custom_white">
+
+        <form name="projectForm">
+          <!--div layout="column"-->
+
+
+          <md-input-container class="md-block">
+            <p>Name</p>
+            <input required md-no-asterisk name="fname" ng-model="project.fname" id="fname" readonly>
+
+
+          </md-input-container>
+
+          <md-input-container class="md-block">
+            <p>Email Id</p>
+            <input required md-no-asterisk name="myemailID" ng-model="project.myemailID" id="myemailID" readonly>
+
+
+          </md-input-container>
+
+          <md-input-container class="md-block">
+            <p>Joining</p>
+            <input required md-no-asterisk name="joiningDT" ng-model="project.joiningDT" id="joiningDT" readonly>
+
+
+          </md-input-container>
+
+
+          <md-input-container class="md-block">
+            <p>Designation</p>
+            <input required md-no-asterisk name="designation" ng-model="project.designation" id="designation" readonly>
+
+
+          </md-input-container>
+
+          <md-input-container class="md-block">
+            <p>Employee Status</p>
+            <input required md-no-asterisk name="status" ng-model="project.status" id="status" readonly>
+
+
+          </md-input-container>
+
+
+          <md-input-container class="md-block">
+            <p>Employee Type</p>
+            <input required md-no-asterisk ng-model="project.EMP_TYPE" id="emp_select" readonly>
+
+          </md-input-container>
+
+
+          <md-input-container class="md-block">
+            <p>Reporting To</p>
+            <input required md-no-asterisk ng-model="project.reportingto" id="report_select" readonly>
+
+          </md-input-container>
+
+          <md-input-container class="md-block">
+            <p>HR Manager</p>
+            <input required md-no-asterisk ng-model="project.HR_Manager" id="HR_Manager" readonly>
+
+          </md-input-container>
+
+          <md-input-container class="md-block">
+              <p>Branch</p>
+              <input required md-no-asterisk ng-model="project.Branch" id="Branch" readonly>
+
+            </md-input-container>
+
+            <md-input-container class="md-block">
+              <p>Shift</p>
+              <input required md-no-asterisk ng-model="project.Shift" id="Shift" readonly>
+
+            </md-input-container>
+
+
+          <md-input-container class="md-block">
+            <label>BIO</label>
+            <input required md-no-asterisk name="bio" ng-model="project.bio" id="bio">
+            <div ng-messages="project.bio.$error">
+              <div ng-message="required">This is required.</div>
+
+            </div>
+          </md-input-container>
+
+          <md-input-container class="md-block">
+            <label>Skill Set</label>
+            <textarea ng-model="project.skillset" md-maxlength="150" rows="3" md-select-on-focus></textarea>
+          </md-input-container>
+
+          <!--/div-->
+
+          <center><div><md-button ng-click="UpdateProfile(project)" id="card_login_btn" class="custom_btn">Save</md-button></div></center>
+        </form>
+
+      </md-content>
+    </ion-content>
+
+</ion-view>

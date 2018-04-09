@@ -1,0 +1,24 @@
+<md-bottom-sheet class="md-grid" layout="column" ng-controller="HolidayFilter" ng-init="init()">
+
+    <div id="loader" ng-show="loader">
+        <div layout="row" layout-sm="column" layout-align="space-around" style="margin-top:75%;">
+            <md-progress-circular md-mode="indeterminate" class="md-accent md-hue-1" md-diameter="40"></md-progress-circular>
+        </div>
+    </div>
+
+
+    <div ng-cloak style="margin:0 20%;">
+
+        <md-input-container style="width:100%;">
+            <label>Select Month</label>
+            <md-select ng-model="project.FilterByYear">
+                <md-option ng-repeat="y in Year" ng-value="y">
+                    {{y}}
+                </md-option>
+            </md-select>
+        </md-input-container>
+
+        <md-button class="md-raised md-primary" ng-click="getHolidayList()">Search</md-button>
+    </div>
+
+</md-bottom-sheet>

@@ -1,0 +1,207 @@
+<ion-view  view-title="TaskFilter" class="custom_white" ng-init="initTaskFilter()" ng-cloak>
+  
+  <div id="loader" ng-show="loader">
+    <div layout="row" layout-sm="column" layout-align="space-around" style="margin-top:75%;">
+      <md-progress-circular md-mode="indeterminate" class="md-accent md-hue-1" md-diameter="40"></md-progress-circular>
+    </div>
+  </div>
+
+
+  <ion-header-bar class="bar-positive">
+    <md-button ng-click="closeFilter()" style="float:left;margin-left: -10px;background-color:transparent;box-shadow:none;top:-12px;" class="md-fab">
+      <i class="fa fa-caret-left"></i>
+    </md-button>
+    <h3 class="md-flex title_text_bar">Filters</h3>
+    <md-button ng-click="searchTaskTiles()" style="float:right;background-color:transparent;box-shadow:none;top:-12px;" class="md-fab">
+      <i class="fa fa-check"></i>
+    </md-button>
+
+  </ion-header-bar>
+
+
+  <ion-content>
+    <!--ion-refresher on-refresh="doRefresh()"></ion-refresher-->
+    
+    <md-content flex layout-padding class="custom_white">
+      <div ng-show="showFilterCategory" class="taskFilter">
+        <md-list>
+
+          <md-list-item class="md-3-line custom_white">
+            <div class="custom_margin_list md-list-item-text">
+              <div layout="row">
+              <div style="width:50%;"><h5 style="margin-left:5px;">View</h5></div>
+              <div style="width:50%;" ng-click="clearALLFilter()"><!--md-button class="md-icon-button md-primary" aria-label="Settings">
+              <i class="fa fa-close"></i>
+              </md-button-->
+              <p style="float:right;margin-top:9px;">CLEAR ALL</p>
+              </div>
+              </div>
+              <!--div ng-show="showPlusV" class="taskTotal" ng-click="OpenView()"><i style="font-size:24px;" class="fa fa-plus-circle"></i></div>
+              <div ng-show="showMinusV" class="taskTotal" ng-click="CloseView()"><i style="font-size:24px;" class="fa fa-minus-circle"></i></div-->
+              <md-card class="Filter_card">
+
+                <md-card-content>
+                  <div layout="row">
+
+                    <div layout="column" class="filterText" style="width:48%;">
+                      <center><input type="checkbox" class="checkFilterV" id="1" value="View" ng-click="checkboxV($event)"></center>
+                      <h4 class="filterTextCard" style="color:#424242;">Created by me</h4></div>
+                    <div class="verticalBorder"></div>
+                    <div layout="column" class="filterText" style="width:48%;">
+                      <center><input type="checkbox" class="checkFilterV" id="2" value="View" ng-click="checkboxV($event)"></center>
+                      <h4 class="filterTextCard" style="color:#424242;">Assigned to me</h4></div>
+                  </div>
+
+                </md-card-content>
+              </md-card>
+            </div>
+
+            <md-divider></md-divider>
+
+          </md-list-item>
+          </md-list>
+
+
+
+        <md-list>
+
+          <md-list-item class="md-3-line custom_white">
+            <div class="custom_margin_list md-list-item-text">
+              <div class="custom_emp_left_p"><h5>Sort by</h5></div>
+              <!--div ng-show="showPlusS" class="taskTotal" ng-click="OpenSort()"><i style="font-size:24px;" class="fa fa-plus-circle circlePlusMinus"></i></div>
+              <div ng-show="showMinusS" class="taskTotal" ng-click="CloseSort()"><i style="font-size:24px;" class="fa fa-minus-circle circlePlusMinus"></i></div-->
+              <md-card class="Filter_card">
+
+                <md-card-content>
+                  <div layout="row">
+                    <div class="filterText" style="width:33%;">
+                      <center><input type="checkbox" class="checkFilterS" id="duedate" value="Sort" ng-click="checkboxS($event)"></center>
+                      <h4 style="color:#424242;">Due date</h4></div>
+                    <div class="verticalBorder"></div>
+                    <div class="filterText" style="width:33%;">
+                      <center><input type="checkbox" class="checkFilterS" id="lastModified" value="Sort" ng-click="checkboxS($event)"></center>
+                      <h4 style="color:#424242;">Last modified</h4></div>
+                    <div class="verticalBorder"></div>
+                    <div class="filterText" style="width:33%;">
+                      <center><input type="checkbox" class="checkFilterS" id="assignon" value="Sort" ng-click="checkboxS($event)"></center>
+                      <h4 style="color:#424242;">Assigned on</h4></div>
+                  </div>
+
+                </md-card-content>
+              </md-card>
+            </div>
+
+            <md-divider></md-divider>
+
+          </md-list-item>
+        </md-list>
+
+
+
+        <md-list>
+
+          <md-list-item class="md-3-line custom_white">
+            <div class="custom_margin_list md-list-item-text">
+              <div class="custom_emp_left_p"><h5>Task</h5></div>
+              <!--div ng-show="showPlusT" class="taskTotal" ng-click="OpenTask()"><i style="font-size:24px;" class="fa fa-plus-circle circlePlusMinus"></i></div>
+              <div ng-show="showMinusT" class="taskTotal" ng-click="CloseTask()"><i style="font-size:24px;" class="fa fa-minus-circle circlePlusMinus"></i></div-->
+              <md-card class="Filter_card">
+
+                <md-card-content>
+                  <div layout="row">
+                    <div class="filterText" style="width:33%;">
+                      <center><input type="checkbox" class="checkFilterT" id="task" value="task" ng-click="checkboxT($event)"></center>
+                      <h4 style="color:#424242;">Everyday</h4></div>
+                    <div class="verticalBorder"></div>
+                    <div class="filterText" style="width:33%;">
+                      <center><input type="checkbox" class="checkFilterT" id="leave" value="task" ng-click="checkboxT($event)"></center>
+                      <h4 style="color:#424242;">Leave</h4></div>
+                    <div class="verticalBorder"></div>
+                    <div class="filterText" style="width:33%;">
+                      <center><input type="checkbox" class="checkFilterT" id="compoff" value="task" ng-click="checkboxT($event)"></center>
+                      <h4 style="color:#424242;">Compensatory</h4></div>
+                  </div>
+
+                </md-card-content>
+              </md-card>
+            </div>
+
+            <md-divider></md-divider>
+
+          </md-list-item>
+        </md-list>
+
+
+        <!--md-list>
+
+        <md-list-item class="md-3-line custom_white">
+          <div class="custom_margin_list md-list-item-text">
+            <div class="custom_emp_left_p"><h5>Status</h5></div>
+            <md-card class="Filter_card">
+
+              <md-card-content>
+                <div layout="row">
+                  <div class="filterText" style="width:33%;">
+                    <center><input type="checkbox" class="checkFilterST" id="pending" value="status" ng-click="checkboxST($event)"></center>
+                    <h4 style="color:#fff;">Pending</h4></div>
+                  <div class="verticalBorder"></div>
+                  <div class="filterText" style="width:33%;">
+                    <center><input type="checkbox" class="checkFilterST" id="overdue" value="status" ng-click="checkboxST($event)"></center>
+                    <h4 style="color:#fff;">Overdue</h4></div>
+                  <div class="verticalBorder"></div>
+                  <div class="filterText" style="width:33%;">
+                    <center><input type="checkbox" class="checkFilterST" id="ongoing" value="status" ng-click="checkboxST($event)"></center>
+                    <h4 style="color:#fff;">Ongoing</h4></div>
+                </div>
+
+              </md-card-content>
+            </md-card>
+          </div>
+
+          <md-divider></md-divider>
+
+        </md-list-item>
+        </md-list-->
+
+
+        <md-list>
+        <md-list-item class="md-3-line custom_white">
+          <div class="custom_margin_list md-list-item-text">
+            <div class="custom_emp_left_p"><h5>Priority</h5></div>
+            <!--div ng-show="showPlusP" class="taskTotal" ng-click="OpenPriority()"><i style="font-size:24px;" class="fa fa-plus-circle"></i></div>
+            <div ng-show="showMinusP" class="taskTotal" ng-click="ClosePriority()"><i style="font-size:24px;" class="fa fa-minus-circle"></i></div-->
+            <md-card class="Filter_card">
+
+              <md-card-content>
+                <div layout="row">
+                  <div class="filterText" style="width:33%;">
+                    <center><input type="checkbox" class="checkFilterP" id="High" value="priority" ng-click="checkboxP($event)"></center>
+                    <h4 style="color:#424242;">High</h4></div>
+                  <div class="verticalBorder"></div>
+                  <div class="filterText" style="width:33%;">
+                    <center><input type="checkbox" class="checkFilterP" id="Medium" value="priority" ng-click="checkboxP($event)"></center>
+                    <h4 style="color:#424242;">Medium</h4></div>
+                  <div class="verticalBorder"></div>
+                  <div class="filterText" style="width:33%;">
+                    <center><input type="checkbox" class="checkFilterP" id="Low" value="priority" ng-click="checkboxP($event)"></center>
+                    <h4 style="color:#424242;">Low</h4></div>
+                </div>
+
+              </md-card-content>
+            </md-card>
+          </div>
+
+          <md-divider></md-divider>
+
+        </md-list-item>
+        </md-list>
+
+
+      </div>
+
+    </md-content>
+
+
+  </ion-content>
+
+</ion-view>

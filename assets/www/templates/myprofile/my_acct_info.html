@@ -1,0 +1,71 @@
+<ion-view view-title="Account Information" ng-controller="my_acct_info_controller" class="custom_white" id="popupContainer" ng-init="init()">
+
+  <ion-header-bar class="bar-positive">
+    <md-button ng-click="goBack()" style="float:left;background-color:transparent;box-shadow:none;top:-12px;margin-left: -10px;" class="md-fab">
+      <i class="fa fa-arrow-left" style="color:#fff;font-size:25px;"></i>
+    </md-button>
+    <h3 class="md-flex">Account Information</h3>
+
+  </ion-header-bar>
+
+    <ion-content>
+
+      <md-content flex layout-padding class="custom_white">
+        <form name="projectForm">
+          <!--div layout="column"-->
+
+
+          <md-input-container class="md-block">
+            <label>Bank Name</label>
+            <input required md-no-asterisk name="Bname" ng-model="project.Bname" id="Bname">
+            <div ng-messages="projectForm.Bname.$error">
+              <div ng-message="required">This is required.</div>
+
+            </div>
+          </md-input-container>
+
+
+          <md-input-container style="width:100%;">
+              <label>Account Type</label>
+              <md-select ng-model="project.accountType">
+                <md-option><em>None</em></md-option>
+                <md-option ng-repeat="type in Account_TYPE" ng-value="type.name">
+                  {{type.name}}
+                </md-option>
+              </md-select>
+            </md-input-container>
+
+            <!--md-input-container class="md-block">
+
+            </md-input-container-->
+
+
+          <md-input-container class="md-block">
+            <label>Account No.</label>
+            <input required md-no-asterisk name="accno" ng-model="project.accno" id="accno" type="number" pattern="[0-9]*" inputmode="numeric">
+            <div ng-messages="projectForm.reportTo.$error">
+              <div ng-message="required">This is required.</div>
+
+            </div>
+          </md-input-container>
+
+          <md-input-container class="md-block">
+            <label>IFSC Code</label>
+            <input required md-no-asterisk name="ifsc" ng-model="project.ifsc" id="ifsc">
+            <div ng-messages="projectForm.reportTo.$error">
+              <div ng-message="required">This is required.</div>
+
+            </div>
+          </md-input-container>
+
+          <!--/div-->
+
+          <center><div><md-button ng-click="UpdateProfile()" id="card_login_btn" class="custom_btn">Save</md-button></div></center>
+        </form>
+
+
+
+      </md-content>
+    </ion-content>
+
+</ion-view>

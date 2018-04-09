@@ -1,0 +1,38 @@
+<md-bottom-sheet class="md-grid" layout="column" ng-controller="shareTimesheet_controller" ng-init="init()">
+
+    <div id="loader" ng-show="loader">
+        <div layout="row" layout-sm="column" layout-align="space-around" style="margin-top:75%;">
+            <md-progress-circular md-mode="indeterminate" class="md-accent md-hue-1" md-diameter="40"></md-progress-circular>
+        </div>
+    </div>
+    <!--div ng-cloak style="border-bottom:1px solid #145c96;width:100%;">
+    <div layout="row">
+        <h3 class="md-flex title_text" style="margin-left: 25px;margin-top: 15px;">Share</h3>
+        <md-button ng-click="shareToUser()" md-no-ink class="md-primary" style="border:none;background-color:#fff;">
+            <i class="fa fa-share" style="font-size:32px;margin-top: 10px;"></i>
+        </md-button>
+    </div>
+    </div-->
+    <md-subheader ng-cloak style="border-bottom:1px solid #145c96;width:100%;height:56px;">
+        <div layout="row">
+            <h3 class="md-flex title_text" style="margin-left: 25px;">Share</h3>
+            <md-button ng-click="shareToUser()" md-no-ink class="md-primary" style="border:none;background-color:transparent;margin-top: -3px;">
+                <i class="fa fa-share" style="font-size:24px;"></i>
+            </md-button>
+        </div>
+    </md-subheader>
+    <div ng-cloak style="padding-top:20px;padding-bottom:20px;">
+
+                <md-input-container style="width:80%;">
+                    <label>Share with</label>
+                    <md-select multiple ng-model="project.shareS">
+                        <!--md-option><em>None</em></md-option-->
+                        <md-option ng-repeat="item in employees" ng-value="item.email">
+                            {{item.name}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+
+
+    </div>
+</md-bottom-sheet>

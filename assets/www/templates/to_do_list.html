@@ -1,0 +1,87 @@
+<ion-view view-title="To-do list" class="custom_background" ng-init="initToDoList()">
+    <div id="loader" ng-show="loader">
+        <div layout="row" layout-sm="column" layout-align="space-around" style="margin-top:75%;">
+            <md-progress-circular md-mode="indeterminate" class="md-accent md-hue-1" md-diameter="40"></md-progress-circular>
+        </div>
+    </div>
+
+    <ion-header-bar class="bar-positive">
+        <md-button ng-click="BackHistory()" style="float:left;margin-left: -10px;background-color:transparent;box-shadow:none;top:-12px;" class="md-fab">
+            <i class="fa fa-arrow-left" style="color:#fff;font-size:25px;"></i>
+        </md-button>
+        <h3 class="md-flex title_text_bar" ng-click="BackHistory()">Back</h3>
+        <md-button ng-click="Addmemo()" style="float:right;background-color:transparent;box-shadow:none;top:-12px;" class="md-fab">
+            <i class="fa fa-plus" style="color:#fff;font-size:25px;"></i>
+        </md-button>
+    </ion-header-bar>
+    <div layout="column" layout-fill style="min-height:120px;height:120px;" class="employee_section_tab">
+        <md-tabs class="has-header" md-selected="selectedTab1" flex>
+            <md-tab style="color:#fff;" label="Pending" ng-click="pending()" id="ongoingTASK">
+
+            </md-tab>
+            <md-tab style="color:#fff;" label="Completed" md-selected="selectedTab1" ng-click="completed()">
+
+            </md-tab>
+        </md-tabs>
+    </div>
+    <!--md-tabs md-dynamic-height md-border-bottom>
+     <md-tab label="Pending" md-on-select="pending()"></md-tab>
+     <md-tab label="Completed" md-on-select="completed()"></md-tab>
+     </md-tabs--->
+
+    <ion-content style="margin-top:50px;">
+        <!--ion-refresher on-refresh="doRefresh()"></ion-refresher class="md-padding" -->
+        <div ng-show="pendingView">
+            <md-list>
+
+                <md-list-item class="TASKDetails md-3-line custom_white" ng-repeat="item in PendingTaskMemo | orderBy : '-last_modified'">
+
+                    <div class="taskLIST custom_margin_list md-list-item-text">
+                        <div layout="row">
+                            <div class="taskTotald" ng-click="CompleteToDo(item._id,item.completed)"><i class="fa fa-check-square-o" style="font-size:24px;color:#3f51b5;margin-top: 6px;"></i></div>
+                            <div class="custom_emp_left_p" ng-click="updateTo_do_list(item)"><h4 style="vertical-align:middle;">{{item.description}}</h4></div>
+
+                        </div>
+
+                    </div>
+
+                    <md-divider ng-if="!$last"></md-divider>
+
+
+
+                </md-list-item>
+
+
+            </md-list>
+        </div>
+
+        <div ng-show="completedView">
+            <md-list>
+
+                <md-list-item class="TASKDetails md-3-line custom_white" ng-repeat="item in CompletedTaskMemo | orderBy : '-last_modified'">
+
+                    <div class="taskLIST custom_margin_list md-list-item-text">
+                        <div layout="row">
+                            <div class="taskTotald" ng-click="CompleteToDo(item._id,item.completed)"><i class="fa fa-check-square-o" style="font-size:24px;color:#3f51b5;margin-top: 6px;"></i></div>
+                            <div class="custom_emp_left_p" ng-click="deleteListCompleted(item._id)"><h4 style="font-size:16px;vertical-align:middle;text-decoration: line-through;">{{item.description}}</h4></div>
+
+                        </div>
+
+                    </div>
+
+                    <md-divider ng-if="!$last"></md-divider>
+
+
+
+                </md-list-item>
+
+
+            </md-list>
+        </div>
+        <div ng-show="norecords" class="norecords"></div>
+    </ion-content>
+
+
+</ion-view>
+
+

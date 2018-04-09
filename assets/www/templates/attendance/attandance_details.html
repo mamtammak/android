@@ -1,0 +1,61 @@
+<ion-view view-title="Attendance" ng-controller="atten_detail_controller" class="custom_background" id="popupContainerAD" ng-init="init()">
+
+    <div id="loader" ng-show="loader">
+        <div layout="row" layout-sm="column" layout-align="space-around" style="margin-top:75%;">
+            <md-progress-circular md-mode="indeterminate" class="md-accent md-hue-1" md-diameter="40"></md-progress-circular>
+        </div>
+    </div>
+
+    <ion-header-bar class="bar-positive">
+        <md-button ng-click="close()" style="float:left;background-color:transparent;box-shadow:none;top:-12px;margin-left: -10px;" class="md-fab">
+            <i class="fa fa-arrow-left" style="color:#fff;font-size:25px;"></i>
+        </md-button>
+        <h3 class="md-flex">{{DATE_of_attendance | date:'fullDate'}}</h3>
+        </div>
+    </ion-header-bar>
+
+
+    <ion-content>
+
+        <md-content flex layout-padding class="custom_background">
+
+            <md-list>
+
+                <md-list-item class="TASKDetails md-3-line custom_white" ng-repeat="item in attd_details">
+
+                    <div class="taskLIST custom_margin_list md-list-item-text">
+                        <div layout="row">
+                            <div layout="column" class="custom_emp_left">
+                                <h3 style="color:#0a5cad;">Time</h3>
+                                <h3 style="padding-top:16px;">{{item.timestamp | date: "shortTime"}}</h3>
+                            </div>
+                            <div layout="column" class="custom_emp_right">
+                                <h3 style="color:#0a5cad;">Action</h3>
+                                <h3 style="padding-top:16px;">{{item.action}}</h3>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <md-divider ng-if="!$last"></md-divider>
+
+
+
+                </md-list-item>
+
+
+            </md-list>
+
+            <div class="nodata" style="bachground-color:#bbbb;" ng-show="norecords"></div>
+
+
+
+        </md-content>
+
+    </ion-content>
+
+
+
+
+
+</ion-view>

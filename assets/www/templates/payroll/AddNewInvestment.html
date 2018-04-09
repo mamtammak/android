@@ -1,0 +1,140 @@
+<ion-view view-title="New Investment Declaration" class="custom_white" ng-init="init()">
+    <div id="loader" ng-show="loader">
+        <div layout="row" layout-sm="column" layout-align="space-around" style="margin-top:75%;">
+            <md-progress-circular md-mode="indeterminate" class="md-accent md-hue-1" md-diameter="40"></md-progress-circular>
+        </div>
+    </div>
+
+    <ion-header-bar class="bar-positive">
+        <md-button ng-click="close()" style="float:left;background-color:transparent;box-shadow:none;top:-12px;margin-left: -10px;" class="md-fab">
+            <i class="fa fa-arrow-left" style="color:#fff;font-size:25px;"></i>
+        </md-button>
+        <h3 class="md-flex">New Investment Declaration</h3>
+    </ion-header-bar>
+
+
+    <ion-content style="margin-bottom:50px;">
+
+      <md-content flex layout-padding class="custom_white">
+
+        <form name="projectform">
+         <div layout="row">
+             <md-input-container style="width:50%;">
+                 <label>Section</label>
+                 <md-select ng-change="getInvestmentTYP()" ng-model="project.section">
+                     <md-option><em>None</em></md-option>
+                     <md-option ng-repeat="item in investmentS" ng-value="item">
+                         {{item.section}}
+                     </md-option>
+                 </md-select>
+             </md-input-container>
+             <md-input-container style="width:50%;">
+                 <label>Financial Year</label>
+                 <md-select ng-click="getFinancialY()" ng-model="project.financialY">
+                     <md-option><em>None</em></md-option>
+                     <md-option  ng-repeat="item in financialY" ng-value="item">
+                         {{item}}
+                     </md-option>
+                 </md-select>
+             </md-input-container>
+         </div>
+
+
+            <div layout="row">
+                <!--input type="checkbox" class="checkhour" style="margin: 5px 0 0 5px;"-->
+                <md-button style="width:35px;" class="md-raised md-primary" ng-click="addInvestment()"><i class="fa fa-plus-circle" style="color:#fff;position:relative;top:2px;font-size:22px;"></i></md-button>
+                <div style="margin-left:10px;" class="custom_left50"><h4>Investment type</h4></div>
+                <div class="custom_right50"><h4>Invested amount</h4></div>
+            </div>
+
+            <md-card id="investment" class="dashboard_card">
+                <md-card-content>
+
+                    <div layout="row" class="mdcard_pg">
+                        <div class="custom_left50">
+                            <md-input-container style="width:100%;">
+                                <label>Select investment type</label>
+                                <md-select ng-change="getinvestmentSelector()" ng-model="project.selector" name="selector">
+                                    <md-option><em>None</em></md-option>
+                                    <md-option  ng-repeat="item in invetmentType" value="{{item}}" id="Options_{{item}}">
+                                        {{item}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+                        <div class="custom_right50">
+                            <md-input-container class="md-block">
+                                <input required md-no-asterisk ng-focus='hideInV()' name="investedAMT" ng-model="project.investedamount" type="number" pattern="[0-9]*" inputmode="numeric">
+
+                            </md-input-container>
+                        </div>
+                    </div>
+
+                    <div id="investm-card"></div>
+
+                    <div layout="row">
+                        <div class="custom_left50">
+                            <h5>Investment amount</h5>
+
+                        </div>
+                        <div class="custom_right50">
+                            <h5>Non-exempted amount</h5>
+
+                        </div>
+
+
+                        <md-button style='background-color:transparent;' ng-click='showInV()' ng-show='double_down' class='md-icon-button md-accent'>
+                            <i class='fa fa-angle-double-down' style='color:rgb(63,81,181);font-size:26px;'></i>
+                        </md-button>
+                    </div>
+                    <div ng-show="showInvestmentAMT">
+
+                        <div layout="row">
+                            <div class="custom_left50">
+                                <h4 id="Total_InvestmentV">{{project.investedamount}}</h4>
+                            </div>
+                            <div class="custom_right50">
+                                <h4 id="deductedAmount">{{project.deductedAmt}}</h4>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </md-card-content>
+            </md-card>
+
+
+            <div layout="row" style="margin:8px;">
+                <div layout="column" class="custom_left50" style="padding-left:16px;">
+                    <h5>Max exempted amount</h5>
+                    <h4>{{MaxExempted}}</h4>
+                </div>
+                <div layout="column" class="custom_right50">
+                    <h5>Exemption %</h5>
+                    <h4>{{exempPer}}</h4>
+                </div>
+            </div>
+
+
+
+
+            <!--div flex style="padding-top:30px;">
+                <label for="fileInvestment">Choose file to upload</label>
+                <input type="file" id="fileInvestment" name="file">
+            </div-->
+
+          </form>
+
+
+      </md-content>
+
+    </ion-content>
+    <div class="bar bar-footer bar-stable">
+        <div ng-click="saveNewDeclaration(project)" class="custom_footerbar_full"><button ion-button block>ADD</button></div>
+
+    </div>
+
+
+</ion-view>
+
+

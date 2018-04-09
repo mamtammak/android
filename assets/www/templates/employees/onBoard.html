@@ -1,0 +1,201 @@
+<ion-view view-title="On Board Deatils" class="custom_white" ng-controller="onBoard_controller" layout="column" ng-cloak id="popupContainerOB" ng-init="init()">
+
+    <div id="loader" ng-show="loader">
+        <div layout="row" layout-sm="column" layout-align="space-around" style="margin-top:75%;">
+            <md-progress-circular md-mode="indeterminate" class="md-accent md-hue-1" md-diameter="40"></md-progress-circular>
+        </div>
+    </div>
+
+    <ion-header-bar class="bar-positive">
+        <md-button ng-click="close()" style="float:left;background-color:transparent;box-shadow:none;top:-12px;margin-left: -10px;" class="md-fab">
+            <i class="fa fa-arrow-left" style="color:#fff;font-size:25px;"></i>
+        </md-button>
+        <h3 class="md-flex">On Board Deatils</h3>
+
+    </ion-header-bar>
+
+
+
+    <ion-content>
+
+      <md-content flex layout-padding class="custom_white">
+
+        <form name="projectForm">
+          <!--div layout="column"-->
+
+
+              <md-input-container class="md-block">
+                <label>First Name</label>
+                <input required md-no-asterisk name="fname" ng-model="project.fname" id="fname">
+                <div ng-messages="projectForm.fname.$error">
+                  <div ng-message="required">This is required.</div>
+
+                </div>
+              </md-input-container>
+
+            <md-input-container class="md-block">
+                <label>Last Name</label>
+                <input required md-no-asterisk name="lname" ng-model="project.lname" id="lname">
+                <div ng-messages="projectForm.lname.$error">
+                    <div ng-message="required">This is required.</div>
+
+                </div>
+            </md-input-container>
+
+
+            <div layout="row">
+
+                <md-input-container style="width:50%;">
+                    <label>Job Title</label>
+                    <md-select ng-model="project.job_title" id="job_title">
+                        <md-option><em>None</em></md-option>
+                        <md-option ng-repeat="job in jobTitle" ng-value="job._id">
+                            {{job.name}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+
+
+                <div flex-gt-xs style="width:50%;padding-top:15px;">
+                    <md-datepicker ng-model="project.date" name="myDate" md-placeholder="Joining Date" id="Board_date"></md-datepicker>
+                </div>
+            </div>
+              <md-input-container class="md-block">
+                <label>Email Id</label>
+                <input required md-no-asterisk name="emailID" ng-model="project.emailID" id="emailID">
+                <div ng-messages="projectForm.emailID.$error">
+                  <div ng-message="required">This is required.</div>
+
+                </div>
+              </md-input-container>
+
+            <div layout="row">
+
+                <md-input-container style="width:50%;">
+                    <label>Gender</label>
+                    <md-select ng-model="project.gender">
+                        <md-option><em>None</em></md-option>
+                        <md-option ng-repeat="sex in gender" ng-value="sex.name">
+                            {{sex.name}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+
+
+                <div flex-gt-xs style="width:50%;padding-top:15px;">
+                    <md-datepicker ng-model="project.birthdate" name="birthdate" md-placeholder="DOB" id="birthdate"></md-datepicker>
+                </div>
+            </div>
+
+
+            <md-input-container class="md-block">
+                <label>Employee Code</label>
+                <input required md-no-asterisk name="empcode" ng-model="project.empcode" id="empcode">
+                <div ng-messages="projectForm.empcode.$error">
+                    <div ng-message="required">This is required.</div>
+
+                </div>
+            </md-input-container>
+
+
+            <!--div flex>
+                <span style="font-size:16px;">Joining</span>
+            </div-->
+
+            <div layout="row">
+
+                <md-input-container style="width:50%;">
+                    <label>Employee Type</label>
+                    <md-select ng-model="project.emp_type" id="emp_select">
+                        <md-option><em>None</em></md-option>
+                        <md-option ng-repeat="emptype in EMP_TYPE" ng-value="emptype.name">
+                            {{emptype.name}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+
+
+                <md-input-container style="width:50%;">
+                    <label>Reporting To</label>
+                    <md-select ng-model="project.reportingto" id="report_select">
+                        <md-option><em>None</em></md-option>
+                        <md-option  ng-repeat="item in supervisor" ng-value="item.nameCode">
+                            {{item.name}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+
+            <div layout="row">
+
+                <md-input-container style="width:50%;">
+                    <label>Branch</label>
+                    <md-select ng-change="getBranchShift()" ng-model="project.branch"  id="branch">
+                        <md-option><em>None</em></md-option>
+                        <md-option ng-repeat="item in branches" ng-value="item" >
+                            {{item.name}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+
+
+
+                <md-input-container style="width:50%;">
+                    <label>Working Shift</label>
+                    <md-select ng-model="project.workingShift" id="workingShift">
+                        <md-option><em>None</em></md-option>
+                        <md-option ng-repeat="item in Branch_Working_Shift" ng-value="item._id">
+                            {{item.desc}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+
+            <md-input-container class="md-block">
+                <label>HR Manager</label>
+                <md-select ng-model="project.HrManager" id="HrManager">
+                    <md-option><em>None</em></md-option>
+                    <md-option  ng-repeat="item in HrManager" ng-value="item._id">
+                        {{item.name}}
+                    </md-option>
+                </md-select>
+            </md-input-container>
+
+            <div layout="row">
+
+                <md-input-container style="width:50%;">
+                    <label>Job Grade</label>
+                    <md-select ng-model="project.jobGrade"  id="jobGrade">
+                        <md-option><em>None</em></md-option>
+                        <md-option ng-repeat="item in jobGrade" ng-value="item" >
+                            {{item.name}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+
+
+
+                <md-input-container style="width:50%;">
+                    <label>Department</label>
+                    <md-select ng-model="project.department" id="department">
+                        <md-option><em>None</em></md-option>
+                        <md-option ng-repeat="item in department" ng-value="item._id">
+                            {{item.name}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+
+            <!--/div-->
+            <center><div><md-button ng-click="AddOnBoard(project)" id="card_login_btn" class="custom_btn">Save</md-button></div></center>
+          </form>
+
+
+
+      </md-content>
+    </ion-content>
+
+
+</ion-view>
+
+

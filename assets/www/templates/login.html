@@ -1,0 +1,75 @@
+<ion-view view-title="Sign-In" class="signin-background" name="login-view" ng-init="init()" id="popupContainer">
+
+
+    <!--md-progress-circular md-mode="indeterminate" ng-show="isLoading"></md-progress-circular-->
+    <div id="loader" ng-show="loader">
+        <div layout="row" layout-sm="column" layout-align="space-around" style="margin-top:75%;">
+            <md-progress-circular md-mode="indeterminate" class="md-accent md-hue-1" md-diameter="40"></md-progress-circular>
+
+        </div>
+        <center>
+            <p style="color:#fff;font-size:16px;">Please wait </p>
+            <p style="color:#fff;font-size:16px;">connecting to secure server</p>
+        </center>
+    </div>
+
+    <md-content class="md-padding" layout-xs="column" layout="row">
+        <form name="projectForm" style="margin-top:15%;">
+            <div flex-xs flex-gt-xs="80">
+                <center><img ng-src="{{imagePath}}" class="logo_hrms">
+                </center>
+                <md-card class="login_card">
+                    <!--img ng-src="{{imagePath}}" class="md-card-image"-->
+
+                    <md-card-content>
+                        <md-input-container class="md-block" style="margin-top:20px;">
+                            <!-- Use floating placeholder instead of label -->
+                            <md-icon md-svg-src="img/icons/mail_outline_24px.svg" class="email"></md-icon>
+                            <input ng-model="data.username" class="inputUsername" id="username" type="email" ng-pattern="/^.+@.+\..+$/" name="username" placeholder="Email Id" required>
+                            <div ng-messages="projectForm.username.$error" role="alert">
+                                <div ng-message-exp="['required','pattern']">
+                                    please enter valid email id.
+                                </div>
+                            </div>
+                        </md-input-container>
+                        
+                        <md-input-container class="md-block" style="margin-top:20px;">
+                            <!-- Use floating placeholder instead of label -->
+                            <md-icon md-svg-src="img/icons/if_key_1608749.svg" class="email"></md-icon>
+                            <input ng-model="data.password" class="inputPassword" id="password" type="{{inputType}}" name="password" placeholder="Password" required>
+                            <div ng-messages="projectForm.password.$error">
+                                <div ng-message="required">please enter valid password</div>
+                            </div>
+                        </md-input-container>
+                        <div layout="row">
+                        <input type="checkbox" id="checkbox" ng-model="passwordCheckbox" style="margin-left:35px;" ng-click="hideShowPassword()" />
+                        <label for="checkbox" style="margin-left:5px;">Show password</label>
+                        <!--label for="checkbox" ng-if="!passwordCheckbox">Show password</label-->
+                        </div>
+                        
+                    </md-card-content>
+                    <md-card-actions layout="column" layout-align="center">
+                        <center>
+                            <div>
+                                <md-button ng-click="login(data)" id="card_login_btn" class="custom_btn">Login</md-button>
+                            </div>
+                        </center>
+                        <center>
+                            <div style="margin-top: 10px;padding-bottom: 10px;">
+                                <p id="card_forgetpass_btn" ng-click="forgetPassword()">Forgot Password ?</p>
+                            </div>
+                        </center>
+                    </md-card-actions>
+                </md-card>
+
+            </div>
+        </form>
+
+    </md-content>
+
+    <!--div class="bar bar-footer">
+            <p class="title">&#169;2017 | Adnate IT Solutions Pvt. Ltd.</p>
+        </div-->
+
+
+</ion-view>

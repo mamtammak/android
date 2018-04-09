@@ -1,0 +1,72 @@
+
+<md-dialog ng-controller="CompList_controller" aria-label="compOff_PopUp" ng-init="InitCompOFFLIST()">
+    <form ng-cloak>
+
+        <div id="loader" ng-show="loader">
+            <div layout="row" layout-sm="column" layout-align="space-around" style="margin-top:75%;">
+                <md-progress-circular md-mode="indeterminate" class="md-accent md-hue-1" md-diameter="40"></md-progress-circular>
+            </div>
+        </div>
+
+        <md-dialog-content class="custom_white">
+            <div class="md-dialog-content">
+                <!--div layout>
+                    <span class="md-body-1">CompOff list</span>
+                </div-->
+                <md-list id="CompOffList">
+
+                    <md-list-item class="md-3-line custom_white" ng-repeat="item in compOffList track by $index">
+
+                        <div class="custom_margin_list md-list-item-text" style="padding-top:12px;">
+                            <input type="checkbox" class="checkhour" value='{{item}}'>&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size:16px;vertical-align:top;color:#616161;">{{item._id}}</span>
+                            <div layout="row">
+                                <div layout="column" class="custom_left50">
+                                    <h3 style="color:#0a5cad;">Worked date</h3>
+                                    <h3 style="padding-top:12px;">{{item.compoff.compoff_dates | date: "mediumDate"}}</h3>
+                                </div>
+                                <div layout="column" class="custom_left50">
+                                    <h3 style="color:#0a5cad;">Lapsed date</h3>
+                                    <h3 style="padding-top:12px;">{{ getDaysDate(item.compoff.compoff_dates) | date: "mediumDate"}}</h3>
+                                </div>
+                            </div>
+                            <div layout="row" ng-if="item.compoff.compoff_type == 'Half Day'" ng-init="data_item.compoff._id=0.5" style="padding-top:12px;">
+                                <md-radio-group ng-model="data_item.compoff._id">
+                                    <md-radio-button value="0.5" class="md-primary custom_radio" ng-click="checkStuff(item.compoff._id,'Half Day')">Half Day</md-radio-button>
+                                </md-radio-group>
+                            </div>
+                            <div ng-if="item.compoff.compoff_type == 'Full Day'" ng-init="data_item.compoff._id=1" style="padding-top:12px;">
+                                <md-radio-group ng-model="data_item.compoff._id" layout="row">
+                                    <md-radio-button value="1" class="md-primary custom_radio" ng-click="checkStuff(item.compoff._id,'Full Day')">Full Day</md-radio-button>
+                                    <md-radio-button value="0.5" class="md-primary custom_radio" ng-click="checkStuff(item.compoff._id,'Half Day')">Half Day</md-radio-button>
+                                </md-radio-group>
+                                <!--md-radio-group ng-model="data.half"><md-radio-button value="HALFDAY" class="md-primary custom_radio">Half Day</md-radio-button></md-radio-group-->
+                            </div>
+
+
+                        </div>
+
+                        <md-divider ng-if="!$last"></md-divider>
+
+                    </md-list-item>
+
+
+                </md-list>
+            </div>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row" style="background-color: #145c96;">
+            <md-button ng-click="close()" style="background-color: transparent;color:#fff;">
+                Cancel
+            </md-button>
+            <span flex></span>
+            <!--md-button ng-click="answer('not useful')">
+                Not Useful
+            </md-button-->
+            <md-button ng-click="NextCompOff()" style="background-color: transparent;color:#fff;">
+                Next
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>
+
+

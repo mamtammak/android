@@ -1,0 +1,108 @@
+<ion-view view-title="Leave Confirmation" class="custom_white" layout="column" ng-init="init()">
+
+    <div id="loader" ng-show="loader">
+        <div layout="row" layout-sm="column" layout-align="space-around" style="margin-top:75%;">
+            <md-progress-circular md-mode="indeterminate" class="md-accent md-hue-1" md-diameter="40"></md-progress-circular>
+        </div>
+    </div>
+    <ion-header-bar class="bar-positive">
+        <md-button ng-click="close()" style="float:left;margin-left: -10px;background-color:transparent;box-shadow:none;top:-12px;" class="md-fab">
+            <i class="fa fa-arrow-left" style="color:#fff;font-size:25px;"></i>
+        </md-button>
+        <h3 class="md-flex">Leave Confirmation</h3>
+
+    </ion-header-bar>
+
+    <ion-content>
+
+      <md-content flex layout-padding class="custom_white">
+
+        <form name="projectForm">
+
+                <div layout="column">
+                <h3 style="color:#3f51b5;">{{name}}</h3>
+                 <h3><span id="highLightFont">{{taskID}}</span></h3>
+                 </div>
+              <md-input-container class="md-block">
+                <label>Employee Name</label>
+                <input required md-no-asterisk name="empName" ng-model="project.empName" id="empName" readonly>
+
+              </md-input-container>
+
+            <md-input-container class="md-block">
+                <label>Email Id</label>
+                <input required md-no-asterisk name="emailid" ng-model="project.emailid" id="emailid" readonly>
+
+            </md-input-container>
+
+            <md-input-container class="md-block">
+                <label>Reason for leave</label>
+                <input required md-no-asterisk name="reasonL" ng-model="project.reasonL" id="reasonL" readonly>
+
+            </md-input-container>
+
+              <md-input-container class="md-block">
+                <label>Leave Applied On</label>
+                <input required md-no-asterisk name="leaveAOn" ng-model="project.leaveAOn" id="leaveAOn" readonly>
+
+              </md-input-container>
+
+            <md-input-container class="md-block">
+                <label>Leave Type</label>
+                <input required md-no-asterisk name="leavetyp" ng-model="project.leavetyp" id="leavetyp" readonly>
+
+            </md-input-container>
+
+            <md-input-container class="md-block">
+                <label>Remaining Leave</label>
+                <input required md-no-asterisk name="remainingL" ng-model="project.remainingL" id="remainingL" readonly>
+
+            </md-input-container>
+
+            <md-input-container class="md-block">
+                <label>No. of days</label>
+                <input required md-no-asterisk name="no_OfDays" ng-model="project.no_OfDays" id="no_OfDays" readonly>
+
+            </md-input-container>
+
+
+            <div layout="row">
+                <md-input-container class="md-block">
+                    <label>From date</label>
+                    <input required md-no-asterisk name="fdate" ng-model="project.fdate" id="fdate" readonly>
+
+                </md-input-container>
+                <md-input-container class="md-block">
+                    <label>To Date</label>
+                    <input required md-no-asterisk name="tdate" ng-model="project.tdate" id="tdate" readonly>
+
+                </md-input-container>
+            </div>
+
+
+            <md-input-container class="md-block">
+                <label>Manager Name</label>
+                <input required md-no-asterisk name="manager" ng-model="project.manager" id="manager" readonly>
+
+            </md-input-container>
+
+
+
+            <md-input-container class="md-block">
+                <label>Remarks</label>
+                <input required md-no-asterisk name="remarks" ng-model="project.remarks" id="remarks">
+
+            </md-input-container>
+
+
+            </form>
+
+
+
+      </md-content>
+    </ion-content>
+
+
+</ion-view>
+
+

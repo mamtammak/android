@@ -1,0 +1,51 @@
+<ion-view view-title="lessonPage" ng-controller="lessonPage_controller" class="custom_background" id="popupContainerTR" ng-init="init()">
+
+    <div id="loader" ng-show="loader">
+        <div layout="row" layout-sm="column" layout-align="space-around" style="margin-top:75%;">
+            <md-progress-circular md-mode="indeterminate" class="md-accent md-hue-1" md-diameter="40"></md-progress-circular>
+        </div>
+    </div>
+
+    <ion-header-bar class="bar-positive">
+        <md-button ng-click="close()" style="float:left;margin-left: -10px;background-color:transparent;box-shadow:none;top:-12px;" class="md-fab">
+            <i class="fa fa-arrow-left" style="color:#fff;font-size:25px;"></i>
+        </md-button>
+        <h3 class="md-flex">Lesson</h3>
+
+    </ion-header-bar>
+
+
+    <ion-content>
+
+        <md-content flex layout-padding class="custom_background">
+            <h3>{{ module_name }}</h3>
+            <p> - {{ module_summary }}</p>
+
+            <br />
+
+            <!--div class="embed-responsive embed-responsive-16by9" ng-show="showVideo">
+                <youtube-video class="embed-responsive-item" video-url="anotherGoodOne" webkitallowfullscreen mozallowfullscreen allowfullscreen></youtube-video>
+            </div-->
+
+
+            <div layout="row">
+                <div ng-click="openPDF()" style="width:30%;"><md-button class="md-raised" style="background-color:rgb(16,108,200);color:#fff;">START</md-button></div>
+            </div>
+            <div layout="row" ng-show="showcomplete">
+               <div ng-click="CompletedL()" style="width:30%;"><md-button class="md-raised" style="background-color:rgb(16,108,200);color:#fff;">Completed</md-button></div>
+            </div>
+
+
+
+
+        </md-content>
+
+
+
+    </ion-content>
+
+
+
+
+
+</ion-view>

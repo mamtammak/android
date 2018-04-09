@@ -1,0 +1,88 @@
+<ion-view view-title="Curriculum" ng-controller="curriculum_controller" class="custom_background" id="popupContainerTR" ng-init="init()">
+
+    <div id="loader" ng-show="loader">
+        <div layout="row" layout-sm="column" layout-align="space-around" style="margin-top:75%;">
+            <md-progress-circular md-mode="indeterminate" class="md-accent md-hue-1" md-diameter="40"></md-progress-circular>
+        </div>
+    </div>
+
+    <ion-header-bar class="bar-positive">
+        <md-button ng-click="close()" style="float:left;margin-left: -10px;background-color:transparent;box-shadow:none;top:-12px;" class="md-fab">
+            <i class="fa fa-arrow-left" style="color:#fff;font-size:25px;"></i>
+        </md-button>
+        <h3 class="md-flex">Curriculum</h3>
+
+    </ion-header-bar>
+    <div class="bar bar-subheader employee_section" style="height:35px;" ng-click="describtion()">
+        <p>Click here to view description of course.</p>
+    </div>
+
+
+    <ion-content>
+
+        <md-content flex layout-padding class="custom_background">
+            <section layout="column" class="wrapper20">
+            <md-list flex class="custom_background">
+
+                <md-list-item class="TASKDetails md-3-line custom_white" ng-repeat="list in lessonsValue" ng-click="startLesson(list)">
+
+                    <div class="taskLIST custom_margin_list md-list-item-text">
+
+                        <div layout="row">
+                                <img ng-src="{{curriculum}}" class="md-avatar" />
+                                <div class="md-list-item-text" layout="column">
+                                    <h3 style="color:#424242;">lesson {{$index + 1}}</h3>
+                                    <h4><span id="highLightFont">{{ list.module_name }}</span></h4>
+
+                                </div>
+                            </div>
+                                <!--div class="my_circle"><h3 style="margin-top:15px;font-size:30px;">{{ list.duration.value }}</h3><h3>{{list.duration.unit}}</h3></div>
+                                <div style="width:70%;">
+                                <div layout="column">
+                                <div><h3 style="margin:20px;font-size:25px;">{{ list.module_name }}</h3></div>
+
+                                </div>
+                                    </div-->
+
+
+
+
+                        <!--div layout="row">
+                            <div><h3 style="margin: 0px 20px 20px;color:#b56070;"> - {{ list.module_summary }}</h3></div>
+                        </div-->
+                        <div layout="row">
+                            <div class="custom_left"><p>{{ list.duration.value }} hour</p></div>
+                            <div ng-repeat="status in tracker" class="custom_right">
+                                <div ng-show="true" ng-if="status == list._id"><h3 style="padding-bottom:5px;color:#388E3C;float:right;">Completed</h3></div>
+                                <!--div ng-show="true" ng-if="status != list._id"><h3 style="padding-bottom:5px;color:#e51400;">In Complete</h3></div-->
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+                <md-divider ng-if="!$last"></md-divider>
+                </md-list-item>
+
+
+            </md-list>
+
+        </section>
+
+        </md-content>
+
+        <!--button id="addeventBTN" class="md-fab md-fab-bottom-right docs-scroll-fab md-button md-ink-ripple scrolling" type="button" docs-scroll-class="scrolling" ng-click="addEvent()">
+
+            <i class="fa fa-plus"></i>
+            <div class="md-ripple-container"></div></button-->
+
+    </ion-content>
+
+
+
+
+
+</ion-view>

@@ -1,0 +1,30 @@
+<md-bottom-sheet class="md-grid" layout="column" ng-controller="timesheetEmpFilter" ng-init="init()">
+
+    <div id="loader" ng-show="loader">
+        <div layout="row" layout-sm="column" layout-align="space-around" style="margin-top:75%;">
+            <md-progress-circular md-mode="indeterminate" class="md-accent md-hue-1" md-diameter="40"></md-progress-circular>
+        </div>
+    </div>
+
+    <!--md-subheader ng-cloak style="border-bottom:1px solid #145c96;width:100%;height:56px;">
+        <div layout="row">
+            <h3 class="md-flex title_text" style="margin-left: 25px;">Search</h3>
+        </div>
+    </md-subheader-->
+    <div ng-cloak style="margin:0 20%;">
+        <md-input-container style="width:100%;">
+            <label>Search by employee</label>
+
+            <md-autocomplete md-selected-item="project.EMPLIST" md-selected-item-change="getTimesheetList(item)" md-search-text="name" md-items="item in emplist | filter:name" md-item-text="item.name" style="margin:0;">
+                <span md-highlight-text="item">{{item.name}}</span>
+                <md-not-found>
+                    <div class="chip-not-found">Not found.</div>
+                </md-not-found>
+            </md-autocomplete>
+        </md-input-container>
+
+    </div>
+    <!--section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+        <md-button class="md-raised" style="width:80%;background-color:#145c96;color:#fff;" ng-click="getTimesheetList()">Search</md-button>
+    </section-->
+</md-bottom-sheet>

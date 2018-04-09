@@ -1,0 +1,26 @@
+<md-dialog ng-controller="events" aria-label="Graph" ng-init="LoadGraphHire()">
+    <form ng-cloak>
+
+        <div id="loader" ng-show="loader">
+            <div layout="row" layout-sm="column" layout-align="space-around" style="margin-top:75%;">
+                <md-progress-circular md-mode="indeterminate" class="md-accent md-hue-1" md-diameter="40"></md-progress-circular>
+            </div>
+        </div>
+
+        <md-dialog-content class="custom_white">
+
+        <p style="font-size:16px;font-weight:400;color:#000;text-align: -webkit-center;width:80%;margin-top:6px;">Hiring Year {{current_year}}</p>
+            <div class="md-dialog-content">
+                <div style="width:99%;">
+                  <canvas id="myChart" style="height:45%;"></canvas>
+                </div>
+            </div>
+
+            <div class="norecords"></div>
+        </md-dialog-content>
+
+        
+    </form>
+</md-dialog>
+
+

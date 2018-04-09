@@ -1,0 +1,93 @@
+<ion-view view-title="Compensatory leave Confirmation" class="custom_white" layout="column" ng-init="init()">
+
+    <ion-header-bar class="bar-positive">
+        <md-button ng-click="close()" style="float:left;background-color:transparent;box-shadow:none;top:-12px;margin-left: -10px;" class="md-fab">
+            <i class="fa fa-arrow-left" style="color:#fff;font-size:25px;"></i>
+        </md-button>
+        <h3 class="md-flex">CompOff Confirmation</h3>
+
+    </ion-header-bar>
+
+    <ion-content>
+
+      <md-content flex layout-padding class="custom_white">
+
+        <form name="projectForm">
+          <!--div layout="column"-->
+
+
+              <md-input-container class="md-block">
+                <label>Applied by</label>
+                <input required md-no-asterisk name="appliedby" ng-model="project.appliedby" id="appliedby" readonly>
+
+              </md-input-container>
+
+            <md-input-container class="md-block">
+                <label>Applied on</label>
+                <input required md-no-asterisk name="appliedon" ng-model="project.appliedon" id="appliedon" readonly>
+
+            </md-input-container>
+
+
+
+              <md-input-container class="md-block">
+                <label>Working on</label>
+                <input required md-no-asterisk name="workingon" ng-model="project.workingon" id="workingon" readonly>
+
+              </md-input-container>
+
+            <md-input-container class="md-block">
+                <label>Working for</label>
+                <!--input required md-no-asterisk name="workingfor" ng-model="project.workingfor" id="workingfor" readonly-->
+                <md-list>
+
+                    <md-list-item class="md-3-line custom_white" ng-repeat="item in WorkingForDays">
+
+                        <div class="custom_margin_list md-list-item-text">
+                            <div layout="row">
+                                <div layout="column" class="custom_left">
+                                    <h3><span id="highLightFont">date</span></h3>
+                                    <h3 style="color:#757575;padding-top:12px;">{{item.compoff_dates | date:'shortDate'}}</h3>
+
+                                </div>
+                                <div layout="column" class="custom_right">
+                                    <h3><span id="highLightFont">type</span></h3>
+                                    <h3 style="color:#757575;padding-top:12px;">{{item.compoff_type}}</h3>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <md-divider ng-if="!$last"></md-divider>
+
+                    </md-list-item>
+
+
+                </md-list>
+
+            </md-input-container>
+
+            <md-input-container class="md-block">
+                <label>Reason</label>
+                <input readonly  name="reasonL" ng-model="project.leaveReason" id="leaveReason">
+
+            </md-input-container>
+
+            <md-input-container class="md-block">
+                <label>Comments</label>
+                <input required md-no-asterisk name="reasonL" ng-model="project.reasonL" id="reasonL">
+
+            </md-input-container>
+
+
+          </form>
+
+
+
+      </md-content>
+    </ion-content>
+
+
+</ion-view>
+
+

@@ -1,0 +1,159 @@
+<ion-view view-title="Task popup" class="custom_white" ng-init="init();">
+    <div id="loader" ng-show="loader">
+        <div layout="row" layout-sm="column" layout-align="space-around" style="margin-top:75%;">
+            <md-progress-circular md-mode="indeterminate" class="md-accent md-hue-1" md-diameter="40"></md-progress-circular>
+        </div>
+    </div>
+    <ion-header-bar class="bar-positive">
+        <md-button ng-click="close()" style="float:left;margin-left: -10px;background-color:transparent;box-shadow:none;top:-12px;" class="md-fab">
+            <i class="fa fa-arrow-left" style="color:#fff;font-size:25px;"></i>
+        </md-button>
+        <h3 class="md-flex">Task</h3>
+
+    </ion-header-bar>
+
+    <ion-content style="margin-bottom:50px;">
+
+        <md-content flex layout-padding class="custom_white">
+        <div><h3 style="color:#424242;">{{TaskTitle}}</h3></div>
+            <md-input-container class="md-block">
+                <label>Description</label>
+                <input required md-no-asterisk name="task_des" ng-model="project.task_des">
+
+            </md-input-container>
+
+            <md-input-container class="md-block">
+                <label>Created by</label>
+                <input required md-no-asterisk name="createdBy" ng-model="project.createdBy" readonly>
+
+            </md-input-container>
+
+            <md-input-container class="md-block">
+                <label>Assigned To</label>
+                <input required md-no-asterisk name="assignTO" ng-model="project.assignTO" readonly>
+
+            </md-input-container>
+
+            <md-input-container style="width:100%;">
+                    <label>Assigned On</label>
+                    <input required md-no-asterisk name="due_date" ng-model="project.assigned_on" readonly>
+
+                </md-input-container>
+
+            <div flex style="padding-top:30px;">
+                <span style="font-size:16px;">Due Date</span><md-datepicker ng-model="project.dueDate" name="dueDate"  style="margin-left: -15px;"></md-datepicker>
+            </div>
+
+
+            <md-input-container style="width:100%;">
+                <label>Priority</label>
+                <md-select ng-model="project.Priority">
+                    <md-option ng-repeat="p in PriorityArr" ng-value="p.index" ng-selected="taskSetPriority == p.index">
+                        {{p.value}}
+                    </md-option>
+                </md-select>
+
+            </md-input-container>
+
+            <div layout="row" style="padding-top:20px;" ng-show="allowFileUpload">
+                <md-button style="width:30px;"  class="md-raised md-primary" ng-click="addSubTask()"><i class="fa fa-plus-circle" style="color:#fff;position:relative;top:2px;font-size:22px;"></i></md-button>
+                <div style="margin-left:10px;" class="custom_left50"><h4>Add Sub-task</h4></div>
+            </div>
+
+
+            <div layout="column" ng-show="true" ng-if="subtaskList.length != 0">
+                <div layout>
+                    <span class="md-body-1">Sub Task</span>
+                </div>
+                <md-list id="subtaskMDList">
+
+                    <md-list-item class="md-3-line custom_white" ng-repeat="item in subtaskList">
+
+                        <div class="custom_margin_list md-list-item-text">
+                            <div ng-show="CreatedBy != MyAccountName"><input type="checkbox" ng-click="EndSubtask(item._id)" ng-model="checked" ng-init="checked=item.status" class="checkhour" value="{{item.status}}_id_{{item._id}}" id="{{item._id}}">&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size:16px;vertical-align:top;">{{item.todo}}</span></div>
+                            <div ng-show="CreatedBy == MyAccountName" layout="row" style="width:100%;">
+                                <div style="width:80%;"><h4>{{item.todo}}</h4></div>
+                                <div><i class="ion-close-round" ng-click="deleteCardDefault(item)" style="float:right;"></i></div>
+                            </div>
+                        </div>
+
+                        <md-divider ng-if="!$last"></md-divider>
+
+                    </md-list-item>
+
+                    <md-divider></md-divider>
+                </md-list>
+            </div>
+
+            <md-list>
+                <md-list-item class="md-3-line custom_white" ng-repeat="s in subtask">
+
+                    <div class="md-list-item-text" layout="row">
+                        <div style="width:80%;"><h4>{{s.subtask}}</h4></div>
+                        <div><i class="ion-close-round" ng-click="deleteCardNew(s)" style="float:right;"></i></div>
+                    </div>
+
+                    <md-divider ng-if="!$last"></md-divider>
+
+                </md-list-item>
+
+
+            </md-list>
+
+            <div class="button" ngf-select="uploadFiles($files)" ngf-multiple="false" style="border-color:grey;color:#145c96;" ng-show="allowFileUpload">Upload Files</div>
+            <!--button type="file" ngf-select="uploadFiles($files)" accept="*" style="border-color:grey;color:#145c96;">Upload Files</button-->
+
+            <div layout="column">
+                <div layout>
+                    <span class="md-body-1">Files</span>
+                </div>
+                <md-list-item class="md-3-line custom_white" ng-repeat="doc in tmp_docs">
+
+                    <div class="md-list-item-text" layout="row">
+                        <div style="width:80%;" ng-click="downloadDOC(doc)"><h4>{{doc}}</h4></div>
+                        <div><i class="ion-close-round" ng-click="deleteFile(doc)" style="float:right;"></i></div>
+                    </div>
+
+                    <md-divider ng-if="!$last"></md-divider>
+
+                </md-list-item>
+            </div>
+
+            <md-list>
+
+                <md-list-item class="md-3-line custom_white" ng-repeat="f in files">
+
+                    <div class="md-list-item-text" layout="row">
+                        <div style="width:80%;" ng-click="downloadDOC(f.name)"><h4>{{f.name}}</h4></div>
+                        <div><i class="ion-close-round" ng-click="deleteFile(f)" style="float:right;"></i></div>
+                    </div>
+
+                    <md-divider ng-if="!$last"></md-divider>
+
+                </md-list-item>
+
+
+            </md-list>
+
+
+
+        </md-content>
+
+    </ion-content>
+
+    <div class="bar bar-footer bar-stable" ng-show="true" ng-if="checkCompleted == false">
+
+        <div ng-show="CreatedBy == MyAccountName" ng-click="deleteTask()" class="custom_footerbar" style="border-right: 1px solid grey;"><button ion-button block>DELETE</button></div>
+        <div ng-show="CreatedBy == MyAccountName" ng-click="saveTask()" class="custom_footerbar"><button ion-button block>UPDATE</button></div>
+
+        <div ng-repeat="Assign_name in AssignedTo" ng-show="Assign_name.name == MyAccountName" style="width:100%;">
+            <center><div ng-show="startedValue == false" ng-click="startTask()" class="custom_footerbar_full"><button ion-button block>START</button></div></center>
+            <center><div ng-show="startedValue == true" ng-click="completeTask()" class="custom_footerbar_full"><button ion-button block>END</button></div></center>
+        </div>
+
+
+    </div>
+
+</ion-view>
+
+
